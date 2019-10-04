@@ -4,8 +4,8 @@ eval `dbus export ss`
 source /jffs/softcenter/scripts/base.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 V2RAY_CONFIG_FILE="/jffs/softcenter/ss/v2ray.json"
-url_main="https://raw.githubusercontent.com/paldier/softcenterarm/master/v2ray_binary"
-url_back=""
+url_main="https://raw.githubusercontent.com/hq450/fancyss/master/v2ray_binary"
+url_back="https://raw.githubusercontent.com/paldier/softcenterarm/master/v2ray_binary"
 
 get_latest_version(){
 	rm -rf /tmp/v2ray_latest_info.txt
@@ -227,7 +227,7 @@ install_binary(){
 move_binary(){
 	echo_date "开始替换v2ray二进制文件... "
 	mv /tmp/v2ray/v2ray /jffs/softcenter/bin/v2ray
-	mv /tmp/v2ray/v2ctl /jffs/softcenter/bin/v2ctl
+	mv /tmp/v2ray/v2ctl /jffs/softcenter/bin/
 	chmod +x /jffs/softcenter/bin/v2*
 	V2RAY_LOCAL_VER=`/jffs/softcenter/bin/v2ray -version 2>/dev/null | head -n 1 | cut -d " " -f2`
 	V2RAY_LOCAL_DATE=`/jffs/softcenter/bin/v2ray -version 2>/dev/null | head -n 1 | cut -d " " -f5`
@@ -236,29 +236,12 @@ move_binary(){
 	echo_date "v2ray二进制文件替换成功... "
 }
 
-close_in_five(){
-	echo_date "插件将在5秒后自动关闭！！"
-	local i=5
-	while [ $i -ge 0 ]
-	do
-		sleep 1
-		echo_date $i
-		let i--
-	done
-	dbus set ss_basic_enable="0"
-	disable_ss >/dev/null
-	echo_date "插件已关闭！！"
-	echo_date ======================= 梅林固件 - 【科学上网】 ========================
-	unset_lock
-	exit
-}
-
 start_v2ray(){
 	echo_date "开启v2ray进程... "
 	cd /jffs/softcenter/bin
-	#export GOGC=30
+	export GOGC=30
 	v2ray --config=/jffs/softcenter/ss/v2ray.json >/dev/null 2>&1 &
-	local V2PID
+	
 	local i=10
 	until [ -n "$V2PID" ]
 	do
@@ -278,3 +261,4 @@ echo_date "                v2ray程序更新(Shell by sadog)"
 echo_date "==================================================================="
 get_latest_version
 echo_date "==================================================================="
+

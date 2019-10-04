@@ -1,11 +1,11 @@
 #!/bin/sh
 
 
-MODULE=koolproxyr
-VERSION=3.8.4
-TITLE=koolproxyr
-DESCRIPTION=去广告，没烦恼
-HOME_URL=Module_koolproxyr.asp
+MODULE=koolproxyR
+VERSION=1.0.0
+TITLE=koolproxyR
+DESCRIPTION="KPR更多规则更舒服！"
+HOME_URL=Module_koolproxyR.asp
 
 # Check and include base
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

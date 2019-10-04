@@ -5,6 +5,46 @@ alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 mkdir -p /jffs/softcenter/ss
 mkdir -p /tmp/ss_backup
 
+firmware_version=`nvram get extendno|cut -d "_" -f2|cut -d "-" -f1|cut -c2-5`
+productid=`nvram get productid`
+if [ "$productid" == "BLUECAVE" ];then
+	if [ -n "nvram get modelname" ];then
+	firmware_ver=`nvram get extendno|grep B`
+	if [ -n "firmware_ver" ];then
+		firmware_check=22.1
+	else
+		firmware_check=7.1
+	fi
+	else
+		firmware_check=16.1
+	fi
+elif [ "$productid" == "RT-AC68U" ];then
+firmware_check=4.2
+elif [ "$productid" == "RT-AC3200" ];then
+firmware_check=4.2
+elif [ "$productid" == "RT-AC3100" ];then
+firmware_check=4.1
+elif [ "$productid" == "GT-AC5300" ];then
+firmware_check=1
+elif [ "$productid" == "GT-AC2900" ];then
+firmware_check=1
+elif [ "$productid" == "RT-AC86U" ];then
+firmware_check=1
+elif [ "$productid" == "RT-AC88U" ];then
+firmware_check=1
+elif [ "$productid" == "RT-ACRH17" ];then
+firmware_check=1
+else
+firmware_check=100
+fi
+firmware_comp=`/jffs/softcenter/bin/versioncmp $firmware_version $firmware_check`
+if [ "$firmware_comp" == "1" ];then
+	echo_date 固件版本过低，无法安装
+	exit 1
+fi
+
+
+
 if [ "$ss_basic_enable" == "1" ];then
 	echo_date 先关闭科学上网插件，保证文件更新成功!
 	sh /jffs/softcenter/ss/ssconfig.sh stop
@@ -26,6 +66,7 @@ rm -rf /jffs/softcenter/bin/rss-redir
 rm -rf /jffs/softcenter/bin/rss-tunnel
 rm -rf /jffs/softcenter/bin/rss-local
 rm -rf /jffs/softcenter/bin/obfs-local
+rm -rf /jffs/softcenter/bin/v2ray-plugin
 rm -rf /jffs/softcenter/bin/koolgame
 rm -rf /jffs/softcenter/bin/pdu
 rm -rf /jffs/softcenter/bin/haproxy
@@ -46,7 +87,6 @@ rm -rf /jffs/softcenter/bin/jitterentropy-rngd
 rm -rf /jffs/softcenter/bin/haveged
 rm -rf /jffs/softcenter/bin/https_dns_proxy
 rm -rf /jffs/softcenter/bin/dnsmassq
-rm -rf /jffs/softcenter/res/layer
 rm -rf /jffs/softcenter/res/shadowsocks.css
 rm -rf /jffs/softcenter/res/icon-shadowsocks.png
 rm -rf /jffs/softcenter/res/ss-menu.js
@@ -107,7 +147,7 @@ echo_date 创建一些二进制文件的软链接！
 echo_date 设置一些默认值
 [ -z "$ss_dns_china" ] && dbus set ss_dns_china=11
 [ -z "$ss_dns_foreign" ] && dbus set ss_dns_foreign=1
-[ -z "$ss_basic_ss_obfs" ] && dbus set ss_basic_ss_obfs=0
+[ -z "$ss_basic_ss_v2ray_plugin" ] && dbus set ss_basic_ss_v2ray_plugin=0
 [ -z "$ss_acl_default_mode" ] && [ -n "$ss_basic_mode" ] && dbus set ss_acl_default_mode="$ss_basic_mode"
 [ -z "$ss_acl_default_mode" ] && [ -z "$ss_basic_mode" ] && dbus set ss_acl_default_mode=1
 [ -z "$ss_acl_default_port" ] && dbus set ss_acl_default_port=all
@@ -126,8 +166,8 @@ dbus set softcenter_module_shadowsocks_description="科学上网"
 dbus set softcenter_module_shadowsocks_home_url="Main_Ss_Content.asp"
 
 # 设置v2ray 版本号
-dbus set ss_basic_v2ray_version="v4.18.0"
-dbus set ss_basic_v2ray_date="20190301"
+dbus set ss_basic_v2ray_version="4.20.0"
+dbus set ss_basic_v2ray_date="20190712"
 
 echo_date 一点点清理工作...
 rm -rf /tmp/shadowsocks* >/dev/null 2>&1
@@ -140,3 +180,4 @@ if [ "$ss_basic_enable" == "1" ];then
 	sh /jffs/softcenter/ss/ssconfig.sh restart
 fi
 echo_date 更新完毕，请等待网页自动刷新！
+

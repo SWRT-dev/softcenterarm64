@@ -19,7 +19,7 @@ cp /jffs/softcenter/scripts/ss_* $TARGET_FOLDER/scripts/
 cp /jffs/softcenter/bin/ss-local $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/ss-redir $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/ss-tunnel $TARGET_FOLDER/bin/
-cp /jffs/softcenter/bin/obfs-local $TARGET_FOLDER/bin/
+cp /jffs/softcenter/bin/v2ray-plugin $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/rss-local $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/rss-redir $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/koolgame $TARGET_FOLDER/bin/
@@ -30,7 +30,7 @@ cp /jffs/softcenter/bin/chinadns $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/chinadns1 $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/resolveip $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/haproxy $TARGET_FOLDER/bin/
-cp /jffs/softcenter/bin/client_linux_arm7 $TARGET_FOLDER/bin/
+cp /jffs/softcenter/bin/client_linux_arm5 $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/base64_encode $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/koolbox $TARGET_FOLDER/bin/
 cp /jffs/softcenter/bin/jq $TARGET_FOLDER/bin/
@@ -61,3 +61,4 @@ rm -rf $TARGET_FOLDER/ss/*.json
 tar -czv -f /tmp/shadowsocks.tar.gz shadowsocks/
 rm -rf $TARGET_FOLDER
 echo "打包完毕！"
+

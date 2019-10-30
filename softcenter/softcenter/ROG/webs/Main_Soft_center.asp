@@ -226,6 +226,8 @@ input[type=button]:focus {
 </style>
 <script>
 var db_softcenter_ = {};
+var model = '<% nvram_get("model"); %>';
+var modelname = '<% nvram_get("modelname"); %>';
 var TIMEOUT_SECONDS = 18;
 var softInfo = null;
 var syncRemoteSuccess = 0; //判断是否进入页面后已经成功进行远端同步
@@ -250,17 +252,6 @@ function appPostScript(moduleInfo, script) {
 	var data = {"action_script":script, "action_mode":" Refresh "};
 	//currState.name = moduleInfo.name;
 	//TODO auto choose for home_url
-	if(typeof db_softcenter_["softcenter_server_tcode"] == "undefined") {
-		data["softcenter_home_url"] = "http://update.wifi.com.cn/arm64";
-	}
-	else if(db_softcenter_["softcenter_server_tcode"] == "CN") {
-	        data["softcenter_home_url"] = "http://update.wifi.com.cn/arm64";
-	    }
-	    else if(db_softcenter_["softcenter_server_tcode"] == "GB") {
-	        data["softcenter_home_url"] = "https://sc.paldier.com/arm64";
-	    }
- 	   else
-	        data["softcenter_home_url"] = "http://update.wifi.com.cn/arm64";
 	data["softcenter_installing_todo"] = moduleInfo.name;
 	if (script == "ks_app_install.sh") {
 		data["softcenter_installing_tar_url"] = moduleInfo.tar_url;
@@ -564,17 +555,6 @@ $(function() {
 		dataType: "script",
 		success: function(response) {
 			db_softcenter_ = db_softcenter;
-			if(typeof db_softcenter_["softcenter_server_tcode"] == "undefined") {
-				db_softcenter_["softcenter_home_url"] = "http://update.wifi.com.cn/arm64";
-			}
-			else if(db_softcenter_["softcenter_server_tcode"] == "CN") {
-			        db_softcenter_["softcenter_home_url"] = "http://update.wifi.com.cn/arm64";
-			}
-			else if(db_softcenter_["softcenter_server_tcode"] == "GB") {
-			        db_softcenter_["softcenter_home_url"] = "https://sc.paldier.com/arm64";
-			}
-			else
-			        db_softcenter_["softcenter_home_url"] = "http://update.wifi.com.cn/arm64";
 			if (!db_softcenter_["softcenter_version"]) {
 				db_softcenter_["softcenter_version"] = "0.0";
 			}
@@ -624,8 +604,27 @@ function menu_hook(title, tab) {
 	tablink[tablink.length -1] = new Array("", "Main_Soft_center.asp", "Main_Soft_setting.asp");
 }
 function notice_show(){
+	if (typeof modelname != "undefined"){
+	$("#modelid").html("Software Center " + modelname );
+	}
+	else {
+	$("#modelid").html("Software Center " + model );
+	}
+	if(db_softcenter_["softcenter_arch"] == "mips")
+		var scarch="mips";
+	else if (db_softcenter_["softcenter_arch"] == "armv7l")
+		var scarch="arm";
+	else if (db_softcenter_["softcenter_arch"] == "aarch64")
+		var scarch="arm64";
+	else if (db_softcenter_["softcenter_arch"] == "mipsle")
+		var scarch="mipsle";
+	else if (db_softcenter_["softcenter_arch"] == "x86")
+		var scarch="x86";
+	else
+		var scarch="mips";
+	var pushurl = 'https://sc.paldier.com/' + scarch + '/softcenter/push_message.json.js';
 	$.ajax({
-		url: 'https://sc.paldier.com/softcenter/push_message.json.js',
+		url: pushurl,
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(res) {
@@ -668,7 +667,7 @@ function notice_show(){
 										<tr>
 											<td colspan="3" valign="top">
 												<div>&nbsp;</div>
-												<div class="formfonttitle">Software Center <% nvram_get("model"); %></div>
+												<div id="modelid" class="formfonttitle"></div>
 												<div style="margin:10px 0 10px 5px;" class="splitLine"></div>
 													<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3" class="FormTable">
 													</table>

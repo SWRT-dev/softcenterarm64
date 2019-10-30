@@ -19,6 +19,9 @@ cp -rf /tmp/ddnsto/uninstall.sh /jffs/softcenter/scripts/uninstall_ddnsto.sh
 chmod +x /jffs/softcenter/bin/ddnsto
 chmod +x /jffs/softcenter/scripts/ddnsto*
 chmod +x /jffs/softcenter/scripts/uninstall_ddnsto.sh
+if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+	cp -rf /tmp/ddnsto/ROG/webs/* /jffs/softcenter/webs/
+fi
 [ ! -L "/jffs/softcenter/init.d/S70ddnsto.sh" ] && ln -sf /jffs/softcenter/scripts/ddnsto_config.sh /jffs/softcenter/init.d/S70ddnsto.sh
 
 # 离线安装用

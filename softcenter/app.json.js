@@ -11,10 +11,10 @@
             "version": "1.0.1"
         }, 
         {
-            "build_date": "2019-10-06_10:19:02", 
+            "build_date": "2019-10-25_22:12:34", 
             "description": "科学上网", 
             "home_url": "Main_Ss_Content.asp", 
-            "md5": "98c043383d8a7864f940e361163ac825", 
+            "md5": "c6f3f29a8e4c580cfdf45613403217db", 
             "name": "shadowsocks", 
             "tar_url": "shadowsocks/shadowsocks.tar.gz", 
             "title": "科学上网", 
@@ -69,6 +69,16 @@
             "tar_url": "swap/swap.tar.gz", 
             "title": "虚拟内存", 
             "version": "2.3"
+        }, 
+        {
+            "build_date": "2019-10-20_11:02:42", 
+            "description": "解决重启Bug", 
+            "home_url": "Module_reboothelper.asp", 
+            "md5": "d87ee970469561fb55321810b35b3264", 
+            "name": "reboothelper", 
+            "tar_url": "reboothelper/reboothelper.tar.gz", 
+            "title": "重启助手", 
+            "version": "0.3"
         }, 
         {
             "build_date": "2019-10-06_10:33:01", 
@@ -212,7 +222,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm/master", 
-    "md5": "8fd1c3c2e5c3a12e9afa94ef979c123a", 
+    "md5": "a6b4562c0572b9b14bc5e3aa935551a8", 
     "tar_url": "softcenter/softcenter.tar.gz", 
-    "version": "1.2.1"
+    "version": "1.2.2"
 }

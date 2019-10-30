@@ -23,8 +23,8 @@ softcenter_install() {
 		cp -rf /tmp/softcenter/webs/* /jffs/softcenter/webs/
 		cp -rf /tmp/softcenter/res/* /jffs/softcenter/res/
 		if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AX11000" ] || [ "`nvram get model`" == "GT-AC2900" ];then
-			cp -rf /tmp/softcenter/ROG/webs/* /koolshare/webs/
-			cp -rf /tmp/softcenter/ROG/res/* /koolshare/res/
+			cp -rf /tmp/softcenter/ROG/webs/* /jffs/softcenter/webs/
+			cp -rf /tmp/softcenter/ROG/res/* /jffs/softcenter/res/
 		fi
 		#cp -rf /tmp/softcenter/init.d/* /jffs/softcenter/init.d/
 		cp -rf /tmp/softcenter/bin/* /jffs/softcenter/bin/
@@ -36,15 +36,18 @@ softcenter_install() {
 		cp -rf /tmp/softcenter/scripts/* /jffs/softcenter/scripts
 		cp -rf /tmp/softcenter/.soft_ver /jffs/softcenter/
 		dbus set softcenter_version=`cat /jffs/softcenter/.soft_ver`
+		dbus set softcenter_firmware_version=`nvram get extendno|cut -d "_" -f2|cut -d "-" -f1|cut -c2-5`
+		dbus set softcenter_arch=`uname -m`
+		dbus set softcenter_api=`cat /jffs/softcenter/.soft_ver`
 		# make some link
 		if [ "`nvram get productid`" == "BLUECAVE" ];then
 			cp -r /jffs/softcenter/bin/base64_encode /jffs/softcenter/bin/base64_decode
 			cp -r /jffs/softcenter/scripts/ks_app_install.sh /jffs/softcenter/scripts/ks_app_remove.sh
-			cp -r /jffs/softcenter/bin/softcenter.sh /jffs/.asusrouter
+			cp -rf /jffs/softcenter/bin/softcenter.sh /jffs/.asusrouter
 		else
 			[ ! -L "/jffs/softcenter/bin/base64_decode" ] && ln -sf /jffs/softcenter/bin/base64_encode /jffs/softcenter/bin/base64_decode
 			[ ! -L "/jffs/softcenter/scripts/ks_app_remove.sh" ] && ln -sf /jffs/softcenter/scripts/ks_app_install.sh /jffs/softcenter/scripts/ks_app_remove.sh
-			[ ! -L "/jffs/.asusrouter" ] && ln -sf /jffs/softcenter/bin/softcenter.sh /jffs/.asusrouter
+			ln -sf /jffs/softcenter/bin/softcenter.sh /jffs/.asusrouter
 			[ -L "/jffs/softcenter/bin/base64" ] && rm -rf /jffs/softcenter/bin/base64
 		fi
 		chmod 755 /jffs/softcenter/bin/*

@@ -1,9 +1,10 @@
 #!/bin/sh
 
 source /jffs/softcenter/scripts/base.sh
+alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 aria2_enable=`dbus get aria2_enable`
 aria2_version=`dbus get aria2_version`
-
+DIR=$(cd $(dirname $0); pwd)
 #重建 /dev/null
 #rm /dev/null 
 #mknod /dev/null c 1 3 
@@ -18,8 +19,10 @@ cp -rf /tmp/aria2/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/aria2/webs/* /jffs/softcenter/webs/
 cp -rf /tmp/aria2/res/* /jffs/softcenter/res/
 cp -rf /tmp/aria2/uninstall.sh /jffs/softcenter/scripts/uninstall_aria2.sh
+if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+	cp -rf /tmp/aria2/ROG/webs/* /jffs/softcenter/webs/
+fi
 
-rm -fr /tmp/aria2* >/dev/null 2>&1
 chmod +x /jffs/softcenter/bin/*
 chmod +x /jffs/softcenter/scripts/aria2*.sh
 chmod +x /jffs/softcenter/scripts/uninstall_aria2.sh
@@ -36,15 +39,17 @@ if [ "$aria2_version" == "1.5" ] || [ "$aria2_version" == "1.4" ] || [ "$aria2_v
 	dbus set aria2_custom=Y2EtY2VydGlmaWNhdGU9L2V0Yy9zc2wvY2VydHMvY2EtY2VydGlmaWNhdGVzLmNydA==
 fi
 
-dbus set aria2_version="2.5"
-dbus set softcenter_module_aria2_version="2.5"
+dbus set aria2_version="$(cat $DIR/version)"
+dbus set softcenter_module_aria2_version="$(cat $DIR/version)"
 dbus set softcenter_module_aria2_install="1"
 dbus set softcenter_module_aria2_name="aria2"
 dbus set softcenter_module_aria2_title="aria2"
 dbus set softcenter_module_aria2_description="linux下载利器"
 sleep 1
-
+echo_date aria2插件安装完毕！
+rm -fr /tmp/aria2* >/dev/null 2>&1
 if [ "$aria2_enable" == "1" ];then
 	[ -f "/jffs/softcenter/scripts/aria2_config.sh" ] && sh /jffs/softcenter/scripts/aria2_config.sh start
 fi
+exit 0
 

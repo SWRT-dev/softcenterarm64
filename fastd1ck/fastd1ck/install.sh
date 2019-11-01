@@ -14,7 +14,10 @@ cp -rf /tmp/fastd1ck/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/fastd1ck/webs/* /jffs/softcenter/webs/
 cp -rf /tmp/fastd1ck/res/* /jffs/softcenter/res/
 cp -rf /tmp/fastd1ck/uninstall.sh /jffs/softcenter/scripts/uninstall_fastd1ck.sh
-rm -fr /tmp/fastd1ck* >/dev/null 2>&1
+if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+	cp -rf /tmp/fastd1ck/ROG/webs/* /jffs/softcenter/webs/
+fi
+
 chmod +x /jffs/softcenter/scripts/fastd1ck*.sh
 chmod +x /jffs/softcenter/scripts/uninstall_fastd1ck.sh
 if [ "$(nvram get productid)" = "BLUECAVE" ];then
@@ -30,7 +33,7 @@ dbus set softcenter_module_fastd1ck_install=1
 dbus set softcenter_module_fastd1ck_name=fastd1ck
 dbus set softcenter_module_fastd1ck_title=迅雷快鸟
 sleep 1
-
+rm -fr /tmp/fastd1ck* >/dev/null 2>&1
 if [ "$fastd1ck_enable" == "1" ];then
 	[ -f "/jffs/softcenter/scripts/fastd1ck_config.sh" ] && sh /jffs/softcenter/scripts/fastd1ck_config.sh start
 fi

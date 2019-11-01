@@ -26,6 +26,9 @@ rm -rf /jffs/softcenter/scripts/serverchan_*
 cp -rf /tmp/serverchan/res/icon-serverchan.png /jffs/softcenter/res/
 cp -rf /tmp/serverchan/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/serverchan/webs/Module_serverchan.asp /jffs/softcenter/webs/
+if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+	cp -rf /tmp/serverchan/ROG/webs/Module_serverchan.asp /jffs/softcenter/webs/
+fi
 chmod +x /jffs/softcenter/scripts/*
 
 # 设置默认值

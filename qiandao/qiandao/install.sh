@@ -9,6 +9,9 @@ cp -rf /tmp/qiandao/res/* /jffs/softcenter/res/
 cp -rf /tmp/qiandao/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/qiandao/webs/* /jffs/softcenter/webs/
 cp -rf /tmp/qiandao/uninstall.sh /jffs/softcenter/scripts/uninstall_qiandao.sh
+if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+	cp -rf /tmp/qiandao/ROG/webs/* /jffs/softcenter/webs/
+fi
 rm -rf /jffs/softcenter/init.d/*qiandao.sh
 if [ "$(nvram get productid)" = "BLUECAVE" ];then
 	cp -r /jffs/softcenter/scripts/qiandao_config.sh /jffs/softcenter/init.d/M99qiandao.sh

@@ -15,6 +15,9 @@ cp -rf /tmp/easyexplorer/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/easyexplorer/webs/* /jffs/softcenter/webs/
 cp -rf /tmp/easyexplorer/res/* /jffs/softcenter/res/
 cp -rf /tmp/easyexplorer/uninstall.sh /jffs/softcenter/scripts/uninstall_easyexplorer.sh
+if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+	cp -rf /tmp/easyexplorer/ROG/webs/* /jffs/softcenter/webs/
+fi
 chmod +x /jffs/softcenter/bin/easy-explorer
 chmod +x /jffs/softcenter/scripts/*
 [ ! -L "/jffs/softcenter/init.d/S99easyexplorer.sh" ] && ln -sf /jffs/softcenter/scripts/easyexplorer_config.sh /jffs/softcenter/init.d/S99easyexplorer.sh

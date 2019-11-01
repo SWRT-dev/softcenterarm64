@@ -16,6 +16,9 @@ cp -rf /tmp/mdial/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/mdial/webs/* /jffs/softcenter/webs/
 cp -rf /tmp/mdial/res/* /jffs/softcenter/res/
 cp -rf /tmp/mdial/uninstall.sh /jffs/softcenter/scripts/uninstall_mdial.sh
+if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+	cp -rf /tmp/mdial/ROG/webs/* /jffs/softcenter/webs/
+fi
 chmod +x /jffs/softcenter/scripts/mdial*.sh
 chmod +x /jffs/softcenter/scripts/uninstall_mdial.sh
 if [ "$(nvram get productid)" = "BLUECAVE" ];then

@@ -1,14 +1,14 @@
 {
     "apps": [
         {
-            "build_date": "2019-10-06_10:12:32", 
+            "build_date": "2019-11-01_10:38:13", 
             "description": "KPR更多规则更舒服！", 
             "home_url": "Module_koolproxyR.asp", 
-            "md5": "0da6242626a12386675ee3efcad93ec9", 
+            "md5": "6789128667f14029180e2b1e916f1a9a", 
             "name": "koolproxyR", 
             "tar_url": "koolproxyR/koolproxyR.tar.gz", 
             "title": "koolproxyR", 
-            "version": "1.0.1"
+            "version": "1.0.2"
         }, 
         {
             "build_date": "2019-10-25_22:12:34", 
@@ -31,20 +31,20 @@
             "version": "2.1"
         }, 
         {
-            "build_date": "2019-10-04_22:22:46", 
+            "build_date": "2019-10-31_12:06:21", 
             "description": "Cloudflare解析自动更新IP", 
             "home_url": "Module_cfddns.asp", 
-            "md5": "491eac53235c47a2090db4cfcc19e985", 
+            "md5": "ddcbbce49f4f95a2e0a8c107a2355d85", 
             "name": "cfddns", 
             "tar_url": "cfddns/cfddns.tar.gz", 
             "title": "Cloudflare DDNS", 
             "version": "1.3"
         }, 
         {
-            "build_date": "2019-10-04_22:23:00", 
+            "build_date": "2019-10-31_11:55:05", 
             "description": "易有云 （EasyExplorer） 跨平台文件同步，支持双向同步！", 
             "home_url": "Module_easyexplorer.asp", 
-            "md5": "ec5f0f1b5ced8a6e57137263fd47d0fc", 
+            "md5": "4bb7f0adb6c515b20470d9d3c3dd4f0e", 
             "name": "easyexplorer", 
             "tar_url": "easyexplorer/easyexplorer.tar.gz", 
             "title": "易有云", 
@@ -81,30 +81,30 @@
             "version": "0.3"
         }, 
         {
-            "build_date": "2019-10-06_10:33:01", 
+            "build_date": "2019-11-01_10:38:06", 
             "description": "去广告，没烦恼", 
             "home_url": "Module_koolproxy.asp", 
-            "md5": "c58ba71ab733c2e6fd5d9d14021ead6f", 
+            "md5": "2517159cf5c57750014eef9e3b4030ed", 
             "name": "koolproxy", 
             "tar_url": "koolproxy/koolproxy.tar.gz", 
             "title": "koolproxy", 
             "version": "3.8.4.2"
         }, 
         {
-            "build_date": "2019-10-04_22:22:32", 
+            "build_date": "2019-11-01_10:37:57", 
             "description": "linux下载利器", 
             "home_url": "Module_aria2.asp", 
-            "md5": "e06d76b975717599626e8fab7907851f", 
+            "md5": "0629783d4742d497c2151c8a336766d9", 
             "name": "aria2", 
             "tar_url": "aria2/aria2.tar.gz", 
             "title": "Aria2", 
-            "version": "2.5"
+            "version": "2.6"
         }, 
         {
-            "build_date": "2019-10-13_10:55:53", 
+            "build_date": "2019-10-31_11:33:24", 
             "description": "内网穿透利器，谁用谁知道。", 
             "home_url": "Module_frpc.asp", 
-            "md5": "45bd089e4067964a487fd364fe51674b", 
+            "md5": "47810e7e78cbf1acc69d83fb37f4ee7f", 
             "name": "frpc", 
             "tar_url": "frpc/frpc.tar.gz", 
             "title": "frpc穿透", 
@@ -131,20 +131,20 @@
             "version": "1.4"
         }, 
         {
-            "build_date": "2019-10-04_22:23:07", 
+            "build_date": "2019-10-31_11:51:16", 
             "description": "迅雷快鸟，为上网加速而生~", 
             "home_url": "Module_fastd1ck.asp", 
-            "md5": "9167776f8981717d62911953ce49170d", 
+            "md5": "a7224af41f0ccb876912ce5ab10421ae", 
             "name": "fastd1ck", 
             "tar_url": "fastd1ck/fastd1ck.tar.gz", 
             "title": "讯雷快鸟", 
             "version": "1.6"
         }, 
         {
-            "build_date": "2019-10-04_22:29:05", 
+            "build_date": "2019-10-31_11:18:35", 
             "description": "这是一只自动帮你签到的dog", 
             "home_url": "Module_qiandao.asp", 
-            "md5": "5c8707e4593c61d5953ffc65f5bdd2f6", 
+            "md5": "366b07620d698a1fe051964e5ef993ba", 
             "name": "qiandao", 
             "tar_url": "qiandao/qiandao.tar.gz", 
             "title": "签到dog", 
@@ -171,14 +171,24 @@
             "version": "1.9"
         }, 
         {
-            "build_date": "2019-10-04_10:57:36", 
+            "build_date": "2019-10-31_11:23:20", 
             "description": "pppoe单线多拨，带宽提升神器！", 
             "home_url": "Module_mdial.asp", 
-            "md5": "d4ec20896040b26a1d2320d8ed0b9b43", 
+            "md5": "b0e62eaec6f2e45e9493695523c7194b", 
             "name": "mdial", 
             "tar_url": "mdial/mdial.tar.gz", 
             "title": "单线多拨", 
             "version": "1.4"
+        }, 
+        {
+            "build_date": "2019-11-01_10:37:51", 
+            "description": "自动部署SSL证书", 
+            "home_url": "Module_acme.asp", 
+            "md5": "57cf240f46ea5d906f3b4396626a7b3f", 
+            "name": "acme", 
+            "tar_url": "acme/acme.tar.gz", 
+            "title": "Let's Encrypt", 
+            "version": "3.0"
         }, 
         {
             "build_date": "2019-10-04_22:22:54", 
@@ -201,10 +211,10 @@
             "version": "1.2"
         }, 
         {
-            "build_date": "2019-10-04_10:58:19", 
+            "build_date": "2019-10-31_11:13:05", 
             "description": "从路由器推送状态及通知的工具", 
             "home_url": "Module_serverchan.asp", 
-            "md5": "1f12a5ee6402868710948c5785c894d4", 
+            "md5": "4e3a101a7333f028e3a31a75041343ca", 
             "name": "serverchan", 
             "tar_url": "serverchan/serverchan.tar.gz", 
             "title": "ServerChan微信推送", 
@@ -222,7 +232,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm/master", 
-    "md5": "a6b4562c0572b9b14bc5e3aa935551a8", 
+    "md5": "592a75835becd8695ddf1046462630e0", 
     "tar_url": "softcenter/softcenter.tar.gz", 
     "version": "1.2.2"
 }

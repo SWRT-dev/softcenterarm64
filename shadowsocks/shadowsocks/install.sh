@@ -5,53 +5,10 @@ alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 mkdir -p /jffs/softcenter/ss
 mkdir -p /tmp/ss_backup
 
-firmware_version=`nvram get extendno|cut -d "_" -f2|cut -d "-" -f1|cut -c2-5`
-productid=`nvram get productid`
-if [ "$productid" == "BLUECAVE" ];then
-	if [ "$(nvram get modelname)" == "K3C" ];then
-	firmware_ver=`nvram get extendno|grep B`
-	if [ -n "$firmware_ver" ];then
-		firmware_check=22.1
-	else
-		firmware_check=7.1
-	fi
-	else
-		firmware_check=16.1
-	fi
-elif [ "$productid" == "RT-AC68U" ];then
-	if [ "$(nvram get modelname)" == "SBR-AC1900P" ];then
-		firmware_check=4.2
-	else
-		firmware_check=1
-	fi
-elif [ "$productid" == "RT-AC3200" ];then
-	if [ "$(nvram get modelname)" == "SBR-AC3200P" ];then
-		firmware_check=4.2
-	else
-		firmware_check=1
-	fi
-elif [ "$productid" == "RT-AC3100" ];then
-	if [ "$(nvram get modelname)" == "K3" ];then
-		firmware_check=4.1
-	else
-		firmware_check=1
-	fi
-elif [ "$productid" == "GT-AC5300" ];then
-	if [ "$(nvram get modelname)" == "R7900P" ];then
-		firmware_check=1
-	else
-		firmware_check=1
-	fi
-elif [ "$productid" == "GT-AC2900" ];then
-	firmware_check=1
-elif [ "$productid" == "RT-AC86U" ];then
-	firmware_check=1
-elif [ "$productid" == "RT-AC88U" ];then
-	firmware_check=1
-elif [ "$productid" == "RT-ACRH17" ];then
-	firmware_check=1
-else
-	firmware_check=100
+firmware_version=`nvram get extendno|cut -d "_" -f2|cut -d "-" -f1|cut -c2-6`
+firmware_check=5.0.1
+if [ ${#firmware_version} -lt 5 ];then
+	firmware_version=1.0.0
 fi
 firmware_comp=`/jffs/softcenter/bin/versioncmp $firmware_version $firmware_check`
 if [ "$firmware_comp" == "1" ];then
@@ -91,7 +48,7 @@ rm -rf /jffs/softcenter/bin/Pcap_DNSProxy
 rm -rf /jffs/softcenter/bin/dnscrypt-proxy
 rm -rf /jffs/softcenter/bin/dns2socks
 rm -rf /jffs/softcenter/bin/cdns
-rm -rf /jffs/softcenter/bin/client_linux_arm5
+rm -rf /jffs/softcenter/bin/client_linux_mips
 rm -rf /jffs/softcenter/bin/chinadns
 rm -rf /jffs/softcenter/bin/chinadns1
 rm -rf /jffs/softcenter/bin/resolveip
@@ -151,11 +108,14 @@ if [ -n "`ls /tmp/ss_backup/P*.sh 2>/dev/null`" ];then
 fi
 
 echo_date 创建一些二进制文件的软链接！
-[ ! -L "/jffs/softcenter/bin/rss-tunnel" ] && ln -sf /jffs/softcenter/bin/rss-local /jffs/softcenter/bin/rss-tunnel
-[ ! -L "/jffs/softcenter/bin/base64_decode" ] && ln -sf /jffs/softcenter/bin/base64_encode /jffs/softcenter/bin/base64_decode
-[ ! -L "/jffs/softcenter/init.d/S99socks5.sh" ] && ln -sf /jffs/softcenter/scripts/ss_socks5.sh /jffs/softcenter/init.d/S99socks5.sh
-[ ! -L "/jffs/softcenter/init.d/S99shadowsocks.sh" ] && ln -sf /jffs/softcenter/ss/ssconfig.sh /jffs/softcenter/init.d/S99shadowsocks.sh
-[ ! -L "/jffs/softcenter/init.d/N99shadowsocks.sh" ] && ln -sf /jffs/softcenter/ss/ssconfig.sh /jffs/softcenter/init.d/N99shadowsocks.sh
+[ ! -e "/jffs/softcenter/bin/rss-tunnel" ] && cp -rf /jffs/softcenter/bin/rss-local /jffs/softcenter/bin/rss-tunnel
+[ ! -e "/jffs/softcenter/bin/base64" ] && cp -rf /jffs/softcenter/bin/koolbox /jffs/softcenter/bin/base64
+[ ! -e "/jffs/softcenter/bin/shuf" ] && cp -rf /jffs/softcenter/bin/koolbox /jffs/softcenter/bin/shuf
+[ ! -e "/jffs/softcenter/bin/netstat" ] && cp -rf /jffs/softcenter/bin/koolbox /jffs/softcenter/bin/netstat
+[ ! -e "/jffs/softcenter/bin/base64_decode" ] && cp -rf /jffs/softcenter/bin/base64_encode /jffs/softcenter/bin/base64_decode
+[ ! -e "/jffs/softcenter/init.d/M99shadowsocks.sh" ] && cp -rf /jffs/softcenter/ss/ssconfig.sh /jffs/softcenter/init.d/M99shadowsocks.sh
+[ ! -e "/jffs/softcenter/init.d/N99shadowsocks.sh" ] && cp -rf /jffs/softcenter/ss/ssconfig.sh /jffs/softcenter/init.d/N99shadowsocks.sh
+[ ! -e "/jffs/softcenter/init.d/M99socks5.sh" ] && cp -rf /jffs/softcenter/scripts/ss_socks5.sh /jffs/softcenter/init.d/M99socks5.sh
 
 echo_date 设置一些默认值
 [ -z "$ss_dns_china" ] && dbus set ss_dns_china=11
@@ -193,4 +153,3 @@ if [ "$ss_basic_enable" == "1" ];then
 	sh /jffs/softcenter/ss/ssconfig.sh restart
 fi
 echo_date 更新完毕，请等待网页自动刷新！
-

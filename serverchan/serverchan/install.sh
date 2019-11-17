@@ -3,6 +3,9 @@ source /jffs/softcenter/scripts/base.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 DIR=$(cd $(dirname $0); pwd)
 
+#删除定时任务
+sed -ie '/serverchan_config.sh/d' /jffs/scripts/services-start
+cru d serverchan_check
 # stop serverchan first
 enable=`dbus get serverchan_enable`
 if [ "$enable" == "1" ] && [ -f "/jffs/softcenter/scripts/serverchan_config.sh" ];then
@@ -50,7 +53,9 @@ if [ -n "${_sckey}" ]; then
     dbus set serverchan_config_sckey_1=`dbus get serverchan_config_sckey`
     dbus remove serverchan_config_sckey
 fi
-
+[ -z "`dbus get serverchan_info_lan_macoff`" ] && dbus set serverchan_info_lan_macoff="1"
+[ -z "`dbus get serverchan_info_dhcp_macoff`" ] && dbus set serverchan_info_dhcp_macoff="1"
+[ -z "`dbus get serverchan_trigger_dhcp_macoff`" ] && dbus set serverchan_trigger_dhcp_macoff="1"
 # 离线安装用
 dbus set serverchan_version="$(cat $DIR/version)"
 dbus set softcenter_module_serverchan_version="$(cat $DIR/version)"
@@ -68,3 +73,4 @@ fi
 rm -rf /tmp/serverchan* >/dev/null 2>&1
 echo_date "ServerChan微信通知插件安装完毕！"
 exit 0
+

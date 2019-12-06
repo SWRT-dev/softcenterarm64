@@ -91,14 +91,14 @@
             "version": "3.8.4.2"
         }, 
         {
-            "build_date": "2019-11-01_10:37:57", 
+            "build_date": "2019-11-20_13:46:04", 
             "description": "linux下载利器", 
             "home_url": "Module_aria2.asp", 
-            "md5": "0629783d4742d497c2151c8a336766d9", 
+            "md5": "d261c3401f6fba5ce60cde349226af35", 
             "name": "aria2", 
             "tar_url": "aria2/aria2.tar.gz", 
             "title": "Aria2", 
-            "version": "2.6"
+            "version": "2.7"
         }, 
         {
             "build_date": "2019-10-31_11:33:24", 
@@ -201,14 +201,14 @@
             "version": "1.3"
         }, 
         {
-            "build_date": "2019-10-13_10:55:45", 
+            "build_date": "2019-12-06_23:03:45", 
             "description": "百度盘", 
             "home_url": "Module_baidupcs.asp", 
-            "md5": "db0fece312782390a9090d3ec40fb154", 
+            "md5": "2e31c6fdd8b820cb08f3c92ee39c4b95", 
             "name": "baidupcs", 
             "tar_url": "baidupcs/baidupcs.tar.gz", 
             "title": "百度盘", 
-            "version": "1.2"
+            "version": "1.3"
         }, 
         {
             "build_date": "2019-11-06_12:05:25", 
@@ -232,7 +232,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm/master", 
-    "md5": "9959b9c76c98ac698d2bec2ec2b0e53a", 
+    "md5": "76944a7b3e8ead11e50baf0920d80782", 
     "tar_url": "softcenter/softcenter.tar.gz", 
     "version": "1.2.3"
 }

@@ -141,6 +141,26 @@
             "version": "1.6"
         }, 
         {
+            "build_date": "2020-01-06_21:58:23", 
+            "description": "腾讯云ddns", 
+            "home_url": "Module_tenddns.asp", 
+            "md5": "9c8719d43ceb550a524183215f5aeaf2", 
+            "name": "tenddns", 
+            "tar_url": "tenddns/tenddns.tar.gz", 
+            "title": "腾讯云ddns", 
+            "version": "0.0.1"
+        }, 
+        {
+            "build_date": "2020-01-06_21:58:08", 
+            "description": "自己的私有云", 
+            "home_url": "Module_verysync.asp", 
+            "md5": "8cb1e6bc4d590b72732e31d2cd9c1b05", 
+            "name": "verysync", 
+            "tar_url": "verysync/verysync.tar.gz", 
+            "title": "微力同步", 
+            "version": "1.0.0"
+        }, 
+        {
             "build_date": "2019-10-31_11:18:35", 
             "description": "这是一只自动帮你签到的dog", 
             "home_url": "Module_qiandao.asp", 
@@ -191,14 +211,14 @@
             "version": "3.0"
         }, 
         {
-            "build_date": "2019-10-04_22:22:54", 
+            "build_date": "2020-01-06_21:55:57", 
             "description": "使用Dnspod的ddns服务", 
             "home_url": "Module_ddnspod.asp", 
-            "md5": "463a749b88e00479d46077e0f3e0ce64", 
+            "md5": "4e0e7fe85f9026ce1bdc30e0261dec1b", 
             "name": "ddnspod", 
             "tar_url": "ddnspod/ddnspod.tar.gz", 
             "title": "DDnspod", 
-            "version": "1.3"
+            "version": "1.4"
         }, 
         {
             "build_date": "2019-12-06_23:03:45", 
@@ -211,14 +231,14 @@
             "version": "1.3"
         }, 
         {
-            "build_date": "2019-11-06_12:05:25", 
+            "build_date": "2020-01-06_21:56:30", 
             "description": "从路由器推送状态及通知的工具", 
             "home_url": "Module_serverchan.asp", 
-            "md5": "4ed6958503fc540ce61b29eb5d0c891d", 
+            "md5": "5aedb742b85bd323d22bbd620929ac0a", 
             "name": "serverchan", 
             "tar_url": "serverchan/serverchan.tar.gz", 
             "title": "ServerChan微信推送", 
-            "version": "1.3"
+            "version": "1.4"
         }, 
         {
             "build_date": "2019-10-04_22:21:58", 
@@ -232,7 +252,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm/master", 
-    "md5": "76944a7b3e8ead11e50baf0920d80782", 
+    "md5": "5f3e6f90b4236a9680e2eea22edb5a89", 
     "tar_url": "softcenter/softcenter.tar.gz", 
-    "version": "1.2.3"
+    "version": "1.2.4"
 }

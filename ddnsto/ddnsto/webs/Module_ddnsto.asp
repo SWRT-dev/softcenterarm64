@@ -125,7 +125,7 @@ function onSubmitCtrl() {
 	db_ddnsto["next_page"] = "Module_db_ddnsto.asp";
     $("#loading_block3").html("<b>正在提交数据！</b>等待后台运行完毕，请不要刷新本页面！")
 	$.ajax({
-		url: "/applydb.cgi?p=db_ddnsto",
+		url: "/applydb.cgi?p=ddnsto",
 		cache: false,
 		type: "POST",
 		dataType: "html",

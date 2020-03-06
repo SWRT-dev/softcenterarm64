@@ -7,7 +7,7 @@
 <meta HTTP-EQUIV="Expires" CONTENT="-1">
 <link rel="shortcut icon" href="images/favicon.png">
 <link rel="icon" href="images/favicon.png">
-<title>Merlin software center</title>
+<title sclang>Software Center</title>
 <link rel="stylesheet" type="text/css" href="index_style.css"/>
 <link rel="stylesheet" type="text/css" href="form_style.css"/>
 <link rel="stylesheet" type="text/css" href="/res/softcenter.css"/>
@@ -23,6 +23,7 @@
 <script type="text/javascript" src="/switcherplugin/jquery.iphone-switch.js"></script>
 <script type="text/javascript" src="/form.js"></script>
 <script type="text/javascript" src="/res/softcenter.js"></script>
+<script type="text/javascript" src="/js/i18n.js"></script>
 <style>
 .cloud_main_radius_left {
 	-webkit-border-radius: 10px 0 0 10px;
@@ -412,9 +413,9 @@ function renderView(apps) {
 		'#{description}',
 		'</a>',
 		'<div class="opt">',
-		'<a type="button" class="install-btn" data-name="#{name}">安装</a>',
-		'<a type="button" class="update-btn" data-name="#{name}">更新</a>',
-		'<a type="button" class="uninstall-btn" data-name="#{name}">卸载</a>',
+		'<a type="button" class="install-btn" data-name="#{name}">' + dict["Install"] + '</a>',
+		'<a type="button" class="update-btn" data-name="#{name}">' + dict["Update"] + '</a>',
+		'<a type="button" class="uninstall-btn" data-name="#{name}">' + dict["Uninstall"] + '</a>',
 		'</div>',
 		'</dd>',
 		'</dl>'
@@ -427,8 +428,8 @@ function renderView(apps) {
 	});
 	$('#IconContainer').html(html.join(''));
 	//更新安装数
-	$('.show-install-btn').val('已安装(' + installCount + ')');
-	$('.show-uninstall-btn').val('未安装(' + uninstallCount + ')');
+	$('.show-install-btn').val(dict["Installed"] + '(' + installCount + ')');
+	$('.show-uninstall-btn').val(dict["Online"] + '(' + uninstallCount + ')');
 }
 function getRemoteData() {
 	var remoteURL = db_softcenter_["softcenter_home_url"] + '/' + scarch + '/softcenter/app.json.js';
@@ -551,16 +552,14 @@ function init(cb) {
 $(function() {
 	//梅林要求用这个函数来显示左测菜单
 	show_menu(menu_hook);
+	sc_load_lang("sc1");
 	$.ajax({
 		type: "GET",
 		url: "/dbconf?p=softcenter",
 		dataType: "script",
 		success: function(response) {
 			db_softcenter_ = db_softcenter;
-			if(typeof db_softcenter_["softcenter_server_tcode"] == "undefined") {
-				db_softcenter_["softcenter_home_url"] = "http://update.wifi.com.cn";
-			}
-			else if(db_softcenter_["softcenter_server_tcode"] == "CN") {
+			if(db_softcenter_["softcenter_server_tcode"] == "CN") {
 			        db_softcenter_["softcenter_home_url"] = "http://update.wifi.com.cn";
 			}
 			else if(db_softcenter_["softcenter_server_tcode"] == "GB") {
@@ -574,15 +573,17 @@ $(function() {
 			}
 			else
 			        db_softcenter_["softcenter_home_url"] = "https://sc.paldier.com";
-			if(db_softcenter_["softcenter_arch"] == "mips")
+			if(db_softcenter_["softcenter_arch"] == "mips")//for grx500
 				scarch="mips";
-			else if (db_softcenter_["softcenter_arch"] == "armv7l")
+			else if (db_softcenter_["softcenter_arch"] == "armv7l")//for bcm4709
 				scarch="arm";
-			else if (db_softcenter_["softcenter_arch"] == "aarch64")
+			else if (db_softcenter_["softcenter_arch"] == "armng")//for bcm6750/ipq4019
+				scarch="armng";
+			else if (db_softcenter_["softcenter_arch"] == "aarch64")//for bcm4908/bcm6710
 				scarch="arm64";
-			else if (db_softcenter_["softcenter_arch"] == "mipsle")
+			else if (db_softcenter_["softcenter_arch"] == "mipsle")//for mtk7621
 				scarch="mipsle";
-			else if (db_softcenter_["softcenter_arch"] == "x86")
+			else if (db_softcenter_["softcenter_arch"] == "x86")//for grx750
 				scarch="x86";
 			else
 				scarch="mips";
@@ -631,7 +632,7 @@ $(function() {
 	});
 });
 function menu_hook(title, tab) {
-	tabtitle[tabtitle.length -1] = new Array("", "软件中心", "离线安装");
+	tabtitle[tabtitle.length -1] = new Array("",dict["Software Center"], dict["Offline installation"]);
 	tablink[tablink.length -1] = new Array("", "Main_Soft_center.asp", "Main_Soft_setting.asp");
 }
 function notice_show(){
@@ -641,7 +642,15 @@ function notice_show(){
 	else {
 	$("#modelid").html("Software Center " + model );
 	}
-	var pushurl = 'https://sc.paldier.com/' + scarch + '/softcenter/push_message.json.js';
+	var pushlog;
+	switch ("<% nvram_get("preferred_lang"); %>") {
+	case "EN":
+		pushlog="push_message_en.json.js";
+		break
+	default:
+		pushlog="push_message.json.js";
+	}
+	var pushurl = 'https://sc.paldier.com/' + scarch + '/softcenter/' + pushlog;
 	$.ajax({
 		url: pushurl,
 		type: 'GET',
@@ -703,7 +712,7 @@ function notice_show(){
 																						<h2 id="push_titile"><em>软件中心</em></h2>
 																					</li>
 																					<li style="margin-top:-5px;">
-																						<h4 id="push_content1" ><font color='#1E90FF'>交流反馈:&nbsp;&nbsp;</font><a href='https://github.com/paldier/softcenter' target='_blank'><em>1.软件中心GitHub项目</em></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://t.me/merlinsc' target='_blank'><em>2.加入telegram群</em></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://www.right.com.cn/forum/forum-173-1.html' target='_blank'><em>3.恩山论坛插件版块</em></a></h4>
+																						<h4 id="push_content1" ><font color='#1E90FF'>交流反馈:&nbsp;&nbsp;</font><a href='https://github.com/paldier/softcenter' target='_blank'><em>1.软件中心GitHub项目</em></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://t.me/merlinchat' target='_blank'><em>2.加入telegram群</em></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://www.right.com.cn/forum/forum-173-1.html' target='_blank'><em>3.恩山论坛插件版块</em></a></h4>
 																					</li>
 																					<li id="push_content2_li" style="margin-top:-5px;">
                                                                                     <h4 id="push_content2">如果你看到这个页面说明主服务器连接不上,如果获取不到在线版本说明节点服务器连接不上！</h4>
@@ -715,8 +724,8 @@ function notice_show(){
 																						<h4 id="push_content4"></h4>
 																					</li>
 																					<li style="margin-top:-5px;">
-																						<h5>当前版本：<span id="spnCurrVersion"></span> 在线版本：<span id="spnOnlineVersion"></span>
-																						<input type="button" id="updateBtn" value="更新" style="display:none" /></h5>
+																						<h5><font color='#1E90FF' sclang>Current version:</font><span id="spnCurrVersion"></span>&nbsp;&nbsp;<font color='#1E90FF' sclang>Latest version:</font><span id="spnOnlineVersion"></span>
+																						<input sclang type="button" id="updateBtn" value="Update" style="display:none" /></h5>
 																					</li>
 																				</ul>
 																			</td>
@@ -741,13 +750,13 @@ function notice_show(){
 														</tr>
 														<tr width="235px">
 															<td colspan="4" cellpadding="0" cellspacing="0" style="padding:0">
-																<input class="show-install-btn" type="button" value="已安装"/>
-																<input class="show-uninstall-btn" type="button" value="未安装"/>
+																<input sclang class="show-install-btn" type="button" value="Installed"/>
+																<input sclang class="show-uninstall-btn" type="button" value="Online"/>
 															</td>
 														</tr>
 														<tr width="100%">
 															<td colspan="4" id="IconContainer">
-																<div id="software_center_message" style="text-align:center; line-height: 4em;">更新中...</div>
+																<div id="software_center_message" style="text-align:center; line-height: 4em;" sclang>loading...</div>
 															</td>
 														</tr>
 														<tr height="10px">
@@ -758,7 +767,7 @@ function notice_show(){
 													<br/>Github项目： <a href="https://github.com/koolshare/rogsoft" target="_blank"> <i><u>github.com/koolshare</u></i> </a>
 													<br/>Shell & Web by： <a href="mailto:sadoneli@gmail.com"> <i>sadoneli</i> </a>, <i>Xiaobao</i>
 													<br/>修改版 by： <i>paldier</i>
-													<br/>Github项目： <a href="https://github.com/paldier/softcenter" target="_blank"> <i><u>https://github.com/paldier</u></i> </a>
+													<br/>Github项目： <a href="https://github.com/paldier/softcenterarm64" target="_blank"> <i><u>https://github.com/paldier</u></i> </a>
 												</div>
 											</td>
 										</tr>

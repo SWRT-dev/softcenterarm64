@@ -31,7 +31,7 @@
 | 软件中心api |                          **1.1** 代                          |                   **1.1** 代                    |                          **1.1** 代                          |                    **1.1** 代                     |                **1.1** 代                     |
 | 代表机型-1  | [BLUECAVE](https://github.com/paldier/bluecave-merlin) |              [RT-AC68U](https://github.com/paldier/rtac68u)               | [RT-AC86U](https://github.com/paldier/86u-merlin) |                         TUF-AX3000                        |          [RT-AC85P](https://github.com/paldier/ac85p-merlin) | 
 | 代表机型-2  | [K3C](https://github.com/paldier/K3C-merlin) |              [K3](https://github.com/paldier/K3-merlin.ng)              | [GT-AC2900](https://github.com/paldier/gt-ac2900) |                         RT-AX58U                        |         RT-ACRH26
-| 代表机型-3  | [RAX40](https://github.com/paldier/rax40-merlin) |         [SBRAC1900P](https://github.com/paldier/sbrac1900p-merlin)                                        | [R8000P](https://github.com/paldier/r8000p-merlin) |                        RAX20                         |         TUF-1750         |
+| 代表机型-3  | [RAX40](https://github.com/paldier/rax40-merlin) |         [SBRAC1900P](https://github.com/paldier/sbrac1900p-merlin)                                        | [R8000P](https://github.com/paldier/r8000p-merlin) |                        RAX20                         |         TUF-AC1750         |
 | 代表机型-4  | DIR2680 |  [RT-ACRH17](https://github.com/paldier/acrh17-merlin)                              | RAX80 |                        RT-AX56U                         |            /              |
 
 

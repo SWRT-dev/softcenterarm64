@@ -195,41 +195,43 @@ kill_process(){
 		echo_date 关闭pdu进程...
 		kill -9 $pdu >/dev/null 2>&1
 	fi
-	client_linux_arm5_process=`pidof client_linux_arm5`
-	if [ -n "$client_linux_arm5_process" ];then
+	client_linux_mips_process=`pidof client_linux_mips`
+	if [ -n "$client_linux_mips_process" ];then 
 		echo_date 关闭kcp协议进程...
-		killall client_linux_arm5 >/dev/null 2>&1
+		killall client_linux_mips >/dev/null 2>&1
 	fi
 	haproxy_process=`pidof haproxy`
-	if [ -n "$haproxy_process" ];then
+	if [ -n "$haproxy_process" ];then 
 		echo_date 关闭haproxy进程...
 		killall haproxy >/dev/null 2>&1
 	fi
 	speederv1_process=`pidof speederv1`
-	if [ -n "$speederv1_process" ];then
+	if [ -n "$speederv1_process" ];then 
 		echo_date 关闭speederv1进程...
 		killall speederv1 >/dev/null 2>&1
 	fi
 	speederv2_process=`pidof speederv2`
-	if [ -n "$speederv2_process" ];then
+	if [ -n "$speederv2_process" ];then 
 		echo_date 关闭speederv2进程...
 		killall speederv2 >/dev/null 2>&1
 	fi
 	ud2raw_process=`pidof udp2raw`
-	if [ -n "$ud2raw_process" ];then
+	if [ -n "$ud2raw_process" ];then 
 		echo_date 关闭ud2raw进程...
 		killall udp2raw >/dev/null 2>&1
 	fi
 	https_dns_proxy_process=`pidof https_dns_proxy`
-	if [ -n "$https_dns_proxy_process" ];then
+	if [ -n "$https_dns_proxy_process" ];then 
 		echo_date 关闭https_dns_proxy进程...
 		killall https_dns_proxy >/dev/null 2>&1
 	fi
 	haveged_process=`pidof haveged`
-	if [ -n "$haveged_process" ];then
+	if [ -n "$haveged_process" ];then 
 		echo_date 关闭haveged进程...
 		killall haveged >/dev/null 2>&1
 	fi
+	echo 1 > /proc/sys/net/ipv4/tcp_fastopen
+	
 }
 
 # ================================= ss prestart ===========================
@@ -773,7 +775,7 @@ create_dnsmasq_conf(){
 	fi
 	
 	if [ -f /tmp/sscdn.conf ];then
-		#echo_date 创建cdn加速列表软链接/tmp/etc/dnsmasq.user/cdn.conf
+		echo_date 创建cdn加速列表软链接/tmp/etc/dnsmasq.user/cdn.conf
 		ln -sf /tmp/sscdn.conf /tmp/etc/dnsmasq.user/cdn.conf
 	fi
 
@@ -830,14 +832,14 @@ start_kcp(){
 
 			start-stop-daemon -S -q -b -m \
 			-p /tmp/var/kcp.pid \
-			-x /jffs/softcenter/bin/client_linux_arm5 \
+			-x /jffs/softcenter/bin/client_linux_mips \
 			-- -l 127.0.0.1:1091 \
 			-r $ss_basic_kcp_server:$ss_basic_kcp_port \
 			$KCP_CRYPT $KCP_KEY $KCP_SNDWND $KCP_RNDWND $KCP_MTU $KCP_CONN $COMP $KCP_MODE $ss_basic_kcp_extra
 		else
 			start-stop-daemon -S -q -b -m \
 			-p /tmp/var/kcp.pid \
-			-x /jffs/softcenter/bin/client_linux_arm5 \
+			-x /jffs/softcenter/bin/client_linux_mips \
 			-- -l 127.0.0.1:1091 \
 			-r $ss_basic_kcp_server:$ss_basic_kcp_port \
 			$ss_basic_kcp_parameter
@@ -1122,8 +1124,8 @@ create_v2ray_json(){
 			esac
 		#fi
 		# incase multi-domain input
-		if [ "`echo $ss_basic_v2ray_network_host | grep ","`" ];then
-			ss_basic_v2ray_network_host=`echo $ss_basic_v2ray_network_host | sed 's/,/", "/g'`
+		if [ "$(echo $ss_basic_v2ray_network_host | grep ",")" ]; then
+			ss_basic_v2ray_network_host=$(echo $ss_basic_v2ray_network_host | sed 's/,/", "/g')
 		fi
 		
 		case "$ss_basic_v2ray_network" in
@@ -1192,6 +1194,7 @@ create_v2ray_json(){
       			}"
 			;;
 		esac
+		# log area
 		cat > "$V2RAY_CONFIG_FILE_TMP" <<-EOF
 			{
 				"log": {
@@ -1200,39 +1203,22 @@ create_v2ray_json(){
 					"loglevel": "error"
 				},
 		EOF
+		# inbounds area (7913 for dns resolve)
 		if [ "$ss_foreign_dns" == "7" ];then
 			echo_date 配置v2ray dns，用于dns解析...
 			cat >> "$V2RAY_CONFIG_FILE_TMP" <<-EOF
-				"inbound": {
-				"protocol": "dokodemo-door",
-				"port": 7913,
-				"settings": {
-					"address": "8.8.8.8",
-					"port": 53,
-					"network": "udp",
-					"timeout": 0,
-					"followRedirect": false
-					}
-				},
-			EOF
-		else
-			cat >> "$V2RAY_CONFIG_FILE_TMP" <<-EOF
-				"inbound": {
-					"port": 23456,
-					"listen": "0.0.0.0",
-					"protocol": "socks",
+				"inbounds": [
+					{
+					"protocol": "dokodemo-door",
+					"port": $DNS_PORT,
 					"settings": {
-						"auth": "noauth",
-						"udp": true,
-						"ip": "127.0.0.1",
-						"clients": null
+						"address": "8.8.8.8",
+						"port": 53,
+						"network": "udp",
+						"timeout": 0,
+						"followRedirect": false
+						}
 					},
-					"streamSettings": null
-				},
-			EOF
-		fi
-		cat >> "$V2RAY_CONFIG_FILE_TMP" <<-EOF
-				"inboundDetour": [
 					{
 						"listen": "0.0.0.0",
 						"port": 3333,
@@ -1243,13 +1229,45 @@ create_v2ray_json(){
 						}
 					}
 				],
-				"outbound": {
+			EOF
+		else
+			# inbounds area (23456 for socks5)
+			cat >>"$V2RAY_CONFIG_FILE_TMP" <<-EOF
+				"inbounds": [
+					{
+						"port": 23456,
+						"listen": "0.0.0.0",
+						"protocol": "socks",
+						"settings": {
+							"auth": "noauth",
+							"udp": true,
+							"ip": "127.0.0.1",
+							"clients": null
+						},
+						"streamSettings": null
+					},
+					{
+						"listen": "0.0.0.0",
+						"port": 3333,
+						"protocol": "dokodemo-door",
+						"settings": {
+							"network": "tcp,udp",
+							"followRedirect": true
+						}
+					}
+				],
+			EOF
+		fi
+		# outbounds area
+		cat >>"$V2RAY_CONFIG_FILE_TMP" <<-EOF
+			"outbounds": [
+				{
 					"tag": "agentout",
 					"protocol": "vmess",
 					"settings": {
 						"vnext": [
 							{
-								"address": "`dbus get ss_basic_server`",
+								"address": "$(dbus get ss_basic_server)",
 								"port": $ss_basic_port,
 								"users": [
 									{
@@ -1276,6 +1294,7 @@ create_v2ray_json(){
 						"concurrency": $ss_basic_v2ray_mux_concurrency
 					}
 				}
+			]
 			}
 		EOF
 		echo_date 解析V2Ray配置文件...
@@ -1284,61 +1303,96 @@ create_v2ray_json(){
 	elif [ "$ss_basic_v2ray_use_json" == "1" ];then
 		echo_date 使用自定义的v2ray json配置文件...
 		echo "$ss_basic_v2ray_json" | base64_decode > "$V2RAY_CONFIG_FILE_TMP"
+		local OB=$(cat "$V2RAY_CONFIG_FILE_TMP" | jq .outbound)
+		local OBS=$(cat "$V2RAY_CONFIG_FILE_TMP" | jq .outbounds)
 
-		OUTBOUND=`cat "$V2RAY_CONFIG_FILE_TMP" | jq .outbounds`
-		#JSON_INFO=`cat "$V2RAY_CONFIG_FILE_TMP" | jq 'del (.inbound) | del (.inboundDetour) | del (.log)'`
-		#INBOUND_TAG=`cat "$V2RAY_CONFIG_FILE_TMP" | jq '.inbound.tag'||""
-		#INBOUND_DETOUR_TAG=`cat "$V2RAY_CONFIG_FILE_TMP" | jq '.inbound.tag'||""
+		# 兼容旧格式：outbound
+		if [ "$OB" != "null" ]; then
+			OUTBOUNDS=$(cat "$V2RAY_CONFIG_FILE_TMP" | jq .outbound)
+		fi
 		
-		local TEMPLATE="{
-						\"log\": {
-							\"access\": \"/dev/null\",
-							\"error\": \"/tmp/v2ray_log.log\",
-							\"loglevel\": \"error\"
-						},
-						\"inbound\": {
-							\"port\": 23456,
-							\"listen\": \"0.0.0.0\",
-							\"protocol\": \"socks\",
-							\"settings\": {
-								\"auth\": \"noauth\",
-								\"udp\": true,
-								\"ip\": \"127.0.0.1\",
-								\"clients\": null
-							},
-							\"streamSettings\": null
-						},
-						\"inboundDetour\": [
-							{
-								\"listen\": \"0.0.0.0\",
-								\"port\": 3333,
-								\"protocol\": \"dokodemo-door\",
-								\"settings\": {
-									\"network\": \"tcp,udp\",
-									\"followRedirect\": true
-								}
-							}
-						]
-						}"
-		#local TEMPLATE=`cat /jffs/softcenter/ss/rules/v2ray_template.json`
+		# 新格式：outbound[]
+		if [ "$OBS" != "null" ]; then
+			OUTBOUNDS=$(cat "$V2RAY_CONFIG_FILE_TMP" | jq .outbounds[])
+		fi
+		
+		if [ "$ss_foreign_dns" == "7" ]; then
+			local TEMPLATE="{
+								\"log\": {
+									\"access\": \"/dev/null\",
+									\"error\": \"/tmp/v2ray_log.log\",
+									\"loglevel\": \"error\"
+								},
+								\"inbounds\": [
+									{
+										\"protocol\": \"dokodemo-door\", 
+										\"port\": $DNS_PORT,
+										\"settings\": {
+											\"address\": \"8.8.8.8\",
+											\"port\": 53,
+											\"network\": \"udp\",
+											\"timeout\": 0,
+											\"followRedirect\": false
+										}
+									},
+									{
+										\"listen\": \"0.0.0.0\",
+										\"port\": 3333,
+										\"protocol\": \"dokodemo-door\",
+										\"settings\": {
+											\"network\": \"tcp,udp\",
+											\"followRedirect\": true
+										}
+									}
+								]
+							}"
+		else
+			local TEMPLATE="{
+								\"log\": {
+									\"access\": \"/dev/null\",
+									\"error\": \"/tmp/v2ray_log.log\",
+									\"loglevel\": \"error\"
+								},
+								\"inbounds\": [
+									{
+										\"port\": 23456,
+										\"listen\": \"0.0.0.0\",
+										\"protocol\": \"socks\",
+										\"settings\": {
+											\"auth\": \"noauth\",
+											\"udp\": true,
+											\"ip\": \"127.0.0.1\",
+											\"clients\": null
+										},
+										\"streamSettings\": null
+									},
+									{
+										\"listen\": \"0.0.0.0\",
+										\"port\": 3333,
+										\"protocol\": \"dokodemo-door\",
+										\"settings\": {
+											\"network\": \"tcp,udp\",
+											\"followRedirect\": true
+										}
+									}
+								]
+							}"
+		fi
 		echo_date 解析V2Ray配置文件...
-		echo $TEMPLATE | jq --argjson args "$OUTBOUND" '. + {outbounds: $args}' > "$V2RAY_CONFIG_FILE"
-		#echo $TEMPLATE | jq --argjson args "$JSON_INFO" '. + $args' > "$V2RAY_CONFIG_FILE"
-		
+		echo $TEMPLATE | jq --argjson args "$OUTBOUNDS" '. + {outbounds: [$args]}' >"$V2RAY_CONFIG_FILE"
 		echo_date V2Ray配置文件写入成功到"$V2RAY_CONFIG_FILE"
-		#close_in_five
-		
+
 		# 检测用户json的服务器ip地址
-		v2ray_protocol=`cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].protocol`
-		case $v2ray_protocol in
+		v2ray_protocal=$(cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].protocol)
+		case $v2ray_protocal in
 		vmess)
-			v2ray_server=`cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].settings.vnext[0].address`
+			v2ray_server=$(cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].settings.vnext[0].address)
 			;;
 		socks)
-			v2ray_server=`cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].settings.servers[0].address`
+			v2ray_server=$(cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].settings.servers[0].address)
 			;;
 		shadowsocks)
-			v2ray_server=`cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].settings.servers[0].address`
+			v2ray_server=$(cat "$V2RAY_CONFIG_FILE" | jq -r .outbounds[0].settings.servers[0].address)
 			;;
 		*)
 			v2ray_server=""
@@ -1388,22 +1442,6 @@ create_v2ray_json(){
 			echo_date "+   请自行将v2ray服务器的ip地址填入【IP/CIDR】黑名单中，以确保正常使用   +"
 			echo_date "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 		fi
-
-		if [ "$ss_foreign_dns" == "7" ];then
-			echo_date 配置v2ray dns，用于dns解析...
-			local V2DNS="{
-							\"protocol\": \"dokodemo-door\", 
-							\"port\": 7913,
-							\"settings\": {
-								\"address\": \"8.8.8.8\",
-								\"port\": 53,
-								\"network\": \"udp\",
-								\"timeout\": 0,
-								\"followRedirect\": false
-							}
-						}"
-			cat /jffs/softcenter/ss/v2ray.json | jq --argjson args "$V2DNS" '. + {inbound: $args}' > /tmp/v2ray_dns.json && mv /tmp/v2ray_dns.json /jffs/softcenter/ss/v2ray.json
-		fi
 	fi
 
 	echo_date 测试V2Ray配置文件.....
@@ -1413,23 +1451,23 @@ create_v2ray_json(){
 		echo_date $result
 		echo_date V2Ray配置文件通过测试!!!
 	else
+		echo_date V2Ray配置文件没有通过测试，请检查设置!!!
 		rm -rf "$V2RAY_CONFIG_FILE_TMP"
 		rm -rf "$V2RAY_CONFIG_FILE"
-		echo_date V2Ray配置文件没有通过测试，请检查设置!!!
 		close_in_five
 	fi
 }
 
 start_v2ray(){
+	# v2ray start
 	cd /jffs/softcenter/bin
 	#export GOGC=30
 	v2ray -config=/jffs/softcenter/ss/v2ray.json >/dev/null 2>&1 &
-	
+	local V2PID
 	local i=10
-	until [ -n "$V2PID" ]
-	do
-		i=$(($i-1))
-		V2PID=`pidof v2ray`
+	until [ -n "$V2PID" ]; do
+		i=$(($i - 1))
+		V2PID=$(pidof v2ray)
 		if [ "$i" -lt 1 ];then
 			echo_date "v2ray进程启动失败！"
 			close_in_five

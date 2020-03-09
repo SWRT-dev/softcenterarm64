@@ -1,34 +1,34 @@
 {
     "apps": [
         {
-            "build_date": "2020-03-06_10:29:23", 
+            "build_date": "2020-03-09_11:56:39", 
             "description": "解锁网易云灰色歌曲", 
             "home_url": "Module_unblockmusic.asp", 
-            "md5": "59342527ca2e8cd4bd351a0ff1d1bf5a", 
+            "md5": "87cb5929609d3ede3d544252b7054285", 
             "name": "unblockmusic", 
             "tar_url": "unblockmusic/unblockmusic.tar.gz", 
             "title": "解锁网易云灰色歌曲", 
-            "version": "1.0.0"
+            "version": "1.0.1"
         }, 
         {
-            "build_date": "2020-03-06_10:28:45", 
+            "build_date": "2020-03-09_13:56:17", 
             "description": "KPR更多规则更舒服！", 
             "home_url": "Module_koolproxyR.asp", 
-            "md5": "e6db657766c56eff48402f80464ebf37", 
+            "md5": "ea7bde0e5b8bf6236b0a5fe9d36e7b1c", 
             "name": "koolproxyR", 
             "tar_url": "koolproxyR/koolproxyR.tar.gz", 
             "title": "koolproxyR", 
             "version": "1.0.2"
         }, 
         {
-            "build_date": "2019-11-17_21:53:16", 
+            "build_date": "2020-03-09_13:57:51", 
             "description": "科学上网", 
             "home_url": "Main_Ss_Content.asp", 
-            "md5": "c120598e896014d5d56be0e2d997efcd", 
+            "md5": "608c9a4041094cd38181064e1efbac30", 
             "name": "shadowsocks", 
             "tar_url": "shadowsocks/shadowsocks.tar.gz", 
             "title": "科学上网", 
-            "version": "4.2.0"
+            "version": "4.2.2"
         }, 
         {
             "build_date": "2019-10-04_22:29:12", 
@@ -262,7 +262,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm/master", 
-    "md5": "3eb09d3312a632ad5b0e6e9763f719e0", 
+    "md5": "0f1d912e41738cbf2c89ee64e78d5933", 
     "tar_url": "softcenter/softcenter.tar.gz", 
     "version": "1.2.5"
 }

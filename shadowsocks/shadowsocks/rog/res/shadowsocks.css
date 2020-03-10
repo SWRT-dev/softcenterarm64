@@ -34,6 +34,18 @@
     font-style: normal;
 	font-weight:normal;
 }
+.vpnClientTitle_td_unclick {
+	background-color: #000;
+	height: 30px;
+	cursor: pointer;
+	border: 1px solid #222;
+}
+.vpnClientTitle_td_click {
+	background-color: #91071f;
+	height: 30px;
+	cursor: pointer;
+	border: 1px solid #222;
+}
 .activate_client_icon {
     background-image: url(/images/New_ui/activate.svg);
     cursor: pointer;
@@ -74,7 +86,7 @@ input[type=checkbox]{
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	z-index: 200;
-	/*background-color:#2B373B;*/
+	background-color:#000000;
 	margin-left: 50px;
 	top: 320px;
 	width:650px;
@@ -158,14 +170,14 @@ input[type=checkbox]{
 	overflow:hidden;
 	text-overflow:ellipsis;
 }
-.FormTable_table{
+.FormTable1{
 	margin-top:10px;
 	font-size:12px;
 	font-family:Arial, Helvetica, sans-serif;
 	border: none;
 	border-collapse: collapse;
 }
-.FormTable_table th{
+.FormTable1 th{
 	font-family:Arial, Helvetica, sans-serif;
 	font-weight:normal;
 	text-align:center;
@@ -188,7 +200,7 @@ input[type=checkbox]{
 	/*--------non rog--------*/
 	/*background-color: #2F3A3E;*/
 }
-.show-btn0, .show-btn1, .show-btn2, .show-btn3, .show-btn4, .show-btn5, .show-btn6, .show-btn7, .show-btn8, .show-btn9, .show-btn10, .sub-node1, .sub-node2 {
+.show-btn0, .show-btn1, .show-btn1_1, .show-btn2, .show-btn3, .show-btn3_1, .show-btn3_2, .show-btn4, .show-btn5, .show-btn6, .show-btn7, .show-btn8, .show-btn9, .show-btn10, .sub-node1, .sub-node2 {
 	font-size:10pt;
 	color: #fff;
 	padding: 10px 3.75px;
@@ -204,7 +216,7 @@ input[type=checkbox]{
 	/*border-bottom: none;*/
 	/*background: #67767d;*/
 }
-.show-btn0:hover, .show-btn1:hover, .show-btn2:hover, .show-btn3:hover, .show-btn4:hover, .show-btn5:hover, .show-btn6:hover, .show-btn7:hover, .show-btn8:hover, .show-btn9:hover, .show-btn10:hover, .sub-node1:hover, .sub-node2:hover, .active {
+.show-btn0:hover, .show-btn1:hover, .show-btn1_1:hover, .show-btn2:hover, .show-btn3:hover, .show-btn3_1:hover, .show-btn3_2:hover, .show-btn4:hover, .show-btn5:hover, .show-btn6:hover, .show-btn7:hover, .show-btn8:hover, .show-btn9:hover, .show-btn10:hover, .sub-node1:hover, .sub-node2:hover, .active {
 	/*--------rog--------*/
 	border: 1px solid #91071f;
 	background: #91071f;
@@ -410,3 +422,4 @@ input[type=checkbox]{
 .cloud_main_radius h3 { font-size:12px;color:#FFF;font-weight:normal;font-style: normal;}
 .cloud_main_radius h4 { font-size:12px;color:#FC0;font-weight:normal;font-style: normal;}
 .cloud_main_radius h5 { color:#FFF;font-weight:normal;font-style: normal;}
+

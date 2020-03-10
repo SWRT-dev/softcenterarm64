@@ -149,7 +149,6 @@ function initial() {
 	show_menu();
 	get_dbus_data();
 	refresh_table();
-	version_show();
 }
 function get_dbus_data() {
 	$.ajax({
@@ -497,22 +496,6 @@ function oncheckclick(obj) {
 			E("serverchan_dhcp_white_en").checked = true;
 		}
 	}
-}
-function version_show() {
-	$.ajax({
-        url: 'http://sc.paldier.com/serverchan/config.json.js',
-		type: 'GET',
-		dataType: 'jsonp',
-		success: function(res) {
-			if (typeof(res["version"]) != "undefined" && res["version"].length > 0) {
-				if (res["version"] == db_serverchan["serverchan_version"]) {
-					$("#serverchan_version_show").html("<i>插件版本：" + res["version"]);
-				} else if (res["version"] > db_serverchan["serverchan_version"]) {
-					$("#serverchan_version_show").html("<font color=\"#66FF66\">有新版本：</font>" + res.version);
-				}
-			}
-		}
-	});
 }
 </script>
 </head>

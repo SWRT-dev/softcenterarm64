@@ -21,10 +21,10 @@
             "version": "1.0.2"
         }, 
         {
-            "build_date": "2020-03-09_13:57:51", 
+            "build_date": "2020-03-09_16:50:04", 
             "description": "科学上网", 
             "home_url": "Main_Ss_Content.asp", 
-            "md5": "608c9a4041094cd38181064e1efbac30", 
+            "md5": "9ee9135197b6feecb4600d4f62a76c7f", 
             "name": "shadowsocks", 
             "tar_url": "shadowsocks/shadowsocks.tar.gz", 
             "title": "科学上网", 
@@ -241,14 +241,14 @@
             "version": "1.3"
         }, 
         {
-            "build_date": "2020-01-06_21:56:30", 
+            "build_date": "2020-03-10_12:29:56", 
             "description": "从路由器推送状态及通知的工具", 
             "home_url": "Module_serverchan.asp", 
-            "md5": "5aedb742b85bd323d22bbd620929ac0a", 
+            "md5": "0e583c98a948879a1af124f8d2fcbe6e", 
             "name": "serverchan", 
             "tar_url": "serverchan/serverchan.tar.gz", 
             "title": "ServerChan微信推送", 
-            "version": "1.4"
+            "version": "1.5"
         }, 
         {
             "build_date": "2019-10-04_22:21:58", 

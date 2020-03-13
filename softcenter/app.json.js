@@ -1,14 +1,14 @@
 {
     "apps": [
         {
-            "build_date": "2020-03-09_11:56:39", 
+            "build_date": "2020-03-11_15:38:45", 
             "description": "解锁网易云灰色歌曲", 
             "home_url": "Module_unblockmusic.asp", 
-            "md5": "87cb5929609d3ede3d544252b7054285", 
+            "md5": "d27be244317ffad0116507093289e753", 
             "name": "unblockmusic", 
             "tar_url": "unblockmusic/unblockmusic.tar.gz", 
             "title": "解锁网易云灰色歌曲", 
-            "version": "1.0.1"
+            "version": "1.0.2"
         }, 
         {
             "build_date": "2020-03-09_13:56:17", 
@@ -21,14 +21,14 @@
             "version": "1.0.2"
         }, 
         {
-            "build_date": "2020-03-09_16:50:04", 
+            "build_date": "2020-03-13_10:24:11", 
             "description": "科学上网", 
             "home_url": "Main_Ss_Content.asp", 
-            "md5": "9ee9135197b6feecb4600d4f62a76c7f", 
+            "md5": "67b0ed36725bd777b8d25e09cd45cc86", 
             "name": "shadowsocks", 
             "tar_url": "shadowsocks/shadowsocks.tar.gz", 
             "title": "科学上网", 
-            "version": "4.2.2"
+            "version": "4.2.3"
         }, 
         {
             "build_date": "2019-10-04_22:29:12", 
@@ -262,7 +262,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm/master", 
-    "md5": "0f1d912e41738cbf2c89ee64e78d5933", 
+    "md5": "850ceb79dbb65f6e465d0e37e1a55299", 
     "tar_url": "softcenter/softcenter.tar.gz", 
     "version": "1.2.5"
 }

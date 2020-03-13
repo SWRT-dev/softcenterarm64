@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MODEL=`nvram get model`
+MODEL=`nvram get productid`
 
 softcenter_install() {
 	if [ -d "/tmp/softcenter" ]; then
@@ -22,25 +22,42 @@ softcenter_install() {
 		# coping files
 		cp -rf /tmp/softcenter/webs/* /jffs/softcenter/webs/
 		cp -rf /tmp/softcenter/res/* /jffs/softcenter/res/
-		if [ "`nvram get model`" == "GT-AC5300" ] || [ "`nvram get model`" == "GT-AX11000" ] || [ "`nvram get model`" == "GT-AC2900" ];then
+		if [ "$MODEL" == "GT-AC5300" ] || [ "$MODEL" == "GT-AX11000" ] || [ "$MODEL" == "GT-AC2900" ];then
 			cp -rf /tmp/softcenter/ROG/webs/* /jffs/softcenter/webs/
 			cp -rf /tmp/softcenter/ROG/res/* /jffs/softcenter/res/
+		elif [ "$MODEL" == "TUF-AX3000" ] ;then
+			cp -rf /tmp/softcenter/TUF/webs/* /jffs/softcenter/webs/
+			cp -rf /tmp/softcenter/TUF/res/* /jffs/softcenter/res/
 		fi
 		#cp -rf /tmp/softcenter/init.d/* /jffs/softcenter/init.d/
 		cp -rf /tmp/softcenter/bin/* /jffs/softcenter/bin/
 		#for axhnd
 		#if [ "`nvram get model`" == "RT-AX88U" ] || [ "`nvram get model`" == "GT-AX11000" ];then
-			#cp -rf /tmp/softcenter/axbin/* /koolshare/bin/
+			#cp -rf /tmp/softcenter/axbin/* /jffs/softcenter/bin/
 		#fi
 		cp -rf /tmp/softcenter/perp /jffs/softcenter/
 		cp -rf /tmp/softcenter/scripts/* /jffs/softcenter/scripts
 		cp -rf /tmp/softcenter/.soft_ver /jffs/softcenter/
 		dbus set softcenter_version=`cat /jffs/softcenter/.soft_ver`
-		dbus set softcenter_firmware_version=`nvram get extendno|cut -d "_" -f2|cut -d "-" -f1|cut -c2-5`
-		dbus set softcenter_arch=`uname -m`
+		dbus set softcenter_firmware_version=`nvram get extendno|cut -d "_" -f2|cut -d "-" -f1|cut -c2-6`
+		ARCH=`uname -m`
+		KVER=`uname -r`
+		if [ "$ARCH" == "armv7l" ]; then
+			if [ "$KVER" == "4.1.52" -o "$KVER" == "3.14.77" ];then
+				dbus set softcenter_arch="armng"
+			else
+				dbus set softcenter_arch="$ARCH"
+			fi
+		else
+			if [ "$KVER" == "3.10.14" ];then
+				dbus set softcenter_arch="mipsle"
+			else
+				dbus set softcenter_arch="$ARCH"
+			fi
+		fi
 		dbus set softcenter_api=`cat /jffs/softcenter/.soft_ver`
 		# make some link
-		if [ "`nvram get productid`" == "BLUECAVE" ];then
+		if [ "$MODEL" == "BLUECAVE" ];then
 			cp -r /jffs/softcenter/bin/base64_encode /jffs/softcenter/bin/base64_decode
 			cp -r /jffs/softcenter/scripts/ks_app_install.sh /jffs/softcenter/scripts/ks_app_remove.sh
 			cp -rf /jffs/softcenter/bin/softcenter.sh /jffs/.asusrouter
@@ -59,6 +76,10 @@ softcenter_install() {
 
 		# remove install package
 		rm -rf /tmp/softcenter
+
+		firmware_comp=`/jffs/softcenter/bin/versioncmp "$(dbus get softcenter_firmware_version)" 5.0.8`
+		[ "$firmware_comp" -ge "0" ] && exit 0
+
 		# creat wan-start nat-start post-mount
 		if [ ! -f "/jffs/scripts/wan-start" ];then
 			cat > /jffs/scripts/wan-start <<-EOF

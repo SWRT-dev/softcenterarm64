@@ -21,14 +21,14 @@
             "version": "1.0.2"
         }, 
         {
-            "build_date": "2020-03-14_11:09:50", 
+            "build_date": "2020-03-18_17:35:31", 
             "description": "科学上网", 
             "home_url": "Main_Ss_Content.asp", 
-            "md5": "b11dc91722210127b64ea6ea053f2e0a", 
+            "md5": "1c64fc9bf9c33d12f3337b8fa7a41cca", 
             "name": "shadowsocks", 
             "tar_url": "shadowsocks/shadowsocks.tar.gz", 
             "title": "科学上网", 
-            "version": "4.2.3"
+            "version": "4.2.4"
         }, 
         {
             "build_date": "2019-10-04_22:29:12", 
@@ -261,7 +261,7 @@
             "version": "1.1"
         }
     ], 
-    "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm/master", 
+    "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm64/master", 
     "md5": "850ceb79dbb65f6e465d0e37e1a55299", 
     "tar_url": "softcenter/softcenter.tar.gz", 
     "version": "1.2.5"

@@ -10,6 +10,7 @@ LOG_FILE=/tmp/syslog.log
 CONFIG_FILE=/jffs/softcenter/ss/ss.json
 V2RAY_CONFIG_FILE_TMP="/tmp/v2ray_tmp.json"
 V2RAY_CONFIG_FILE="/jffs/softcenter/ss/v2ray.json"
+TROJAN_CONFIG_FILE="/jffs/softcenter/ss/trojan.json"
 LOCK_FILE=/var/lock/koolss.lock
 DNS_PORT=7913
 ISP_DNS1=$(nvram get wan0_dns|sed 's/ /\n/g'|grep -v 0.0.0.0|grep -v 127.0.0.1|sed -n 1p)
@@ -195,43 +196,46 @@ kill_process(){
 		echo_date 关闭pdu进程...
 		kill -9 $pdu >/dev/null 2>&1
 	fi
-	client_linux_mips_process=`pidof client_linux_mips`
-	if [ -n "$client_linux_mips_process" ];then 
+	client_linux_arm5_process=`pidof client_linux_arm5`
+	if [ -n "$client_linux_arm5_process" ];then
 		echo_date 关闭kcp协议进程...
-		killall client_linux_mips >/dev/null 2>&1
+		killall client_linux_arm5 >/dev/null 2>&1
 	fi
 	haproxy_process=`pidof haproxy`
-	if [ -n "$haproxy_process" ];then 
+	if [ -n "$haproxy_process" ];then
 		echo_date 关闭haproxy进程...
 		killall haproxy >/dev/null 2>&1
 	fi
 	speederv1_process=`pidof speederv1`
-	if [ -n "$speederv1_process" ];then 
+	if [ -n "$speederv1_process" ];then
 		echo_date 关闭speederv1进程...
 		killall speederv1 >/dev/null 2>&1
 	fi
 	speederv2_process=`pidof speederv2`
-	if [ -n "$speederv2_process" ];then 
+	if [ -n "$speederv2_process" ];then
 		echo_date 关闭speederv2进程...
 		killall speederv2 >/dev/null 2>&1
 	fi
 	ud2raw_process=`pidof udp2raw`
-	if [ -n "$ud2raw_process" ];then 
+	if [ -n "$ud2raw_process" ];then
 		echo_date 关闭ud2raw进程...
 		killall udp2raw >/dev/null 2>&1
 	fi
 	https_dns_proxy_process=`pidof https_dns_proxy`
-	if [ -n "$https_dns_proxy_process" ];then 
+	if [ -n "$https_dns_proxy_process" ];then
 		echo_date 关闭https_dns_proxy进程...
 		killall https_dns_proxy >/dev/null 2>&1
 	fi
 	haveged_process=`pidof haveged`
-	if [ -n "$haveged_process" ];then 
+	if [ -n "$haveged_process" ];then
 		echo_date 关闭haveged进程...
 		killall haveged >/dev/null 2>&1
 	fi
-	echo 1 > /proc/sys/net/ipv4/tcp_fastopen
-	
+	trojan_process=`pidof trojan`
+	if [ -n "$trojan_process" ];then 
+		echo_date 关闭trojan进程...
+		killall trojan >/dev/null 2>&1
+	fi
 }
 
 # ================================= ss prestart ===========================
@@ -382,6 +386,9 @@ get_type_name() {
 		;;
 		3)
 			echo "v2ray"
+		;;
+		4)
+			echo "trojan"
 		;;
 	esac
 }
@@ -832,14 +839,14 @@ start_kcp(){
 
 			start-stop-daemon -S -q -b -m \
 			-p /tmp/var/kcp.pid \
-			-x /jffs/softcenter/bin/client_linux_mips \
+			-x /jffs/softcenter/bin/client_linux_arm5 \
 			-- -l 127.0.0.1:1091 \
 			-r $ss_basic_kcp_server:$ss_basic_kcp_port \
 			$KCP_CRYPT $KCP_KEY $KCP_SNDWND $KCP_RNDWND $KCP_MTU $KCP_CONN $COMP $KCP_MODE $ss_basic_kcp_extra
 		else
 			start-stop-daemon -S -q -b -m \
 			-p /tmp/var/kcp.pid \
-			-x /jffs/softcenter/bin/client_linux_mips \
+			-x /jffs/softcenter/bin/client_linux_arm5 \
 			-- -l 127.0.0.1:1091 \
 			-r $ss_basic_kcp_server:$ss_basic_kcp_port \
 			$ss_basic_kcp_parameter
@@ -1059,6 +1066,71 @@ start_koolgame(){
 			dbus set ss_basic_udp2raw_boost_enable=0
 		fi
 	fi
+}
+
+create_trojan_json(){
+	if [ -n "$ssconf_basic_node" -a "$(dbus get ssconf_basic_type_$ssconf_basic_node)" == "4" ]; then
+		echo_date 生成trojan配置文件...
+		rm -rf "$TROJAN_CONFIG_FILE"
+		cat > "$TROJAN_CONFIG_FILE" <<-EOF
+		{
+		    "run_type": "nat",
+		    "local_addr": "0.0.0.0",
+		    "local_port": 3333,
+		    "remote_addr": "$ss_basic_server",
+		    "remote_port": $ss_basic_port,
+		    "password": [
+			"$ss_basic_password"
+		    ],
+		    "log_level": 1,
+		    "ssl": {
+			"verify": false,
+			"verify_hostname": false,
+			"cert": "",
+			"cipher": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:AES128-SHA:AES256-SHA:DES-CBC3-SHA",
+			"cipher_tls13": "TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384",
+			"sni": "",
+			"alpn": [
+			    "h2",
+			    "http/1.1"
+			],
+			"reuse_session": true,
+			"session_ticket": false,
+			"curves": ""
+		    },
+		    "tcp": {
+			"no_delay": true,
+			"keep_alive": true,
+			"reuse_port": false,
+			"fast_open": false,
+			"fast_open_qlen": 20
+		    }
+		}
+		EOF
+		echo_date trojan配置文件生成成功.
+	else
+		echo_date trojan配置文件生成失败，请检查设置!!!
+	fi
+
+}
+
+start_trojan(){
+	echo_date 开启trojan主进程...
+	cd /jffs/softcenter/bin
+	#/jffs/softcenter/bin/trojan -c /jffs/softcenter/ss/trojan.json -l /jffs/softcenter/ss/trojan.log >/dev/null 2>&1 &
+	/jffs/softcenter/bin/trojan -c /jffs/softcenter/ss/trojan.json >/dev/null 2>&1 &
+	local trojanpid
+	local i=10
+	until [ -n "$trojanpid" ]; do
+		i=$(($i - 1))
+		trojanpid=$(pidof trojan)
+		if [ "$i" -lt 1 ];then
+			echo_date "trojan进程启动失败！"
+			close_in_five
+		fi
+		sleep 1
+	done
+	echo_date trojan启动成功，pid：$trojanpid
 }
 
 get_function_switch() {
@@ -2143,9 +2215,11 @@ apply_ss(){
 	# do not re generate json on router start, use old one
 	[ -z "$WAN_ACTION" ] && [ "$ss_basic_type" != "3" ] && create_ss_json
 	[ -z "$WAN_ACTION" ] && [ "$ss_basic_type" = "3" ] && create_v2ray_json
+	[ -z "$WAN_ACTION" ] && [ "$ss_basic_type" = "4" ] && create_trojan_json
 	[ "$ss_basic_type" == "0" ] || [ "$ss_basic_type" == "1" ] && start_ss_redir
 	[ "$ss_basic_type" == "2" ] && start_koolgame
 	[ "$ss_basic_type" == "3" ] && start_v2ray
+	[ "$ss_basic_type" == "4" ] && start_trojan
 	[ "$ss_basic_type" != "2" ] && start_kcp
 	[ "$ss_basic_type" != "2" ] && start_dns
 	#===load nat start===

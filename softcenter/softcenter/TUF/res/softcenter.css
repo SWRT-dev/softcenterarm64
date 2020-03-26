@@ -20,8 +20,8 @@
 	font-family: Lucida Console;
 	background-image:none;
 	background-color: transparent;
-	background-color: #3e030d;
-	border:1px solid #91071f;
+	background-color: #92650F;
+	border:1px solid  #fcb33a;
 	color:#FFFFFF;
 }
 
@@ -80,7 +80,7 @@
 }
 .tab{
 	cursor:pointer;
-	background: rgb(83,4,18);
+	background: #92650F;
 	color: White;
 	float: left;
 	height: 30px;

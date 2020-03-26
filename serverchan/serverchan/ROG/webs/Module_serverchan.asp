@@ -98,7 +98,7 @@
     margin-left: -100px;
     top: 10px;
     width:720px;
-    return height:auto;
+    height:auto;
     box-shadow: 3px 3px 10px #000;
     background: rgba(0,0,0,0.85);
     display:none;
@@ -151,7 +151,6 @@ function initial() {
 	show_menu();
 	get_dbus_data();
 	refresh_table();
-	version_show();
 }
 function get_dbus_data() {
 	$.ajax({
@@ -305,17 +304,9 @@ function manual_push(){
 	// post data
 	//var id = parseInt(Math.random() * 100000000);
 	//var postData = {"id": id, "method": "serverchan_check.sh", "params":[1], "fields": {}};
-	var db_new= {};
-	db_new["action_script"]="serverchan_check.sh";
-	db_new["action_mode"] = " Refresh ";
-	db_new["current_page"] = "Module_serverchan.asp";
-	db_new["next_page"] = "Module_serverchan.asp";
 	$.ajax({
-		url: "/applydb.cgi?p=serverchan",
-		cache:false,
-		type: "POST",
-		dataType: "text",
-		data: $.param(db_new),
+		url: "/logreaddb.cgi?script=serverchan_check.sh",
+		dataType: "html",
 		success: function(response){
 			alert("手动推送成功，请检查手机信息！");
 		}
@@ -499,22 +490,6 @@ function oncheckclick(obj) {
 			E("serverchan_dhcp_white_en").checked = true;
 		}
 	}
-}
-function version_show() {
-	$.ajax({
-        url: 'https://sc.paldier.com/serverchan/config.json.js',
-		type: 'GET',
-		dataType: 'jsonp',
-		success: function(res) {
-			if (typeof(res["version"]) != "undefined" && res["version"].length > 0) {
-				if (res["version"] == db_serverchan["serverchan_version"]) {
-					$("#serverchan_version_show").html("<i>插件版本：" + res["version"]);
-				} else if (res["version"] > db_serverchan["serverchan_version"]) {
-					$("#serverchan_version_show").html("<font color=\"#66FF66\">有新版本：</font>" + res.version);
-				}
-			}
-		}
-	});
 }
 </script>
 </head>

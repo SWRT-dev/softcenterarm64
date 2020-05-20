@@ -211,14 +211,14 @@
             "version": "1.4"
         }, 
         {
-            "build_date": "2019-11-17_21:52:53", 
+            "build_date": "2020-05-21_07:42:41", 
             "description": "自动部署SSL证书", 
             "home_url": "Module_acme.asp", 
-            "md5": "49f52d3ba5f5a5f96a284c7f9ebe949d", 
+            "md5": "e5db1a9661ec0b0761672febd23d9bd3", 
             "name": "acme", 
             "tar_url": "acme/acme.tar.gz", 
             "title": "Let's Encrypt", 
-            "version": "3.0"
+            "version": "3.1"
         }, 
         {
             "build_date": "2020-01-06_21:55:57", 
@@ -262,7 +262,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm64/master", 
-    "md5": "0a8bbdf805245c126bc9dacc0f262951", 
+    "md5": "3e3608dd2f0020213bb4e7c3ab159aa3", 
     "tar_url": "softcenter/softcenter.tar.gz", 
-    "version": "1.2.6"
+    "version": "1.2.7"
 }

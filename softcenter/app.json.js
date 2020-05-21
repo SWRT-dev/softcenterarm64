@@ -31,14 +31,14 @@
             "version": "4.2.8"
         }, 
         {
-            "build_date": "2019-10-04_22:29:12", 
+            "build_date": "2020-05-21_10:54:59", 
             "description": "超强的SSH网页客户端~", 
             "home_url": "Module_shellinabox.asp", 
-            "md5": "dcbfce9f6d4d34acc2e252d4603f12ed", 
+            "md5": "5485a64a166ad90807468e6e278b9b3e", 
             "name": "shellinabox", 
             "tar_url": "shellinabox/shellinabox.tar.gz", 
             "title": "shellinabox", 
-            "version": "2.1"
+            "version": "2.2"
         }, 
         {
             "build_date": "2020-05-21_08:17:15", 

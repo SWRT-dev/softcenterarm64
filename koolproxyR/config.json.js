@@ -1,8 +1,8 @@
 {
-"version":"1.0.2",
-"md5":"ea7bde0e5b8bf6236b0a5fe9d36e7b1c",
+"version":"1.0.3",
+"md5":"e18387dda0d830bd773edf301e1a9b0a",
 "home_url":"Module_koolproxyR.asp",
 "title":"koolproxyR",
 "description":"KPR更多规则更舒服！",
-"build_date":"2020-03-09_13:56:17"
+"build_date":"2020-05-21_09:33:42"
 }

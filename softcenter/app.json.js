@@ -131,10 +131,10 @@
             "version": "2.4"
         }, 
         {
-            "build_date": "2019-10-04_22:28:56", 
+            "build_date": "2020-05-21_09:29:45", 
             "description": "kms", 
             "home_url": "Module_kms.asp", 
-            "md5": "81576bdc0b6ea627fa4b94111c334abd", 
+            "md5": "b61574f4bd28031df5d0d4282fcf3404", 
             "name": "kms", 
             "tar_url": "kms/kms.tar.gz", 
             "title": "系统工具", 

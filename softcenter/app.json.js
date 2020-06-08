@@ -21,16 +21,6 @@
             "version": "1.0.3"
         }, 
         {
-            "build_date": "2020-05-21_10:35:56", 
-            "description": "科学上网", 
-            "home_url": "Main_Ss_Content.asp", 
-            "md5": "fba778337b5333d0c9de99ed9c444006", 
-            "name": "shadowsocks", 
-            "tar_url": "shadowsocks/shadowsocks.tar.gz", 
-            "title": "科学上网", 
-            "version": "4.2.8"
-        }, 
-        {
             "build_date": "2020-05-21_10:54:59", 
             "description": "超强的SSH网页客户端~", 
             "home_url": "Module_shellinabox.asp", 
@@ -121,16 +111,6 @@
             "version": "1.8"
         }, 
         {
-            "build_date": "2020-05-21_11:01:04", 
-            "description": "ss-server", 
-            "home_url": "Module_ssserver.asp", 
-            "md5": "92f710fcffa7d749922bc81cd7cd8082", 
-            "name": "ssserver", 
-            "tar_url": "ssserver/ssserver.tar.gz", 
-            "title": "ss-server", 
-            "version": "2.4"
-        }, 
-        {
             "build_date": "2020-05-21_09:29:45", 
             "description": "kms", 
             "home_url": "Module_kms.asp", 
@@ -179,6 +159,16 @@
             "tar_url": "qiandao/qiandao.tar.gz", 
             "title": "签到dog", 
             "version": "1.6"
+        }, 
+        {
+            "build_date": "2020-06-06_14:00:00", 
+            "description": "内网穿透利器，谁用谁知道。", 
+            "home_url": "Module_frps.asp", 
+            "md5": "ce3a9e12435809623bbef8186b47167f", 
+            "name": "frps", 
+            "tar_url": "frps/frps.tar.gz", 
+            "title": "frps穿透服务器", 
+            "version": "1.5"
         }, 
         {
             "build_date": "2020-05-28_09:18:53", 
@@ -262,7 +252,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm64/master", 
-    "md5": "5ee43f8298306c812c24b68296ed8990", 
+    "md5": "b0d0816d9f4532ea2aef213ba650c90c", 
     "tar_url": "softcenter/softcenter.tar.gz", 
-    "version": "1.2.7"
+    "version": "1.2.8"
 }

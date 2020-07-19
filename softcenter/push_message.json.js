@@ -1,5 +1,5 @@
 {
-"title":"<em>梅林固件&nbsp;-&nbsp;软件中心</em>",
+"title":"<em>软件中心&nbsp;for&nbsp;arm64&nbsp;platform</em>",
 "content1":"<b>软件中心：</b>务必先更新固件到5.0.8或以上<font color='#1E90FF'>在更新软件中心",
 "content2":"部分插件下载缓慢，5分钟后刷新查看",
 "content3":"<font color='#1E90FF'>交流反馈:&nbsp;&nbsp;</font>\

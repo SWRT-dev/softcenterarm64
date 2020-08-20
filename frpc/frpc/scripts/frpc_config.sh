@@ -173,7 +173,7 @@ fun_ddns_start(){
 
 # =============================================
 # this part for start up by post-mount
-case $1 in
+case $ACTION in
 start)
 	fun_ntp_sync
 	fun_start_stop

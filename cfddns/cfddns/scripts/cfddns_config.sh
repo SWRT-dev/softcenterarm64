@@ -132,7 +132,7 @@ check_update(){
 # }
 
 # ====================================used by init or cru====================================
-case $1 in
+case $ACTION in
 start)
 	#此处为开机自启，wan重启动设计
 	if [ "$cfddns_enable" == "1" ];then

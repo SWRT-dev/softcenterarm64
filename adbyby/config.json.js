@@ -1,8 +1,8 @@
 {
-"version":"1.1",
-"md5":"2c97be87a54e794e30f60876de771071",
+"version":"1.2",
+"md5":"69b7e78fa27d2453b54662403fecf047",
 "home_url":"Module_adbyby.asp",
 "title":"adbyby",
 "description":"广告屏蔽大师",
-"build_date":"2019-10-04_22:21:58"
+"build_date":"2020-08-20_11:32:48"
 }

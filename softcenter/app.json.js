@@ -1,24 +1,24 @@
 {
     "apps": [
         {
-            "build_date": "2020-07-03_14:29:20", 
+            "build_date": "2020-08-20_12:29:00", 
             "description": "解锁网易云灰色歌曲", 
             "home_url": "Module_unblockmusic.asp", 
-            "md5": "c561fab8efd9cbf0094273d09f2467fe", 
+            "md5": "a598b951e34b9e739c0dd5596794c80c", 
             "name": "unblockmusic", 
             "tar_url": "unblockmusic/unblockmusic.tar.gz", 
             "title": "解锁网易云灰色歌曲", 
-            "version": "1.0.5"
+            "version": "1.0.6"
         }, 
         {
-            "build_date": "2020-05-21_09:33:42", 
+            "build_date": "2020-08-20_11:46:29", 
             "description": "KPR更多规则更舒服！", 
             "home_url": "Module_koolproxyR.asp", 
-            "md5": "e18387dda0d830bd773edf301e1a9b0a", 
+            "md5": "76d296cc21dd937283385f026d6060b0", 
             "name": "koolproxyR", 
             "tar_url": "koolproxyR/koolproxyR.tar.gz", 
             "title": "koolproxyR", 
-            "version": "1.0.3"
+            "version": "1.0.4"
         }, 
         {
             "build_date": "2020-05-21_10:54:59", 
@@ -31,228 +31,218 @@
             "version": "2.2"
         }, 
         {
-            "build_date": "2020-05-21_08:17:15", 
+            "build_date": "2020-08-20_11:38:26", 
             "description": "Cloudflare解析自动更新IP", 
             "home_url": "Module_cfddns.asp", 
-            "md5": "473bee2a408a6185ac7c3a3200e374bf", 
+            "md5": "cddf806456328c8fbb5f0552933a575b", 
             "name": "cfddns", 
             "tar_url": "cfddns/cfddns.tar.gz", 
             "title": "Cloudflare DDNS", 
-            "version": "1.4"
+            "version": "1.5"
         }, 
         {
-            "build_date": "2020-05-21_08:32:58", 
-            "description": "易有云 （EasyExplorer） 跨平台文件同步，支持双向同步！", 
-            "home_url": "Module_easyexplorer.asp", 
-            "md5": "e2c694fc693e4e27a865c09775209c0f", 
-            "name": "easyexplorer", 
-            "tar_url": "easyexplorer/easyexplorer.tar.gz", 
-            "title": "易有云", 
-            "version": "2.4"
-        }, 
-        {
-            "build_date": "2019-10-04_22:23:12", 
-            "description": "一款傻瓜式的接入局域网软件~", 
-            "home_url": "Module_fcn.asp", 
-            "md5": "4e2694783f3b902897954439c227db9a", 
-            "name": "fcn", 
-            "tar_url": "fcn/fcn.tar.gz", 
-            "title": "一键接入局域网", 
-            "version": "1.1"
-        }, 
-        {
-            "build_date": "2020-05-25_22:28:05", 
+            "build_date": "2020-08-20_12:27:16", 
             "description": "老板，来一斤虚拟内存~", 
             "home_url": "Module_swap.asp", 
-            "md5": "8d76f52cfaf1acdf9b34c4810f2ea5bb", 
+            "md5": "ffdfaa21adf6ce22aac6180c40220d15", 
             "name": "swap", 
             "tar_url": "swap/swap.tar.gz", 
             "title": "虚拟内存", 
-            "version": "2.3"
+            "version": "2.4"
         }, 
         {
-            "build_date": "2020-05-21_09:39:52", 
+            "build_date": "2020-08-20_11:51:20", 
             "description": "解决重启Bug", 
             "home_url": "Module_reboothelper.asp", 
-            "md5": "3155f3d94649874a4f4130b440eb03d1", 
+            "md5": "5846e711f257b45be6a486a2efb48af3", 
             "name": "reboothelper", 
             "tar_url": "reboothelper/reboothelper.tar.gz", 
             "title": "重启助手", 
-            "version": "0.3"
+            "version": "0.4"
         }, 
         {
-            "build_date": "2020-05-21_09:31:38", 
+            "build_date": "2020-08-20_11:45:05", 
             "description": "去广告，没烦恼", 
             "home_url": "Module_koolproxy.asp", 
-            "md5": "200cb1371c20959aee5826ca51a8d885", 
+            "md5": "962842c2db20c9de3c58bfbb4d2c1f53", 
             "name": "koolproxy", 
             "tar_url": "koolproxy/koolproxy.tar.gz", 
             "title": "koolproxy", 
-            "version": "3.8.4.3"
+            "version": "3.8.4.4"
         }, 
         {
-            "build_date": "2020-05-21_07:46:53", 
+            "build_date": "2020-08-20_11:35:03", 
             "description": "linux下载利器", 
             "home_url": "Module_aria2.asp", 
-            "md5": "7e72178f8477d5fcf6e8769970d6222e", 
+            "md5": "5ee7936ec6dd6389300b2087164297a3", 
             "name": "aria2", 
             "tar_url": "aria2/aria2.tar.gz", 
             "title": "Aria2", 
-            "version": "2.8"
+            "version": "2.9"
         }, 
         {
-            "build_date": "2020-05-21_08:39:04", 
-            "description": "内网穿透利器，谁用谁知道。", 
-            "home_url": "Module_frpc.asp", 
-            "md5": "6a641752531721279d6dc1db5beaec77", 
-            "name": "frpc", 
-            "tar_url": "frpc/frpc.tar.gz", 
-            "title": "frpc穿透", 
-            "version": "1.8"
-        }, 
-        {
-            "build_date": "2020-05-21_09:29:45", 
-            "description": "kms", 
-            "home_url": "Module_kms.asp", 
-            "md5": "b61574f4bd28031df5d0d4282fcf3404", 
-            "name": "kms", 
-            "tar_url": "kms/kms.tar.gz", 
-            "title": "系统工具", 
-            "version": "1.4"
-        }, 
-        {
-            "build_date": "2020-05-21_08:34:29", 
-            "description": "迅雷快鸟，为上网加速而生~", 
-            "home_url": "Module_fastd1ck.asp", 
-            "md5": "de32db7cc2fc51fc8454746b264f963e", 
-            "name": "fastd1ck", 
-            "tar_url": "fastd1ck/fastd1ck.tar.gz", 
-            "title": "讯雷快鸟", 
-            "version": "1.7"
-        }, 
-        {
-            "build_date": "2020-01-06_21:58:23", 
-            "description": "腾讯云ddns", 
-            "home_url": "Module_tenddns.asp", 
-            "md5": "9c8719d43ceb550a524183215f5aeaf2", 
-            "name": "tenddns", 
-            "tar_url": "tenddns/tenddns.tar.gz", 
-            "title": "腾讯云ddns", 
-            "version": "0.0.1"
-        }, 
-        {
-            "build_date": "2020-05-21_11:04:11", 
-            "description": "自己的私有云", 
-            "home_url": "Module_verysync.asp", 
-            "md5": "18432d62d5260c3a26159b70e5f9f81d", 
-            "name": "verysync", 
-            "tar_url": "verysync/verysync.tar.gz", 
-            "title": "微力同步", 
+            "build_date": "2020-08-20_11:48:50", 
+            "description": "灵缇游戏加速插件", 
+            "home_url": "Module_lingti.asp", 
+            "md5": "1d66c013fcc32c0ce042df97dfe3bc4c", 
+            "name": "lingti", 
+            "tar_url": "lingti/lingti.tar.gz", 
+            "title": "灵缇游戏加速插件", 
             "version": "1.0.0"
         }, 
         {
-            "build_date": "2020-05-21_09:38:59", 
+            "build_date": "2020-08-20_11:42:25", 
+            "description": "内网穿透利器，谁用谁知道。", 
+            "home_url": "Module_frpc.asp", 
+            "md5": "86e5f78343066dd2e683f038dfd3ffff", 
+            "name": "frpc", 
+            "tar_url": "frpc/frpc.tar.gz", 
+            "title": "frpc穿透", 
+            "version": "1.9"
+        }, 
+        {
+            "build_date": "2020-08-20_11:43:56", 
+            "description": "kms", 
+            "home_url": "Module_kms.asp", 
+            "md5": "5e249de8454fb3e466f21ac11c431f10", 
+            "name": "kms", 
+            "tar_url": "kms/kms.tar.gz", 
+            "title": "系统工具", 
+            "version": "1.5"
+        }, 
+        {
+            "build_date": "2020-08-20_11:41:33", 
+            "description": "迅雷快鸟，为上网加速而生~", 
+            "home_url": "Module_fastd1ck.asp", 
+            "md5": "586f24aa9c03ee723a3108bd5d00dfcc", 
+            "name": "fastd1ck", 
+            "tar_url": "fastd1ck/fastd1ck.tar.gz", 
+            "title": "讯雷快鸟", 
+            "version": "1.8"
+        }, 
+        {
+            "build_date": "2020-08-20_12:28:16", 
+            "description": "腾讯云ddns", 
+            "home_url": "Module_tenddns.asp", 
+            "md5": "7ea5118c2b866ddc8f9fb51334305684", 
+            "name": "tenddns", 
+            "tar_url": "tenddns/tenddns.tar.gz", 
+            "title": "腾讯云ddns", 
+            "version": "0.0.2"
+        }, 
+        {
+            "build_date": "2020-08-20_12:29:52", 
+            "description": "自己的私有云", 
+            "home_url": "Module_verysync.asp", 
+            "md5": "d878c10da8b0d6ae68a514ab5e937078", 
+            "name": "verysync", 
+            "tar_url": "verysync/verysync.tar.gz", 
+            "title": "微力同步", 
+            "version": "1.0.1"
+        }, 
+        {
+            "build_date": "2020-08-20_11:50:35", 
             "description": "这是一只自动帮你签到的dog", 
             "home_url": "Module_qiandao.asp", 
-            "md5": "b8f9314239473f2ad83bc801f6eb478e", 
+            "md5": "4e65333470519017e3ec5e3f0142ff1d", 
             "name": "qiandao", 
             "tar_url": "qiandao/qiandao.tar.gz", 
             "title": "签到dog", 
-            "version": "1.6"
+            "version": "1.7"
         }, 
         {
-            "build_date": "2020-06-06_14:00:00", 
+            "build_date": "2020-08-20_11:43:08", 
             "description": "内网穿透利器，谁用谁知道。", 
             "home_url": "Module_frps.asp", 
-            "md5": "ce3a9e12435809623bbef8186b47167f", 
+            "md5": "6cb919c3effc835a4ca302fbd0aae8ac", 
             "name": "frps", 
             "tar_url": "frps/frps.tar.gz", 
             "title": "frps穿透服务器", 
-            "version": "1.5"
+            "version": "1.6"
         }, 
         {
-            "build_date": "2020-05-28_09:18:53", 
+            "build_date": "2020-08-20_11:34:16", 
             "description": "aliddns", 
             "home_url": "Module_aliddns.asp", 
-            "md5": "a5da49f10c52cc9744b779c9bf05ada1", 
+            "md5": "dab6ab1debc4fb8bb5fb02a63127c153", 
             "name": "aliddns", 
             "tar_url": "aliddns/aliddns.tar.gz", 
             "title": "阿里DDNS", 
-            "version": "2.2"
+            "version": "2.3"
         }, 
         {
-            "build_date": "2020-05-21_11:00:15", 
-            "description": "VPN全家桶, ver 4.29 build 9680", 
+            "build_date": "2020-08-20_12:26:22", 
+            "description": "VPN全家桶, ver 4.30 build 9700", 
             "home_url": "Module_softether.asp", 
-            "md5": "4b9d06a4d79dbdded7085544a156b975", 
+            "md5": "6885bef927445f8e96079916915837f0", 
             "name": "softether", 
             "tar_url": "softether/softether.tar.gz", 
             "title": "SoftEther_VPN_Server", 
-            "version": "1.9"
+            "version": "2.0"
         }, 
         {
-            "build_date": "2020-05-21_09:37:46", 
+            "build_date": "2020-08-20_11:49:46", 
             "description": "pppoe单线多拨，带宽提升神器！", 
             "home_url": "Module_mdial.asp", 
-            "md5": "ae44f6150562c49055d0832e0a959436", 
+            "md5": "cc2b5247e4a617ba6c5fa3dc3e335e36", 
             "name": "mdial", 
             "tar_url": "mdial/mdial.tar.gz", 
             "title": "单线多拨", 
-            "version": "1.5"
+            "version": "1.6"
         }, 
         {
-            "build_date": "2020-06-10_11:03:02", 
+            "build_date": "2020-08-20_11:31:43", 
             "description": "自动部署SSL证书", 
             "home_url": "Module_acme.asp", 
-            "md5": "2ac15ea3079466b04c2142f285287f7b", 
+            "md5": "ad389f395919862b7879c74afaaba5a8", 
             "name": "acme", 
             "tar_url": "acme/acme.tar.gz", 
             "title": "Let's Encrypt", 
-            "version": "3.2"
+            "version": "3.3"
         }, 
         {
-            "build_date": "2020-05-21_08:23:54", 
+            "build_date": "2020-08-20_11:39:23", 
             "description": "使用Dnspod的ddns服务", 
             "home_url": "Module_ddnspod.asp", 
-            "md5": "cb168a69f6a4934f2b1f33f2524a3dd0", 
+            "md5": "88db3db6d773192c8b571c71267e8df6", 
             "name": "ddnspod", 
             "tar_url": "ddnspod/ddnspod.tar.gz", 
             "title": "DDnspod", 
-            "version": "1.5"
+            "version": "1.6"
         }, 
         {
-            "build_date": "2020-05-21_08:15:28", 
+            "build_date": "2020-08-20_11:35:54", 
             "description": "百度盘", 
             "home_url": "Module_baidupcs.asp", 
-            "md5": "6f231ccf6edf21aca2202bbd00334395", 
+            "md5": "56ae86d93eb755ea2720a95cf44bb800", 
             "name": "baidupcs", 
             "tar_url": "baidupcs/baidupcs.tar.gz", 
             "title": "百度盘", 
-            "version": "1.4"
+            "version": "1.5"
         }, 
         {
-            "build_date": "2020-05-28_09:33:15", 
+            "build_date": "2020-08-20_11:52:56", 
             "description": "从路由器推送状态及通知的工具", 
             "home_url": "Module_serverchan.asp", 
-            "md5": "226479466d9099d3842684031a10d73c", 
+            "md5": "617e150664cde71baf71dbd8fe866cb9", 
             "name": "serverchan", 
             "tar_url": "serverchan/serverchan.tar.gz", 
             "title": "ServerChan微信推送", 
-            "version": "1.9"
+            "version": "2.0"
         }, 
         {
-            "build_date": "2019-10-04_22:21:58", 
+            "build_date": "2020-08-20_11:32:48", 
             "description": "广告屏蔽大师", 
             "home_url": "Module_adbyby.asp", 
-            "md5": "2c97be87a54e794e30f60876de771071", 
+            "md5": "69b7e78fa27d2453b54662403fecf047", 
             "name": "adbyby", 
             "tar_url": "adbyby/adbyby.tar.gz", 
             "title": "adbyby", 
-            "version": "1.1"
+            "version": "1.2"
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm64/master", 
-    "md5": "66c60a0ebfc36371a979db1a28ca380e", 
+    "md5": "a1b9ff576c3f3c966ce5cd030a1580bb", 
     "tar_url": "softcenter/softcenter.tar.gz", 
-    "version": "1.2.9"
+    "version": "1.3.0"
 }

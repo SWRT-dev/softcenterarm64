@@ -2,7 +2,7 @@
 eval `dbus export adbyby`
 source /jffs/softcenter/scripts/base.sh
 
-case $1 in
+case $ACTION in
 start)
 	sh /jffs/softcenter/adbyby/adbyby.sh start
 	;;

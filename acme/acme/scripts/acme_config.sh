@@ -135,7 +135,7 @@ apply_now(){
 }
 
 # start by init
-case $1 in
+case $ACTION in
 start)
 	if [ "$acme_enable" == "1" ];then
 		# detect domain folder first

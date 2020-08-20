@@ -70,11 +70,11 @@ start_aria2(){
 }
 
 stop_aria2(){
-	if [ "$(pidof aria2c)" ];then
+	if [ -n "$(pidof aria2c)" ];then
 		echo_date 关闭aria2c进程！
 		kill -9 $(pidof aria2c) >/dev/null 2>&1
 	fi
-	if [ "$(pidof cpulimit)" ];then
+	if [ -n "$(pidof cpulimit)" ];then
 		echo_date 关闭cpulimit进程！
 		kill -9 $(pidof cpulimit) >/dev/null 2>&1
 	fi
@@ -132,7 +132,7 @@ close_port(){
 
 # ==========================================================
 # this part for start up by post-mount
-case $1 in
+case $ACTION in
 start)
 	# startup by post-mount
 	if [ "$aria2_enable" == "1" ];then

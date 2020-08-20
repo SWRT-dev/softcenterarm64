@@ -95,7 +95,7 @@ add_auto_start(){
 	fi
 }
 # ====================================used by init or cru====================================
-case $1 in
+case $ACTION in
 start)
 	#此处为开机自启动设计
 	if [ "$ddnspod_enable" == "1" ];then

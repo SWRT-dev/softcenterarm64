@@ -51,7 +51,7 @@ del_cron(){
 	sed -i '/qiandao/d' /var/spool/cron/crontabs/* >/dev/null 2>&1
 }
 
-case $1 in
+case $ACTION in
 start)
 	# 开机启动
 	if [ "$qiandao_enable" == "1" ];then
@@ -65,7 +65,7 @@ start)
 	# web提交
 	echo "------------------------------ MrelinR 自动签到程序 -------------------------------" > $LOGFILE
 	echo "" >> $LOGFILE
-	#[ ! -L "/jffs/softcenter/init.d/S99qiandao.sh" ] && ln -sf /jffs/softcenter/scripts/qiandao_config.sh /jffs/softcenter/init.d/S99qiandao.sh
+	#[ ! -f "/jffs/softcenter/init.d/S99qiandao.sh" ] && cp -r /jffs/softcenter/scripts/qiandao_config.sh /jffs/softcenter/init.d/S99qiandao.sh
 	if [ "$qiandao_enable" == "1" ];then
 		if [ "$qiandao_action" == "2" ];then
 			echo_date "保存设置并立即签到！" >> $LOGFILE

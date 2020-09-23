@@ -1,0 +1,23 @@
+#!/bin/sh
+
+request_handle()
+{
+	. $(dirname $0)/get_path
+	local init_file="$(get_path)/init.status"
+	if [ ! -f $init_file ]; then
+		touch "$init_file" >/dev/null 2>&1	
+	fi
+	echo "result_code:0"	
+	echo "app_path:$init_file"	
+	return 0
+}
+
+
+case $1 in
+	request_handle)
+		request_handle "$2"
+		;;
+	*)
+		;;
+esac
+

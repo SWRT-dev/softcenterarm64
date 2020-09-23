@@ -11,16 +11,6 @@
             "version": "1.0.7"
         }, 
         {
-            "build_date": "2020-08-27_17:47:49", 
-            "description": "KPR更多规则更舒服！", 
-            "home_url": "Module_koolproxyR.asp", 
-            "md5": "df0c3c3d537e6589250d0cc402a2e235", 
-            "name": "koolproxyR", 
-            "tar_url": "koolproxyR/koolproxyR.tar.gz", 
-            "title": "koolproxyR", 
-            "version": "1.0.5"
-        }, 
-        {
             "build_date": "2020-05-21_10:54:59", 
             "description": "超强的SSH网页客户端~", 
             "home_url": "Module_shellinabox.asp", 
@@ -61,14 +51,14 @@
             "version": "0.4"
         }, 
         {
-            "build_date": "2020-08-20_11:45:05", 
+            "build_date": "2020-09-23_13:26:42", 
             "description": "去广告，没烦恼", 
             "home_url": "Module_koolproxy.asp", 
-            "md5": "962842c2db20c9de3c58bfbb4d2c1f53", 
+            "md5": "666fcea3730e76f7166ff1bfdb0e39c1", 
             "name": "koolproxy", 
             "tar_url": "koolproxy/koolproxy.tar.gz", 
             "title": "koolproxy", 
-            "version": "3.8.4.4"
+            "version": "3.8.5.0"
         }, 
         {
             "build_date": "2020-08-20_11:35:03", 
@@ -229,6 +219,16 @@
             "tar_url": "serverchan/serverchan.tar.gz", 
             "title": "ServerChan微信推送", 
             "version": "2.0"
+        }, 
+        {
+            "build_date": "2020-09-23_13:26:11", 
+            "description": "花生壳内网版3.0 （phddns） 动态域名 内网穿透", 
+            "home_url": "Module_phddns.asp", 
+            "md5": "25e983867ca323a07121b2c21e8ce8c9", 
+            "name": "phddns", 
+            "tar_url": "phddns/phddns.tar.gz", 
+            "title": "花生壳3.0", 
+            "version": "3.0.2"
         }, 
         {
             "build_date": "2020-08-20_11:32:48", 

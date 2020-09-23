@@ -1,11 +1,11 @@
 #!/bin/sh
 
 
-MODULE=koolproxy
-VERSION=3.8.5.0
-TITLE=koolproxy
-DESCRIPTION=去广告，没烦恼
-HOME_URL=Module_koolproxy.asp
+MODULE=phddns
+VERSION=3.0.2
+TITLE="花生壳3.0"
+DESCRIPTION="花生壳内网版3.0 （phddns） 动态域名 内网穿透"
+HOME_URL=Module_phddns.asp
 
 # Check and include base
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -28,3 +28,4 @@ cd $DIR
 # do something here
 
 do_build_result
+

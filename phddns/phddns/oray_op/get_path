@@ -1,0 +1,8 @@
+#!/bin/sh
+
+get_path() {
+	echo "/jffs/softcenter/etc"
+	return 0
+}
+
+

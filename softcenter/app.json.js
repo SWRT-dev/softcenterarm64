@@ -151,14 +151,14 @@
             "version": "1.7"
         }, 
         {
-            "build_date": "2020-08-20_11:43:08", 
+            "build_date": "2020-10-27_20:10:37", 
             "description": "内网穿透利器，谁用谁知道。", 
             "home_url": "Module_frps.asp", 
-            "md5": "6cb919c3effc835a4ca302fbd0aae8ac", 
+            "md5": "f388727cd09f17c825b352b2cdc393cb", 
             "name": "frps", 
             "tar_url": "frps/frps.tar.gz", 
             "title": "frps穿透服务器", 
-            "version": "1.6"
+            "version": "1.7"
         }, 
         {
             "build_date": "2020-08-20_11:34:16", 
@@ -231,14 +231,14 @@
             "version": "2.0"
         }, 
         {
-            "build_date": "2020-09-23_13:26:11", 
+            "build_date": "2020-10-19_16:37:21", 
             "description": "花生壳内网版3.0 （phddns） 动态域名 内网穿透", 
             "home_url": "Module_phddns.asp", 
-            "md5": "25e983867ca323a07121b2c21e8ce8c9", 
+            "md5": "5aa313dea5b6ad2e1b0344fad61dc96a", 
             "name": "phddns", 
             "tar_url": "phddns/phddns.tar.gz", 
             "title": "花生壳3.0", 
-            "version": "3.0.2"
+            "version": "3.0.3"
         }, 
         {
             "build_date": "2020-08-20_11:32:48", 

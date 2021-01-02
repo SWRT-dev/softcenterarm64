@@ -1,14 +1,14 @@
 {
     "apps": [
         {
-            "build_date": "2020-09-09_21:34:42", 
+            "build_date": "2021-01-02_15:11:16", 
             "description": "解锁网易云灰色歌曲", 
             "home_url": "Module_unblockmusic.asp", 
-            "md5": "d8ef543aeb41f55d9df68a1f206b60f6", 
+            "md5": "869e3ad32fc5fa9107fb6a0280d41dd4", 
             "name": "unblockmusic", 
             "tar_url": "unblockmusic/unblockmusic.tar.gz", 
             "title": "解锁网易云灰色歌曲", 
-            "version": "1.0.7"
+            "version": "1.0.8"
         }, 
         {
             "build_date": "2020-05-21_10:54:59", 

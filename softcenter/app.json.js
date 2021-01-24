@@ -141,6 +141,16 @@
             "version": "1.0.1"
         }, 
         {
+            "build_date": "2021-01-24_11:26:41", 
+            "description": "DDNSTO远程控制", 
+            "home_url": "Module_ddnsto.asp", 
+            "md5": "141e5767e58b613e2a8095fe45b23302", 
+            "name": "ddnsto", 
+            "tar_url": "ddnsto/ddnsto.tar.gz", 
+            "title": "DDNSTO远程控制", 
+            "version": "2.9.3"
+        }, 
+        {
             "build_date": "2020-08-20_11:50:35", 
             "description": "这是一只自动帮你签到的dog", 
             "home_url": "Module_qiandao.asp", 
@@ -219,6 +229,16 @@
             "tar_url": "ddnspod/ddnspod.tar.gz", 
             "title": "DDnspod", 
             "version": "1.7"
+        }, 
+        {
+            "build_date": "2021-01-24_11:27:04", 
+            "description": "分布式的虚拟以太网", 
+            "home_url": "Module_zerotier.asp", 
+            "md5": "6fb55da520dc172feefeef0b44507f8a", 
+            "name": "zerotier", 
+            "tar_url": "zerotier/zerotier.tar.gz", 
+            "title": "zerotier", 
+            "version": "0.3"
         }, 
         {
             "build_date": "2020-12-02_14:16:29", 

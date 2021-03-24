@@ -81,14 +81,14 @@
             "version": "2.9"
         }, 
         {
-            "build_date": "2020-11-19_18:56:00", 
+            "build_date": "2021-03-24_19:54:05", 
             "description": "灵缇游戏加速插件", 
             "home_url": "Module_lingti.asp", 
-            "md5": "45646f0ccf8d496efe340f2a6c85121a", 
+            "md5": "58101833314a321a091c3e0264aec45c", 
             "name": "lingti", 
             "tar_url": "lingti/lingti.tar.gz", 
             "title": "灵缇游戏加速插件", 
-            "version": "1.0.1"
+            "version": "1.0.2"
         }, 
         {
             "build_date": "2020-08-20_11:42:25", 

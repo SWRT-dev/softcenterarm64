@@ -141,14 +141,14 @@
             "version": "0.0.2"
         }, 
         {
-            "build_date": "2020-08-20_12:29:52", 
+            "build_date": "2021-04-04_17:11:35", 
             "description": "自己的私有云", 
             "home_url": "Module_verysync.asp", 
-            "md5": "d878c10da8b0d6ae68a514ab5e937078", 
+            "md5": "63827153f1ec5490361af20b666c6c08", 
             "name": "verysync", 
             "tar_url": "verysync/verysync.tar.gz", 
             "title": "微力同步", 
-            "version": "1.0.1"
+            "version": "1.1.0"
         }, 
         {
             "build_date": "2021-01-24_11:26:41", 

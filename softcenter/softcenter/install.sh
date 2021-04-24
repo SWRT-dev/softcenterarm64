@@ -1,6 +1,8 @@
 #!/bin/sh
 
-MODEL=`nvram get productid`
+# Copyright (C) 2021 MerlinRdev
+
+MODEL=$(nvram get productid)
 if [ "${MODEL:0:3}" == "GT-" ] || [ "$(nvram get merlinr_rog)" == "1" ];then
 	ROG=1
 elif [ "${MODEL:0:3}" == "TUF" ] || [ "$(nvram get merlinr_tuf)" == "1" ];then
@@ -72,9 +74,6 @@ softcenter_install() {
 		cd /jffs/softcenter/scripts && ln -sf ks_app_install.sh ks_app_remove.sh
 		chmod 755 /jffs/softcenter/bin/*
 		#chmod 755 /jffs/softcenter/init.d/*
-		chmod 755 /jffs/softcenter/perp/*
-		chmod 755 /jffs/softcenter/perp/.boot/*
-		chmod 755 /jffs/softcenter/perp/.control/*
 		chmod 755 /jffs/softcenter/scripts/*
 
 		# remove install package

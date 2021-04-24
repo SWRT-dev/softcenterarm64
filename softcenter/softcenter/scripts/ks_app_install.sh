@@ -1,6 +1,7 @@
 #!/bin/sh
 
-#From dbus to local variable
+# Copyright (C) 2021 MerlinRdev
+
 eval $(dbus export softcenter_installing_)
 source /jffs/softcenter/scripts/base.sh
 
@@ -110,18 +111,22 @@ install_module() {
 	OLD_VERSION=$(dbus get softcenter_module_${softcenter_installing_module}_version)
 	if [ -z "$(dbus get softcenter_server_tcode)" ]; then
 		modelname=$(nvram get modelname)
-		if [ "$modelname" == "K3" ] || [ "$modelname" == "XWR3100" ]; then
-			dbus set softcenter_server_tcode=CN
-		elif [ "$modelname" == "SBRAC1900P"  ] || [ "$modelname" == "SBR-AC1900P" ] || [ "$modelname" == "SBRAC3200P" ] || [ "$modelname" == "SBR-AC3200P" ] || [ "$modelname" == "R7900P" ] || [ "$modelname" == "R8000P" ] || [ "$modelname" == "R7000P" ]; then
-			dbus set softcenter_server_tcode=ALI
-		else
-			dbus set softcenter_server_tcode=`nvram get territory_code |cut -c 1-2`
-			#get null? anonymous firmware just set GB
-			[ -z "$(dbus get softcenter_server_tcode)" ] && dbus set softcenter_server_tcode=GB
-		fi
+		case $modelname in
+			K3|XWR3100)
+				dbus set softcenter_server_tcode=CN
+				;;
+			SBRAC1900P|SBRAC3200P|R8000P|R7000P)
+				dbus set softcenter_server_tcode=ALI
+				;;
+			*)
+				dbus set softcenter_server_tcode=`nvram get territory_code |cut -c 1-2`
+				[ -z "$(dbus get softcenter_server_tcode)" ] && dbus set softcenter_server_tcode=GB
+				[ "$(nvram get buildinfo | cut -d "@" -f2)" != "MerlinRdev" ] && dbus set softcenter_server_tcode=GB
+				;;
+		esac
 	fi
 	eval $(dbus export softcenter_server_tcode)
-	if [ "$softcenter_server_tcode" == "CN" ] || [ "$softcenter_server_tcode" == "CN1" ]; then
+	if [ "$softcenter_server_tcode" == "CN" ]; then
 		HOME_URL="https://sc.softcenter.site/$ARCH_SUFFIX"
 	elif [ "$softcenter_server_tcode" == "ALI" ]; then
 		HOME_URL="https://wufan.softcenter.site/$ARCH_SUFFIX"

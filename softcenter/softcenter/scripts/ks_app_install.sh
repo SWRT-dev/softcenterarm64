@@ -110,7 +110,7 @@ install_module() {
 	#OLD_MD5=$(dbus get softcenter_module_${softcenter_installing_module_md5})
 	OLD_VERSION=$(dbus get softcenter_module_${softcenter_installing_module}_version)
 	if [ -z "$(dbus get softcenter_server_tcode)" ]; then
-		/jffs/softcenter/sc_auth tcode
+		/jffs/softcenter/bin/sc_auth tcode
 	fi
 	eval $(dbus export softcenter_server_tcode)
 	if [ "$softcenter_server_tcode" == "CN" ]; then

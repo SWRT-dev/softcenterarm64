@@ -55,9 +55,11 @@ rules() {
 	zt0=$(ifconfig | grep zt | awk '{print $1}')
 	echo_date "zt interface $zt0 is started!" >> /tmp/zerotier.log
 	del_rules
-	iptables -A INPUT -i $zt0 -j ACCEPT
-	iptables -A FORWARD -i $zt0 -o $zt0 -j ACCEPT
-	iptables -A FORWARD -i $zt0 -j ACCEPT
+	#add to front of drop
+	iptables -I INPUT -i $zt0 -j ACCEPT
+	iptables -I FORWARD -i $zt0 -o $zt0 -j ACCEPT
+	iptables -I FORWARD -i $zt0 -j ACCEPT
+	iptables -I FORWARD -o $zt0 -j ACCEPT
 	if [ $zerotier_nat -eq 1 ]; then
 		iptables -t nat -A POSTROUTING -o $zt0 -j MASQUERADE
 		while [ "$(ip route | grep "dev $zt0  proto" | awk '{print $1}')" = "" ]; do

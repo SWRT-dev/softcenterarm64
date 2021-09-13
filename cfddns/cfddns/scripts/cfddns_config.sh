@@ -41,9 +41,9 @@ get_info(){
 	cfddns_result=`get_record_response`
 	if [ $(echo $cfddns_result | grep -c "\"success\":true") -gt 0 ];then
 		# CFDDNS的A记录ID
-		cfddns_id=`echo $cfddns_result | awk -F"","" '{print $1}' | sed 's/{.*://g' | sed 's/\"//g'`
+		cfddns_id=`echo $cfddns_result | jq .result[0].id | sed 's/{.*://g' | sed 's/\"//g'`
 		# CFDDNS的A记录IP
-		current_ip=`echo $cfddns_result | awk -F"","" '{print $4}' | grep -oE '([0-9]{1,3}\.?){4}'`
+		current_ip=`echo $cfddns_result | jq .result[0].content | grep -oE '([0-9]{1,3}\.?){4}'`
 		echo_date CloudFlare IP为 $current_ip
 	else
 		dbus set cfddns_status="【$LOGTIME】：获取IPV4解析记录错误！"
@@ -72,9 +72,9 @@ get_info_ipv6(){
 		cfddns_result=`get_record_response`
 		if [ $(echo $cfddns_result | grep -c "\"success\":true") -gt 0 ];then 
 			# CFDDNS的AAAA记录ID
-			cfddns_id=`echo $cfddns_result | awk -F"","" '{print $1}' | sed 's/{.*://g' | sed 's/\"//g'`
+			cfddns_id=`echo $cfddns_result | jq .result[0].id | sed 's/{.*://g' | sed 's/\"//g'`
 			# CFDDNS的AAAA记录IP
-			current_ipv6=`echo $cfddns_result | awk -F"","" '{print $4}' | grep -oE '([a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){0,7}::[a-f0-9]{0,4}(:[a-f0-9]{1,4}){0,7})'`
+			current_ipv6=`echo $cfddns_result | jq .result[0].content | grep -oE '([a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){0,7}::[a-f0-9]{0,4}(:[a-f0-9]{1,4}){0,7})'`
 			echo_date CfddsnIP为 $current_ipv6
 		else
 			dbus set cfddns_status="【$LOGTIME】：获取IPV6解析记录错误！"
@@ -158,11 +158,7 @@ restart)
 	#此处为web提交动设计
 	echo "" > $LOG_FILE
 	if [ "$cfddns_enable" == "1" ];then
-		if [ "$(nvram get productid)" = "BLUECAVE" ];then
-			cp -r /jffs/softcenter/scripts/cfddns_config.sh /jffs/softcenter/init.d/M99cfddns.sh
-		else
-			[ ! -L "/jffs/softcenter/init.d/S99cfddns.sh" ] && ln -sf /jffs/softcenter/scripts/cfddns_config.sh /jffs/softcenter/init.d/S99cfddns.sh
-		fi
+		[ ! -L "/jffs/softcenter/init.d/S99cfddns.sh" ] && ln -sf /jffs/softcenter/scripts/cfddns_config.sh /jffs/softcenter/init.d/S99cfddns.sh
 		echo_date "======================================" >> $LOG_FILE
 		check_update >> $LOG_FILE
 	else

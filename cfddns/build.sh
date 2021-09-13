@@ -2,7 +2,7 @@
 
 
 MODULE=cfddns
-VERSION=1.5
+VERSION=1.6
 TITLE="Cloudflare DDNS"
 DESCRIPTION=Cloudflare解析自动更新IP
 HOME_URL=Module_cfddns.asp
@@ -29,4 +29,4 @@ cd $DIR
 
 do_build_result
 
-sh backup.sh $MODULE
+#sh backup.sh $MODULE

@@ -1292,19 +1292,21 @@
 				var link_ariang1 = window.btoa(db_aria2_["aria2_rpc_secret"])
 
 				if (E("aria2_ddnsto").checked) {
-					E("link4.1").href = "http://aria2.me/aria-ng/#!/settings/rpc/set/wss/www.ddnsto.com/443/jsonrpc/" + link_ariang;
+					E("link4.1").href = "https://aria2.paldier.com/#!/settings/rpc/set/wss/www.ddnsto.com/443/jsonrpc/" + link_ariang;
 				} else {
-					E("link4.1").href = "http://aria2.me/aria-ng/#!/settings/rpc/set/http/" + '<% nvram_get("lan_ipaddr"); %>' + "/" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc/" + link_ariang1;
+					E("link4.1").href = "https://aria2.paldier.com/#!/settings/rpc/set/http/" + '<% nvram_get("lan_ipaddr"); %>' + "/" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc/" + link_ariang1;
 				}
 			}
 			
 			function generate_glutton_link() {
+				var link_ariang = window.btoa(db_aria2_["aria2_ddnsto_token"])
+				var link_ariang1 = window.btoa(db_aria2_["aria2_rpc_secret"])
+
 				if (E("aria2_ddnsto").checked) {
-					var link_glutton = window.btoa("https://www.ddnsto.com:443" + "/jsonrpc||" + db_aria2_["aria2_ddnsto_token"])
+					E("link4.2").href = "https://sc.softcenter.site/aria2-ng/#!/settings/rpc/set/wss/www.ddnsto.com/443/jsonrpc/" + link_ariang;
 				} else {
-					var link_glutton = window.btoa("http://" + '<% nvram_get("lan_ipaddr"); %>' + ":" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc||" + db_aria2_["aria2_rpc_secret"])
+					E("link4.2").href = "https://sc.softcenter.site/aria2-ng/#!/settings/rpc/set/http/" + '<% nvram_get("lan_ipaddr"); %>' + "/" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc/" + link_ariang1;
 				}
-				E("link4.2").href = "http://aria2.me/glutton/" + "?s=" + link_glutton;
 			}
 			function copyUrl2(){ 
 				var Url2 = E("link4.2").href; 
@@ -1465,21 +1467,21 @@
 													<th style="width:25%;">AriaNg控制台</th>
 													<td>
 														<div style="padding-top:5px;">
-															<a id="link4.1" style="font-size: 14px;" href="http://aria2.me/aria-ng/" target="_blank"><i><u>http://aria2.me/aria-ng/</u></i></a>
+															<a id="link4.1" style="font-size: 14px;" href="http://aria2.paldier.com/" target="_blank"><i><u>http://aria2.paldier.com/</u></i></a>
 															<span><a style="font-size: 12px;margin-left: 20px;" href="http://koolshare.cn/thread-116500-1-1.html" target="_blank"><i><u>戳我了解</u></i></a>
 															</div>
 														</td>
 													</tr>
 												<tr id="glutton">
-													<th style="width:25%;">Glutton控制台</th>
+													<th style="width:25%;">AriaNg控制台</th>
 													<td>
 														<div style="padding-top:5px;">
-															<a id="link4.2" style="font-size: 14px;" href="http://aria2.me/glutton/" target="_blank"><i><u>http://aria2.me/glutton/</u></i></a>
+															<a id="link4.2" style="font-size: 14px;" href="https://sc.softcenter.site/aria2-ng/" target="_blank"><i><u>https://sc.softcenter.site/aria2-ng/</u></i></a>
 															<span><a style="font-size: 12px;margin-left: 20px;" href="https://koolshare.cn/thread-40938-1-1.html" target="_blank"><i><u>戳我了解</u></i></a>
 														</div>
 													</td>
 												</tr>
-												<tr id="webui">
+												<tr id="webui" style="display: none;">
 													<th style="width:25%;">更多控制台</th>
 													<td>
 													<div style="padding-top:5px;">

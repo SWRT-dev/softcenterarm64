@@ -71,9 +71,9 @@ start_unblockmusic(){
 	echo_date 开启unblockmusic
 	echo_date Enable unblockmusic
 	if [ "$unblockmusic_musicapptype" = "default" ]; then
-		nohup /jffs/softcenter/bin/UnblockNeteaseMusic -p 5200 -sp 5300 -o "kuwo:kugou" -m 0 -c "${serverCrt}" -k "${serverKey}" -sl 2 -e -l /tmp/unblockmusic.log -sl 2 2>&1 &
+		nohup /jffs/softcenter/bin/UnblockNeteaseMusic -p 5200 -sp 5300 -o "kuwo:kugou:qq" -m 0 -c "${serverCrt}" -k "${serverKey}" -sl 2 -e -l /tmp/unblockmusic.log -sl 2 -lv -bu -ba 2>&1 &
 	else
-		nohup /jffs/softcenter/bin/UnblockNeteaseMusic -p 5200 -sp 5300 -o "$unblockmusic_musicapptype" -m 0 -c "${serverCrt}" -k "${serverKey}" -sl 2 -e -l /tmp/unblockmusic.log -sl 2 2>&1 &
+		nohup /jffs/softcenter/bin/UnblockNeteaseMusic -p 5200 -sp 5300 -o "$unblockmusic_musicapptype" -m 0 -c "${serverCrt}" -k "${serverKey}" -sl 2 -e -l /tmp/unblockmusic.log -sl 2 -lv -bu -ba 2>&1 &
 	fi
 	mkdir -p /var/wwwext
 	cp -f /jffs/softcenter/bin/Music/ca.crt /www/ext

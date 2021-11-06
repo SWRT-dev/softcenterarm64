@@ -1,6 +1,6 @@
 {
 "title":"<em>Software Center&nbsp;for&nbsp;arm64&nbsp;platform</em>",
-"content1":"<b>Software Center: </b>1.3.8,<font color='#1E90FF'> Support api version 1.1 and 1.5</font>",
+"content1":"<b>Software Center: </b>1.3.9,<font color='#1E90FF'> Support api version 1.1 and 1.5</font>",
 "content2":"New firmware 5.1.6 has been released",
 "content3":"<font color='#1E90FF'>feedback:&nbsp;&nbsp;</font>\
 <a href='https://github.com/paldier/softcenterarm64' target='_blank'><em>1.GitHub</em></a>&nbsp;&nbsp;&nbsp;&nbsp;\

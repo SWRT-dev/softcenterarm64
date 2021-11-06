@@ -40,23 +40,7 @@ softcenter_install() {
 			cp -rf /tmp/softcenter/ROG/res/* /jffs/softcenter/res/
 		fi
 		dbus set softcenter_version=`cat /jffs/softcenter/.soft_ver`
-		ARCH=`uname -m`
-		KVER=`uname -r`
-		if [ "$ARCH" == "armv7l" ]; then
-			if [ "$KVER" != "2.6.36.4brcmarm" ];then
-				dbus set softcenter_arch="armng"
-			else
-				dbus set softcenter_arch="$ARCH"
-			fi
-		elif [ "$ARCH" == "mips" ]; then
-			if [ "$KVER" == "3.10.14" ];then
-				dbus set softcenter_arch="mipsle"
-			else
-				dbus set softcenter_arch="$ARCH"
-			fi
-		else
-			dbus set softcenter_arch="$ARCH"
-		fi
+
 		if [ -f "/jffs/softcenter/scripts/ks_tar_intall.sh" ];then
 			rm -rf /jffs/softcenter/scripts/ks_tar_intall.sh
 		fi
@@ -80,6 +64,8 @@ softcenter_install() {
 		rm -rf /tmp/softcenter
 		# set softcenter tcode
 		/jffs/softcenter/bin/sc_auth tcode
+		# set softcenter arch
+		/jffs/softcenter/bin/sc_auth arch
 		# creat wan-start nat-start post-mount
 		if [ ! -f "/jffs/scripts/wan-start" ];then
 			cat > /jffs/scripts/wan-start <<-EOF

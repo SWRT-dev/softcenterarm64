@@ -1,5 +1,5 @@
 #! /bin/sh
-VERSION=1.3.8
+VERSION=1.3.9
 
 cat version
 rm -f softcenter.tar.gz

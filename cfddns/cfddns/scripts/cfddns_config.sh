@@ -10,6 +10,12 @@ LOGTIME=$(TZ=UTC-8 date -R "+%Y-%m-%d %H:%M:%S")
 [ "$cfddns_ttl" = "" ] && cfddns_ttl="1"
 get_type="A"
 
+if [ "$cfddns_name" = "@" ];then
+	cfddns_name_domain=$cfddns_domain
+else
+	cfddns_name_domain=$cfddns_name.$cfddns_domain
+fi
+
 get_bol() {
 	case "$cfddns_proxied" in
 		1)
@@ -22,7 +28,7 @@ get_bol() {
 }
 
 get_record_response() {
-	curl -kLsX GET "https://api.cloudflare.com/client/v4/zones/$cfddns_zid/dns_records?type=$get_type&name=$cfddns_name.$cfddns_domain&order=type&direction=desc&match=all" \
+	curl -kLsX GET "https://api.cloudflare.com/client/v4/zones/$cfddns_zid/dns_records?type=$get_type&name=${cfddns_name_domain}&order=type&direction=desc&match=all" \
 	-H "X-Auth-Email: $cfddns_email" \
 	-H "X-Auth-Key: $cfddns_akey" \
 	-H "Content-type: application/json"
@@ -33,7 +39,7 @@ update_record() {
 	-H "X-Auth-Email: $cfddns_email" \
 	-H "X-Auth-Key: $cfddns_akey" \
 	-H "Content-Type: application/json" \
-	--data '{"id":"'$cfddns_id'","type":"'$get_type'","name":"'$cfddns_name.$cfddns_domain'","content":"'$update_to_ip'","zone_id":"'$cfddns_zid'","zone_name":"'$cfddns_domain'","ttl":'$cfddns_ttl',"proxied":'$(get_bol)'}'
+	--data '{"type":"'$get_type'","name":"'${cfddns_name_domain}'","content":"'$update_to_ip'","ttl":'$cfddns_ttl',"proxied":'$(get_bol)'}'
 }
 
 get_info(){

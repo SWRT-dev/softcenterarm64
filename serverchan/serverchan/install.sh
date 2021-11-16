@@ -3,9 +3,9 @@ source /jffs/softcenter/scripts/base.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 DIR=$(cd $(dirname $0); pwd)
 MODEL=$(nvram get productid)
-if [ "${MODEL:0:3}" == "GT-" ] || [ "$(nvram get merlinr_rog)" == "1" ];then
+if [ "${MODEL:0:3}" == "GT-" ] || [ "$(nvram get swrt_rog)" == "1" ];then
 	ROG=1
-elif [ "${MODEL:0:3}" == "TUF" ] || [ "$(nvram get merlinr_tuf)" == "1" ];then
+elif [ "${MODEL:0:3}" == "TUF" ] || [ "$(nvram get swrt_tuf)" == "1" ];then
 	TUF=1
 fi
 
@@ -18,10 +18,7 @@ fi
 # 安装
 echo_date "开始安装ServerChan微信通知..."
 cd /tmp
-if [[ ! -x /jffs/softcenter/bin/jq ]]; then
-	cp -f /tmp/serverchan/bin/jq /jffs/softcenter/bin/jq
-	chmod +x /jffs/softcenter/bin/jq
-fi
+
 rm -rf /jffs/softcenter/init.d/*serverchan.sh
 rm -rf /jffs/softcenter/serverchan >/dev/null 2>&1
 rm -rf /jffs/softcenter/scripts/serverchan_*

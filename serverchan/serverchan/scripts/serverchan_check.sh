@@ -10,8 +10,23 @@ fi
 ntpclient -h ${ntp_server} -i3 -l -s > /dev/null 2>&1
 serverchan_info_text=/tmp/.serverchan_info.md
 
+rc_support=$(nvram get rc_support)
+isqca=0
+islantiq=0
+ismtk=0
+ishnd=0
 ARCH=$(uname -m)
 KVER=$(uname -r)
+if [ "$(echo ${rc_support} |grep -w qcawifi)" != "" ];then
+	isqca=1
+elif [ "$(echo ${rc_support} |grep -w lantiq)" != "" ];then
+	islantiq=1
+elif [ "$(echo ${rc_support} |grep -w rawifi)" != "" ];then
+	ismtk=1
+elif [ "$KVER" != "2.6.36.4brcmarm" ];then
+	ishnd=1
+fi
+
 if [ "$ARCH" == "armv7l" ]; then
 	if [ "$KVER" != "2.6.36.4brcmarm" ];then
 #bcm675x/ipq4/5/6/80xx/mt7622
@@ -115,8 +130,8 @@ if [ "${serverchan_info_system}" == "1" ]; then
 	router_memfree=`awk 'BEGIN{printf ("%.2f\n",'$(cat /proc/meminfo | grep "MemFree" | awk '{print $2}')'/1024)}'`
 	router_swaptotal=`awk 'BEGIN{printf ("%.2f\n",'$(cat /proc/meminfo | grep "SwapTotal" | awk '{print $2}')'/1024)}'`
 	router_swapfree=`awk 'BEGIN{printf ("%.2f\n",'$(cat /proc/meminfo | grep "SwapFree" | awk '{print $2}')'/1024)}'`
-	router_jffs_total=`df -h | grep "/jffs" | grep -v grep | awk '{print $2}' | sed 's/M//g'`
-	router_jffs_used=`df -h | grep "/jffs" | grep -v grep | awk '{print $3}' | sed 's/M//g'`
+	router_jffs_total=`df -h | grep "/jffs$" | grep -v grep | awk '{print $2}' | sed 's/M//g'`
+	router_jffs_used=`df -h | grep "/jffs$" | grep -v grep | awk '{print $3}' | sed 's/M//g'`
 	echo "#### **系统运行状态:**" >> ${serverchan_info_text}
 	echo "##### 系统名称: ${router_name}" >> ${serverchan_info_text}
 	echo "##### 系统当前时间: ${router_time}" >> ${serverchan_info_text}
@@ -134,59 +149,50 @@ if [[ "${serverchan_info_temp}" == "1" ]]; then
     interface_2=`nvram get wl0_ifname`
     interface_5=`nvram get wl1_ifname`
     interface_52=`nvram get wl2_ifname`
-	case $productid in
-	BLUECAVE)
+	if [ "$islantiq" == "1" ];then
 		interface_2_temperature=`iwpriv ${interface_2} gTemperature | awk '{print $3}'`
 		interface_5_temperature=`iwpriv ${interface_5} gTemperature | awk '{print $3}'`
 		router_cpu_temperature=`cat /sys/kernel/debug/ltq_tempsensor/allsensors | awk '{print $5}' | grep -Eo '[0-9]+' |cut -c1-2 |sed -n '2p'`
-		;;
-	RT-ACRH17|RT-AC82U|RT-AC2200)
-		interface_2_temperature=`thermaltool -i wifi0 -get |grep temperature | awk '{print $3}'`
-		interface_5_temperature=`thermaltool -i wifi1 -get |grep temperature | awk '{print $3}'`
+	elif [ "$isqca" == "1" ];then
+		case $productid in
+		RT-AC82U|RT-AC95U)
+			interface_2_temperature=`thermaltool -i wifi0 -get |grep temperature | awk '{print $3}'`
+			interface_5_temperature=`thermaltool -i wifi1 -get |grep temperature | awk '{print $3}'`
+			[ -n "$interface_52" ] && interface_52_temperature=`thermaltool -i wifi2 -get |grep temperature | awk '{print $3}'`
+			router_cpu_temperature=0
+			;;
+		RT-AX89*|*)
+			interface_2_temperature=`thermaltool -i wifi0 -get |grep temperature | awk '{print $3}'`
+			interface_5_temperature=`thermaltool -i wifi1 -get |grep temperature | awk '{print $3}'`
+			[ -n "$interface_52" ] && interface_52_temperature=`thermaltool -i wifi2 -get |grep temperature | awk '{print $3}'`
+			router_cpu_temperature=`cat /sys/class/thermal/thermal_zone0/temp`
+			;;
+	elif [ "$ismtk" == "1" ];then
+		interface_2_temperature=0
+		interface_5_temperature=0
 		router_cpu_temperature=0
-		;;
-	RT-AC95U)
-		interface_2_temperature=`thermaltool -i wifi0 -get |grep temperature | awk '{print $3}'`
-		interface_5_temperature=`thermaltool -i wifi1 -get |grep temperature | awk '{print $3}'`
-		interface_52_temperature=`thermaltool -i wifi2 -get |grep temperature | awk '{print $3}'`
-		router_cpu_temperature=0
-		;;
-	RT-AX89X)
-		interface_2_temperature=`thermaltool -i wifi0 -get |grep temperature | awk '{print $3}'`
-		interface_5_temperature=`thermaltool -i wifi1 -get |grep temperature | awk '{print $3}'`
-		router_cpu_temperature=`cat /sys/class/thermal/thermal_zone0/temp`
-		;;
-	RT-AC86U|GT-AC*|TUF-AX*|RT-AX5*|RT-AX68U|RT-AX82U|RT-AX86U)
+	elif [ "$ishnd" == "1" ];then
 		pu_temperature_origin=`cat /sys/class/thermal/thermal_zone0/temp`
 		router_cpu_temperature=`awk 'BEGIN{printf "%.1f\n",('$cpu_temperature_origin'/'1000')}'`
 		interface_2_temperature=`wl -i ${interface_2} phy_tempsense | awk '{print $1}'`
 		interface_5_temperature=`wl -i ${interface_5} phy_tempsense | awk '{print $1}'`
 		[ -n "$interface_52" ] && interface_52_temperature=`wl -i ${interface_52} phy_tempsense | awk '{print $1}'`
-		;;
-	RT-AC68*|RT-AC3100|RT-AC88U|RT-AC3200|RT-AC5300)
+	else
 		interface_2_temperature=`wl -i ${interface_2} phy_tempsense | awk '{print $1}'`
 		interface_5_temperature=`wl -i ${interface_5} phy_tempsense | awk '{print $1}'`
 		[ -n "$interface_52" ] && interface_52_temperature=`wl -i ${interface_52} phy_tempsense | awk '{print $1}'`
 		router_cpu_temperature=`cat /proc/dmu/temperature | awk '{print $4}' | grep -Eo '[0-9]+'`
-		;;
-	RT-AC85*|RM-AC*)
-		interface_2_temperature=0
-		interface_5_temperature=0
-		router_cpu_temperature=0
-		;;
-	esac
+	fi
     if [ "${interface_2_temperature}" != "" ] || [ "${interface_5_temperature}" != "" ] || [ "${router_cpu_temperature}" != "" ]; then
-		case $productid in
-		RT-AC68*|RT-AC3100|RT-AC88U|RT-AC3200|RT-AC5300|RT-AC86U|GT-AC*|TUF-AX*|RT-AX5*|RT-AX68U|RT-AX82U|RT-AX86U)
+		if [ "$ismtk" == "1" -o "$isqca" == "1" -o "$islantiq" == "1" ];then
+			interface_2_temperature_c=${interface_2_temperature}
+			interface_5_temperature_c=${interface_5_temperature}
+			[ -n "$interface_52" ] && interface_52_temperature_c=${interface_52_temperature}
+		else
 			interface_2_temperature_c=`expr ${interface_2_temperature} / 2 + 20`
 			interface_5_temperature_c=`expr ${interface_5_temperature} / 2 + 20`
 			[ -n "$interface_52" ] && interface_52_temperature_c=`expr ${interface_52_temperature} / 2 + 20`
-			;;
-		*)
-			interface_2_temperature_c=${interface_2_temperature}
-			interface_5_temperature_c=${interface_5_temperature}
-			;;
-		esac
+		fi
 		if [ -n "$interface_52" ];then
 			router_temperature="2.4G: ${interface_2_temperature_c}°C | 5G_1: ${interface_5_temperature_c}°C | 5G_2: ${interface_52_temperature_c}°C | CPU: ${router_cpu_temperature}°C"
 		else

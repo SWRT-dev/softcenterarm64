@@ -271,6 +271,16 @@
             "version": "1.7"
         }, 
         {
+            "build_date": "2021-11-16_19:25:28", 
+            "description": "阿里云盘 WebDAV 服务器", 
+            "home_url": "Module_aliyundrivewebdav.asp", 
+            "md5": "afe7eafcf2ccd74c81b61bc0d3975b2b", 
+            "name": "aliyundrivewebdav", 
+            "tar_url": "aliyundrivewebdav/aliyundrivewebdav.tar.gz", 
+            "title": "阿里云盘WebDAV", 
+            "version": "0.5.5"
+        }, 
+        {
             "build_date": "2021-11-16_11:51:37", 
             "description": "从路由器推送状态及通知的工具", 
             "home_url": "Module_serverchan.asp", 

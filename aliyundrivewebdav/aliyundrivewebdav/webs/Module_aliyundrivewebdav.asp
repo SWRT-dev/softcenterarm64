@@ -49,6 +49,7 @@
                     type: "GET",
                     url: "/_api/aliyundrivewebdav_",
                     async: false,
+                    dataType: "json",
                     success: function(data) {
                         db_aliyundrivewebdav = data.result[0];
                         conf2obj();
@@ -109,6 +110,7 @@
                     type: "POST",
                     url: "/_api/",
                     async: true,
+                    dataType: "json",
                     data: JSON.stringify(postData),
                     success: function(response) {
                         var arr = response.result.split("@");

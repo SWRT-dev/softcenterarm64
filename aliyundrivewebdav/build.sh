@@ -2,7 +2,7 @@
 
 
 MODULE=aliyundrivewebdav
-VERSION=0.5.5
+VERSION=0.5.5.1
 TITLE="阿里云盘WebDAV"
 DESCRIPTION="阿里云盘 WebDAV 服务器"
 HOME_URL=Module_aliyundrivewebdav.asp

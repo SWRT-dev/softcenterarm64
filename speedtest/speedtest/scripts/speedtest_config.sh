@@ -4,6 +4,9 @@ source /jffs/softcenter/scripts/base.sh
 
 case $ACTION in
 start)
+		killall -9 speedtest
+		rm -f /jffs/softcenter/bin/settings.toml
+		cd /jffs/softcenter/bin
 		echo 'bind_address=""' > settings.toml
 		echo 'listen_port=8989' >> settings.toml
 		echo 'proxyprotocol_port=0' >> settings.toml
@@ -18,7 +21,6 @@ start)
 		echo 'database_username=""' >> settings.toml
 		echo 'database_password=""' >> settings.toml
 		echo 'database_file="speedtest.db"' >> settings.toml
-		cd /jffs/softcenter/bin
 		./speedtest &
 		http_response "$1"
 	;;

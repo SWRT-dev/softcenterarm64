@@ -34,9 +34,9 @@ write_sourcelist(){
 		echo $koolproxy_sourcelist|sed 's/>/\n/g' > /jffs/softcenter/koolproxy/data/source.list
 	else
 		cat > /jffs/softcenter/koolproxy/data/source.list <<-EOF
-			1|koolproxy.txt|https://cdn.jsdelivr.net/gh/ihuaer/koolproxy@master/koolproxy.txt|
-			1|daily.txt|https://cdn.jsdelivr.net/gh/ihuaer/koolproxy@master/daily.txt|
-			1|kp.dat|https://cdn.jsdelivr.net/gh/ihuaer/koolproxy@master/kp.dat|
+			1|koolproxy.txt|http://router.houzi-blog.top:3090/koolproxy.txt|
+			1|daily.txt|http://router.houzi-blog.top:3090/daily.txt|
+			1|kp.dat|http://router.houzi-blog.top:3090/kp.dat|
 			1|user.txt||
 			
 		EOF

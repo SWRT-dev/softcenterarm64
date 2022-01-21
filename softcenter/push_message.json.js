@@ -1,6 +1,6 @@
 {
 "title":"<em>软件中心&nbsp;for&nbsp;arm64&nbsp;platform</em>",
-"content1":"<b>软件中心：1.4.0已发布，同时支持SWRT以及SWRT官改固件</b>",
+"content1":"<b>软件中心：1.4.1已发布，同时支持SWRT以及SWRT官改固件</b>",
 "content2":"固件5.1.7:已经发布,<font color='#1E90FF'>同时支持api版本1.1和1.5</font>",
 "content3":"<font color='#1E90FF'>交流反馈:&nbsp;&nbsp;</font>\
 <a href='https://github.com/paldier/softcenterarm64' target='_blank'><em>1.软件中心GitHub项目</em></a>&nbsp;&nbsp;&nbsp;&nbsp;\

@@ -27,35 +27,26 @@ elif [ "$KVER" != "2.6.36.4brcmarm" ];then
 	ishnd=1
 fi
 
-if [ "$ARCH" == "armv7l" ]; then
-	if [ "$KVER" != "2.6.36.4brcmarm" ];then
-#bcm675x/ipq4/5/6/80xx/mt7622
-		ARCH_SUFFIX="armng"
-	else
-#bcm470x
-		ARCH_SUFFIX="arm"
-	fi
-elif [ "$ARCH" == "aarch64" ]; then
-#bcm490x
-	ARCH_SUFFIX="arm64"
-elif [ "$ARCH" == "mips" ]; then
-	if [ "$KVER" == "3.10.14" ];then
-#mtk6721
-		ARCH_SUFFIX="mipsle"
-	else
-#grx500
-		ARCH_SUFFIX="mips"
-	fi
-elif [ "$ARCH" == "mipsle" ]; then
-	ARCH_SUFFIX="mipsle"
-else
+softcenter_arch=$(dbus get softcenter_arch)
+softcenter_server_tcode=$(dbus get softcenter_server_tcode)
+if [ "$softcenter_arch" == "" ]; then
+	/jffs/softcenter/bin/sc_auth arch
+	eval $(dbus export softcenter_arch)
+fi
+if [ "$softcenter_server_tcode" == "" ]; then
+	/jffs/softcenter/bin/sc_auth tcode
+	eval $(dbus export softcenter_server_tcode)
+fi
+ARCH_SUFFIX=$softcenter_arch
+if [ "$ARCH_SUFFIX" == "armv7l" ]; then
 	ARCH_SUFFIX="arm"
+elif [ "$ARCH_SUFFIX" == "aarch64" ]; then
+	ARCH_SUFFIX="arm64"
 fi
 
-tcode=`dbus get softcenter_server_tcode`
-if [ "$tcode" == "CN" ]; then
+if [ "$softcenter_server_tcode" == "CN" ]; then
 	scurl="https://sc.softcenter.site"
-elif [ "$tcode" == "ALI" ]; then
+elif [ "$softcenter_server_tcode" == "ALI" ]; then
 	scurl="https://wufan.softcenter.site"
 else
 	scurl="https://sc.paldier.com"
@@ -94,10 +85,6 @@ restart)
 	echo "###### 本次信息推送：手动推送." > ${serverchan_info_text}
 	;;
 esac
-
-if [[ ! -L /jffs/softcenter/bin/base64_decode ]];then
-    ln -s /jffs/softcenter/bin/base64_encode /jffs/softcenter/bin/base64_decode
-fi
 
 send_title=`dbus get serverchan_config_name| base64_decode`
 # 系统运行状态
@@ -167,6 +154,7 @@ if [[ "${serverchan_info_temp}" == "1" ]]; then
 			[ -n "$interface_52" ] && interface_52_temperature=`thermaltool -i wifi2 -get |grep temperature | awk '{print $3}'`
 			router_cpu_temperature=`cat /sys/class/thermal/thermal_zone0/temp`
 			;;
+		esac
 	elif [ "$ismtk" == "1" ];then
 		interface_2_temperature=0
 		interface_5_temperature=0
@@ -265,26 +253,6 @@ if [[ "${serverchan_info_wan}" == "1" ]]; then
 			echo '##### 国内链接 【'${net_check_time}'】 √' >> ${serverchan_info_text}
 		else
 			echo '##### 国内链接 【'${net_check_time}'】 ×' >> ${serverchan_info_text}
-		fi
-	}
-
-	get_foreign_status1(){
-		wget -4 --spider --quiet --tries=2 --timeout=2 www.google.com.tw
-		if [ "$?" == "0" ]; then
-			echo '##### 国外链接 【'${net_check_time}'】 √' >> ${serverchan_info_text}
-		else
-			echo '##### 国外链接 【'${net_check_time}'】 ×' >> ${serverchan_info_text}
-		fi
-	}
-
-	get_china_status(){
-		local ret=`httping www.baidu.com -s -Z -c1 -f -t 3 2>/dev/null|sed -n '2p'|sed 's/seq=0//g'|sed 's/([0-9]\+\sbytes),\s//g'`
-		local S1=`echo $ret|grep -Eo "200 OK"`
-		if [ -n "$S1" ]; then
-			local S2=`echo $ret|sed 's/time=//g'|awk '{printf "%.0f ms\n",$(NF -3)}'`
-			echo '##### 国内链接 【'${net_check_time}'】 ✓%26nbsp;%26nbsp;'$S2'' >> ${serverchan_info_text}
-		else
-			echo '##### 国内链接 【'${net_check_time}'】 X' >> ${serverchan_info_text}
 		fi
 	}
 	
@@ -547,7 +515,7 @@ sckey_nu=`dbus list serverchan_config_sckey | sort -n -t "_" -k 4|cut -d "=" -f 
 for nu in ${sckey_nu}
 do
 	serverchan_config_sckey=`dbus get serverchan_config_sckey_${nu}`
-	url="https://sc.ftqq.com/${serverchan_config_sckey}.send"
+	url="https://sctapi.ftqq.com/${serverchan_config_sckey}.send"
 	result=`wget --no-check-certificate --post-data "text=${serverchan_send_title}&desp=${serverchan_send_content}" -qO- ${url}`
     if [ -n $(echo $result | grep "success") ];then
         [ "${serverchan_info_logger}" == "1" ] && logger "[ServerChan]: 路由器状态信息推送到 SCKEY No.${nu} 成功！"

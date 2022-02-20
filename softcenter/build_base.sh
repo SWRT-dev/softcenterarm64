@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Now in module working directory
+SC_ARCH=arm64
 
 do_build_result() {
 if [ "$VERSION" = "" ]; then
@@ -18,6 +19,9 @@ rm -f ${MODULE}.tar.gz
 cat > ${MODULE}/version <<EOF
 $VERSION
 EOF
+cat > ${MODULE}/.arch <<EOF
+$SC_ARCH
+EOF
 
 tar -zcvf ${MODULE}.tar.gz $MODULE
 md5value=`md5sum ${MODULE}.tar.gz|tr " " "\n"|sed -n 1p`
@@ -32,6 +36,7 @@ cat > ./config.json.js <<EOF
 {
 "version":"$VERSION",
 "md5":"$md5value",
+"arch":"$SC_ARCH",
 "home_url":"$HOME_URL",
 "title":"$TITLE",
 "description":"$DESCRIPTION",

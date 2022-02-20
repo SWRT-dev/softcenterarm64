@@ -149,7 +149,16 @@ install_tar(){
 			INSTALL_SCRIPT_NU=$(find /tmp -name "install.sh"|wc -l) 2>/dev/null
 			[ "$INSTALL_SCRIPT_NU" == "1" ] && INSTALL_SCRIPT=$(find /tmp -name "install.sh") || INSTALL_SCRIPT=""
 		fi
-
+		if [ -f /tmp/${MODULE_PREFIX}/.arch ];then
+			local module_arch=$(cat /tmp/${MODULE_PREFIX}/.arch)
+			if [ "${module_arch}" != "$softcenter_arch" ] && [ "$(echo ${module_arch} | grep $softcenter_arch)" == "" ];then
+				echo_date "插件架构不符！"
+				echo_date "插件:${module_arch}"
+				echo_date "路由器:${softcenter_arch}"
+				echo_date "删除相关文件并退出..."
+				clean 1
+			fi
+		fi
 		if [ -n "${INSTALL_SCRIPT}" -a -f "${INSTALL_SCRIPT}" ];then
 			SCRIPT_AB_DIR=$(dirname ${INSTALL_SCRIPT})
 			MODULE_NAME=${SCRIPT_AB_DIR##*/}

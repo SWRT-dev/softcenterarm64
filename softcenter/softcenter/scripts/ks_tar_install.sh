@@ -17,6 +17,12 @@ else
 fi
 #base model, not odmpid
 MODEL=$(nvram get productid)
+ARCH_SUFFIX=$softcenter_arch
+if [ "$ARCH_SUFFIX" == "armv7l" ]; then
+	ARCH_SUFFIX="arm"
+elif [ "$ARCH_SUFFIX" == "aarch64" ]; then
+	ARCH_SUFFIX="arm64"
+fi
 if [ "${MODEL:0:3}" == "GT-" ] || [ "$(nvram get swrt_rog)" == "1" ];then
 	ROG=1
 elif [ "${MODEL:0:3}" == "TUF" ] || [ "$(nvram get swrt_tuf)" == "1" ];then
@@ -151,10 +157,10 @@ install_tar(){
 		fi
 		if [ -f /tmp/${MODULE_PREFIX}/.arch ];then
 			local module_arch=$(cat /tmp/${MODULE_PREFIX}/.arch)
-			if [ "${module_arch}" != "$softcenter_arch" ] && [ "$(echo ${module_arch} | grep $softcenter_arch)" == "" ];then
+			if [ "${module_arch}" != "$ARCH_SUFFIX" ] && [ "$(echo ${module_arch} | grep $ARCH_SUFFIX)" == "" ];then
 				echo_date "插件架构不符！"
 				echo_date "插件:${module_arch}"
-				echo_date "路由器:${softcenter_arch}"
+				echo_date "路由器:${ARCH_SUFFIX}"
 				echo_date "删除相关文件并退出..."
 				clean 1
 			fi

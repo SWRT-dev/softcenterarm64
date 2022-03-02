@@ -48,7 +48,7 @@ stop)
 	stop_kms
 	;;
 start_nat)
-	if [ "$kms_enable" == "1" -a -n "$(pidof vlmcsd)" ]; then
+	if [ "$kms_enable" == "1" ]; then
 		close_port >/dev/null 2>&1
 		[ "$kms_wan_port" == "1" ] && open_port
 	fi

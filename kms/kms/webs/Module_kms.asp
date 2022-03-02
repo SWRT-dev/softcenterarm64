@@ -34,11 +34,11 @@ function init() {
 function get_dbus_data() {
 	$.ajax({
 		type: "GET",
-		url: "/dbconf?p=kms_",
-		dataType: "script",
+		url: "/_api/kms",
+		dataType: "json",
 		async: false,
 		success: function(data) {
-			db_kms = db_kms_;
+			db_kms = data.result[0];
 			E("kms_enable").checked = db_kms["kms_enable"] == "1";
 			if(db_kms["kms_wan_port"]){
 				E("kms_wan_port").value = db_kms["kms_wan_port"];
@@ -53,16 +53,14 @@ function save() {
 	db_kms["kms_enable"] = E("kms_enable").checked ? '1' : '0';
 	db_kms["kms_wan_port"] = E("kms_wan_port").value;
 	// post data
-	//var id = parseInt(Math.random() * 100000000);
-	//var postData = {"id": id, "method": "kms_config.sh", "params": [1], "fields": db_kms };
-	db_kms["action_script"]="kms_config.sh";
-	db_kms["action_mode"] = "restart";
+	var id = parseInt(Math.random() * 100000000);
+	var postData = {"id": id, "method": "kms_config.sh", "params": [1], "fields": db_kms };
 	$.ajax({
-		url: "/applydb.cgi?p=kms",
+		url: "/_api/",
 		cache: false,
 		type: "POST",
-		dataType: "text",
-		data: $.param(db_kms)
+		dataType: "json",
+		data: JSON.stringify(postData)
 	});
 }
 function menu_hook(title, tab) {

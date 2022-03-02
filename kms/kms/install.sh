@@ -2,11 +2,11 @@
 
 source /jffs/softcenter/scripts/base.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
-MODEL=$(nvram get productid)
 DIR=$(cd $(dirname $0); pwd)
-if [ "$MODEL" == "GT-AC5300" ] || [ "$MODEL" == "GT-AX11000" ] || [ "$MODEL" == "GT-AC2900" ] || [ "$(nvram get merlinr_rog)" == "1" ];then
+MODEL=$(nvram get productid)
+if [ "${MODEL:0:3}" == "GT-" ] || [ "$(nvram get swrt_rog)" == "1" ];then
 	ROG=1
-elif [ "$MODEL" == "TUF-AX3000" ] || [ "$(nvram get merlinr_tuf)" == "1" ] ;then
+elif [ "${MODEL:0:3}" == "TUF" ] || [ "$(nvram get swrt_tuf)" == "1" ];then
 	TUF=1
 fi
 # stop kms first
@@ -20,6 +20,13 @@ cp -rf /tmp/kms/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/kms/bin/* /jffs/softcenter/bin/
 cp -rf /tmp/kms/webs/* /jffs/softcenter/webs/
 cp -rf /tmp/kms/res/* /jffs/softcenter/res/
+if [ "$ROG" == "1" ];then
+	continue
+elif [ "$TUF" == "1" ];then
+	sed -i 's/3e030d/3e2902/g;s/91071f/92650F/g;s/680516/D0982C/g;s/cf0a2c/c58813/g;s/700618/74500b/g;s/530412/92650F/g' /jffs/softcenter/webs/Module_kms.asp >/dev/null 2>&1
+else
+	sed -i '/rogcss/d' /jffs/softcenter/webs/Module_kms.asp >/dev/null 2>&1
+fi
 chmod +x /jffs/softcenter/scripts/kms*
 chmod +x /jffs/softcenter/bin/vlmcsd
 dbus set kms_version="$(cat $DIR/version)"

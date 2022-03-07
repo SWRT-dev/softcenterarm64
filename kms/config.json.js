@@ -1,9 +1,9 @@
 {
-"version":"1.6",
-"md5":"5754ce138f66de80309b9799fa1f7f50",
+"version":"1.7",
+"md5":"ce1f1b34b4cf58a05a2463b80527f00a",
 "arch":"arm64",
 "home_url":"Module_kms.asp",
 "title":"系统工具",
 "description":"kms",
-"build_date":"2022-03-02_16:14:46"
+"build_date":"2022-03-07_11:17:52"
 }

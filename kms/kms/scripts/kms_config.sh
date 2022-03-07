@@ -5,7 +5,7 @@ source /jffs/softcenter/scripts/base.sh
 CONFIG_FILE=/etc/dnsmasq.user/kms.conf
 
 start_kms(){
-	/jffs/softcenter/bin/vlmcsd
+	/jffs/softcenter/bin/vlmcsd -i /jffs/softcenter/bin/vlmcsd.ini -p /var/run/vlmcsd.pid -L 0.0.0.0:1688
 	echo "srv-host=_vlmcs._tcp.lan,`uname -n`.lan,1688,0,100" > $CONFIG_FILE
 	nvram set lan_domain=lan
 	nvram commit

@@ -18,8 +18,10 @@ start_kms(){
 stop_kms(){
 	killall vlmcsd
 	rm $CONFIG_FILE
-	rm -rf /jffs/softcenter/init.d/N97Kms.sh
-	rm -rf /jffs/softcenter/init.d/S97Kms.sh
+	if [ "$kms_enable" != "1" ]; then
+		rm -rf /jffs/softcenter/init.d/N97Kms.sh
+		rm -rf /jffs/softcenter/init.d/S97Kms.sh
+	fi
 	service restart_dnsmasq
 }
 

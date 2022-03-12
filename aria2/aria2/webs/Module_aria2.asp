@@ -201,12 +201,12 @@
 			function get_dbus_data() {
 				$.ajax({
 				 type: "GET",
-					url: "dbconf?p=aria2",
-					dataType: "script",
+					url: "/_api/aria2,ddnsto",
+					dataType: "json",
 					async: false,
 					success: function(data) {
-						db_aria2_ = db_aria2;
-						db_ddnsto_ = {};
+						db_aria2_ = data.result[0];
+						db_ddnsto_ = data.result[1];
 						conf2obj();
 						toggle_func();
 						update_visibility();
@@ -545,27 +545,25 @@
 				}
 				//console.log(db_aria2_);
 				// post data
-				//var id = parseInt(Math.random() * 100000000);
-				//var postData = {"id": id, "method": "aria2_config.sh", "params": ["restart"], "fields": dbus };
-				dbus["action_script"]="aria2_config.sh";
-				dbus["action_mode"] = "restart";
+				var id = parseInt(Math.random() * 100000000);
+				var postData = {"id": id, "method": "aria2_config.sh", "params": ["restart"], "fields": dbus };
 				$.ajax({
-					url: "/applydb.cgi?p=aria2",
+					url: "/_api/",
 					cache: false,
-				 	type: "POST",
-					dataType: "text",
-					data: $.param(dbus),
+					type: "POST",
+					dataType: "json",
+					data: JSON.stringify(postData),
 					success: function(response) {
-						//if (response.result == id){
+						if (response.result == id){
 							//refreshpage();
 							get_realtime_log();
-						//}
+						}
 					}
 				});
 			}
 			function get_log() {
 				$.ajax({
-					url: '/res/aria2_log.html',
+					url: '/_temp/aria2_log.txt',
 					type: 'GET',
 					dataType: 'html',
 					async: true,
@@ -598,8 +596,10 @@
 			}
 			function get_realtime_log() {
 				$.ajax({
-					url: '/res/aria2_log.html',
+					url: '/_temp/aria2_log.txt',
 					type: 'GET',
+					async: true,
+					cache:false,
 					dataType: 'text',
 					success: function(response) {
 						var retArea = E("log_content3");
@@ -723,34 +723,32 @@
 				dbus["aria2_enable"] = "0";
 				var id = parseInt(Math.random() * 100000000);
 				var postData = {"id": id, "method": "aria2_config.sh", "params": ["clean"], "fields": dbus };
-				dbus["action_script"]="aria2_config.sh";
-				dbus["action_mode"] = "clean";
 				$.ajax({
-					url: "/applydb.cgi?p=aria2",
+					url: "/_api/",
 					cache: false,
-				 	type: "POST",
-					dataType: "text",
-					data: $.param(dbus),
+					type: "POST",
+					dataType: "json",
+					data: JSON.stringify(postData),
 					success: function(response) {
-						//if (response.result == id){
+						if (response.result == id){
 							//refreshpage();
 							get_realtime_log();
-						//}
+						}
 					}
 				});
 			}
 			function get_run_status(){
-				//var id = parseInt(Math.random() * 100000000);
-				//var postData = {"id": id, "method": "aria2_status.sh", "params":[], "fields": ""};
+				var id = parseInt(Math.random() * 100000000);
+				var postData = {"id": id, "method": "aria2_status.sh", "params":[], "fields": ""};
 				$.ajax({
 				 type: "POST",
 					cache:false,
-					url: "/logreaddb.cgi?p=aria2.log&script=aria2_status.sh",
-					//data: JSON.stringify(postData),
-					dataType: "html",
+					url: "/_api/",
+					data: JSON.stringify(postData),
+					dataType: "json",
 					success: function(response){
 						console.log(response)
-						E("status").innerHTML = response;
+						E("status").innerHTML = response.result;
 						setTimeout("get_run_status();", 10000);
 					},
 					error: function(){
@@ -1294,7 +1292,7 @@
 				if (E("aria2_ddnsto").checked) {
 					E("link4.1").href = "https://aria2.paldier.com/#!/settings/rpc/set/wss/www.ddnsto.com/443/jsonrpc/" + link_ariang;
 				} else {
-					E("link4.1").href = "https://aria2.paldier.com/#!/settings/rpc/set/http/" + '<% nvram_get("lan_ipaddr"); %>' + "/" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc/" + link_ariang1;
+					E("link4.1").href = "http://aria2.paldier.com/#!/settings/rpc/set/ws/" + '<% nvram_get("lan_ipaddr"); %>' + "/" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc/" + link_ariang1;
 				}
 			}
 			
@@ -1305,7 +1303,7 @@
 				if (E("aria2_ddnsto").checked) {
 					E("link4.2").href = "https://sc.softcenter.site/aria2-ng/#!/settings/rpc/set/wss/www.ddnsto.com/443/jsonrpc/" + link_ariang;
 				} else {
-					E("link4.2").href = "https://sc.softcenter.site/aria2-ng/#!/settings/rpc/set/http/" + '<% nvram_get("lan_ipaddr"); %>' + "/" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc/" + link_ariang1;
+					E("link4.2").href = "http://sc.softcenter.site/aria2-ng/#!/settings/rpc/set/ws/" + '<% nvram_get("lan_ipaddr"); %>' + "/" + db_aria2_["aria2_rpc_listen_port"] + "/jsonrpc/" + link_ariang1;
 				}
 			}
 			function copyUrl2(){ 
@@ -1476,7 +1474,7 @@
 													<th style="width:25%;">AriaNg控制台</th>
 													<td>
 														<div style="padding-top:5px;">
-															<a id="link4.2" style="font-size: 14px;" href="https://sc.softcenter.site/aria2-ng/" target="_blank"><i><u>https://sc.softcenter.site/aria2-ng/</u></i></a>
+															<a id="link4.2" style="font-size: 14px;" href="http://sc.softcenter.site/aria2-ng/" target="_blank"><i><u>http://sc.softcenter.site/aria2-ng/</u></i></a>
 															<span><a style="font-size: 12px;margin-left: 20px;" href="https://koolshare.cn/thread-40938-1-1.html" target="_blank"><i><u>戳我了解</u></i></a>
 														</div>
 													</td>
@@ -1935,7 +1933,7 @@
 														<li>额外tracker设置，如果有多个tracker，可以用英文逗号隔开，或者每行一个，或者各一行一个均可！</li>
 														<li>如果你是非公网ip用户，可以开启远程穿透连接，插件将会自动为你设置为通过ddnsto插件穿透！</li>
 														<li>感谢<a href="https://github.com/aria2/aria2" target="_blank" ><i><u>aria2开源项目</u></i></a>，更多帮助信息，请在<a href="https://aria2.github.io/" target="_blank" ><i><u>aria2官方网站</u></i></a>了解。</li>
-														<li>本插件的维护地址在<a href="https://github.com/koolshare/rogsoft" target="_blank" ><i><u>https://github.com/koolshare/rogsoft</u></i></a>，欢迎到此反馈问题！</li>
+														<li>本插件的维护地址在<a href="https://github.com/SWRT-dev/softcenter" target="_blank" ><i><u>https://github.com/SWRT-dev/softcenter</u></i></a>，欢迎到此反馈问题！</li>
 													</ul>
 												</td>
 												</tr>

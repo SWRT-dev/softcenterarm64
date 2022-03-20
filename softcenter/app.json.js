@@ -112,6 +112,17 @@
             "version": "1.0.2"
         }, 
         {
+            "arch": "arm64", 
+            "build_date": "2022-03-20_15:57:37", 
+            "description": "支持Alidns(阿里云) Dnspod(腾讯云) Cloudflare 华为云 Callback", 
+            "home_url": "Module_ddns.asp", 
+            "md5": "7cf30286288fbd45c912825f31ed2098", 
+            "name": "ddns", 
+            "tar_url": "ddns/ddns.tar.gz", 
+            "title": "多ddns合一", 
+            "version": "0.1"
+        }, 
+        {
             "build_date": "2020-08-20_11:42:25", 
             "description": "内网穿透利器，谁用谁知道。", 
             "home_url": "Module_frpc.asp", 

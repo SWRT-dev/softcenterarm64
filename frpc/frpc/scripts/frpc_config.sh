@@ -2,15 +2,13 @@
 
 eval `dbus export frpc_`
 source /jffs/softcenter/scripts/base.sh
+mkdir -p /tmp/upload
 
 NAME=frpc
 BIN=/jffs/softcenter/bin/frpc
-INI_FILE=/tmp/.frpc.ini
-STCP_INI_FILE=/tmp/.frpc_stcp.ini
+INI_FILE=/tmp/upload/.frpc.ini
+STCP_INI_FILE=/tmp/upload/.frpc_stcp.ini
 PID_FILE=/var/run/frpc.pid
-lan_ip=`nvram get lan_ipaddr`
-lan_port="80"
-ddns_flag=false
 
 fun_ntp_sync(){
     ntp_server=`nvram get ntp_server0`
@@ -119,17 +117,9 @@ fun_start_stop(){
 }
 fun_nat_start(){
     if [ "${frpc_enable}"x = "1"x ];then
-		if [ "$(nvram get productid)" = "BLUECAVE" ];then
-			cp -r /jffs/softcenter/scripts/frpc_config.sh /jffs/softcenter/init.d/M99frpc.sh
-		else
-			[ ! -L "/jffs/softcenter/init.d/N99frpc.sh" ] && ln -sf /jffs/softcenter/scripts/frpc_config.sh /jffs/softcenter/init.d/N99frpc.sh
-		fi
+	[ ! -L "/jffs/softcenter/init.d/N99frpc.sh" ] && ln -sf /jffs/softcenter/scripts/frpc_config.sh /jffs/softcenter/init.d/N99frpc.sh
     else
-	if [ "$(nvram get productid)" = "BLUECAVE" ];then
-		rm -rf /jffs/softcenter/init.d/M99frpc.sh >/dev/null 2>&1
-	else
-		rm -rf /jffs/softcenter/init.d/N99frpc.sh >/dev/null 2>&1
-	fi
+	rm -rf /jffs/softcenter/init.d/N99frpc.sh >/dev/null 2>&1
     fi
 }
 fun_crontab(){
@@ -147,29 +137,6 @@ fun_crontab(){
         cru d frpc_monitor
     fi
 }
-fun_ddns_stop(){
-	nvram unset ddns_hostname_x
-    nvram set ddns_enable_x=0
-    nvram commit
-}
-fun_ddns_start(){
-    # ddns setting
-    if [ "${frpc_enable}"x = "1"x ];then
-        # ddns setting
-        if [[ "${frpc_common_ddns}" == "1" ]] && [[ "${frpc_domain}" != "" ]]; then
-            nvram set ddns_enable_x=1
-            nvram set ddns_hostname_x=${frpc_domain}
-            ddns_custom_updated 1
-            nvram commit
-        elif [[ "${frpc_common_ddns}" == "2" ]]; then
-            echo "ddns no setting"
-        else
-            fun_ddns_stop
-        fi
-    else
-        fun_ddns_stop
-    fi
-}
 
 # =============================================
 # this part for start up by post-mount
@@ -179,20 +146,21 @@ start)
 	fun_start_stop
 	fun_nat_start
 	fun_crontab
-	fun_ddns_start
 	;;
 start_nat)
 	fun_ntp_sync
 	fun_start_stop
 	fun_crontab
-	fun_ddns_start
 	;;
+esac
 # for web submit
-restart)
+case $2 in
+1)
 	fun_ntp_sync
 	fun_start_stop
 	fun_nat_start
 	fun_crontab
-	fun_ddns_start
+	http_response "$1"
 	;;
 esac
+

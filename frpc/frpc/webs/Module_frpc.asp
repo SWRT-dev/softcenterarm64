@@ -125,10 +125,9 @@ input[type=button]:focus {
 </style>
 <script>
 var myid;
-var db_frpc_ = {};
-var _responseLen;
+var db_frpc = {};
 var node_max = 0;
-var params_input = ["frpc_common_ddns", "frpc_domain", "frpc_common_cron_time", "frpc_common_cron_hour_min", "frpc_common_server_addr", "frpc_common_server_port", "frpc_common_protocol", "frpc_common_tcp_mux", "frpc_common_login_fail_exit", "frpc_common_privilege_token", "frpc_common_vhost_http_port", "frpc_common_vhost_https_port", "frpc_common_user", "frpc_common_log_file", "frpc_common_log_level", "frpc_common_log_max_days"]
+var params_input = ["frpc_domain", "frpc_common_cron_time", "frpc_common_cron_hour_min", "frpc_common_server_addr", "frpc_common_server_port", "frpc_common_protocol", "frpc_common_tcp_mux", "frpc_common_login_fail_exit", "frpc_common_privilege_token", "frpc_common_vhost_http_port", "frpc_common_vhost_https_port", "frpc_common_user", "frpc_common_log_file", "frpc_common_log_level", "frpc_common_log_max_days"]
 var params_check = ["frpc_enable", "frpc_customize_conf"]
 var params_base64 = ["frpc_config"]
 function initial() {
@@ -142,33 +141,33 @@ function initial() {
 function get_dbus_data() {
 	$.ajax({
 		type: "GET",
-		url: "/dbconf?p=frpc",
-		dataType: "script",
+		url: "/_api/frpc",
+		dataType: "json",
 		async: false,
 		success: function(data) {
-			db_frpc_ = db_frpc;
+			db_frpc = data.result[0];
 			conf2obj();
-			$("#frpc_version_show").html("插件版本：" + db_frpc_["frpc_version"]);
+			$("#frpc_version_show").html("插件版本：" + db_frpc["frpc_version"]);
 		}
 	});
 }
 function conf2obj() {
 	//input
 	for (var i = 0; i < params_input.length; i++) {
-		if(db_frpc_[params_input[i]]){
-			E(params_input[i]).value = db_frpc_[params_input[i]];
+		if(db_frpc[params_input[i]]){
+			E(params_input[i]).value = db_frpc[params_input[i]];
 		}
 	}
 	// checkbox
 	for (var i = 0; i < params_check.length; i++) {
-		if(db_frpc_[params_check[i]]){
-			E(params_check[i]).checked = db_frpc_[params_check[i]] == 1 ? true : false
+		if(db_frpc[params_check[i]]){
+			E(params_check[i]).checked = db_frpc[params_check[i]] == 1 ? true : false
 		}
 	}
 	//base64
 	for (var i = 0; i < params_base64.length; i++) {
-		if(db_frpc_[params_base64[i]]){
-			E(params_base64[i]).value = Base64.decode(db_frpc_[params_base64[i]]);
+		if(db_frpc[params_base64[i]]){
+			E(params_base64[i]).value = Base64.decode(db_frpc[params_base64[i]]);
 		}
 	}
 	//dfnamic table data
@@ -176,24 +175,20 @@ function conf2obj() {
 	$('#conf_table tr:last').after(refresh_html());
 }
 function get_status() {
-		//var postData = {
-			//"id": parseInt(Math.random() * 100000000),
-			//"method": "frpc_status.sh",
-			//"params": [],
-			//"fields": ""
-		//};
-		var dbus = {};
-		dbus["action_script"]="frpc_status.sh";
-		dbus["action_mode"] = " Refresh ";
+		var postData = {
+			"id": parseInt(Math.random() * 100000000),
+			"method": "frpc_status.sh",
+			"params": [],
+			"fields": ""
+		};
 		$.ajax({
 			type: "POST",
 			cache: false,
-			url: "/applydb.cgi?p=frpc",
-			data: $.param(dbus),
-			dataType: "text",
+			url: "/_api/",
+			data: JSON.stringify(postData),
+			dataType: "json",
 			success: function(response) {
-				//E("status").innerHTML = response.result;
-				setTimeout("check_frpc_status();", 10000);
+				E("status").innerHTML = response.result;
 				setTimeout("get_status();", 10000);
 			},
 			error: function() {
@@ -201,35 +196,7 @@ function get_status() {
 			}
 		});
 	}
-function check_frpc_status() {
-			  $.ajax({
-			    url: '/res/frpc_check.html',
-			    dataType: 'html',
-			    error: function(xhr) {
-			      setTimeout("check_frpc_status();", 5000);
-			    },
-			    success: function(response) {
-			      if (response.search("XU6J03M6") != -1) {
-				frpc_status = response.replace("XU6J03M6", " ");
-				//alert(aria2_status);
-				E("status").innerHTML = frpc_status;
-				return true;
-			      }
-			      if (_responseLen == response.length) {
-				noChange_status++;
-			      } else {
-				noChange_status = 0;
-			      }
-			      if (noChange_status > 100) {
-				noChange_status = 0;
-				//refreshpage();
-			      } else {
-				//setTimeout("check_aria2_status();", 5000);
-			      }
-			      _responseLen = response.length;
-			    }
-			  });
-}
+
 function buildswitch() {
 	$("#frpc_enable").click(
 	function() {
@@ -256,43 +223,41 @@ function save() {
 	//input
 	for (var i = 0; i < params_input.length; i++) {
 		if (E(params_input[i]).value) {
-			db_frpc_[params_input[i]] = E(params_input[i]).value;
+			db_frpc[params_input[i]] = E(params_input[i]).value;
 		}else{
-			db_frpc_[params_input[i]] = "";
+			db_frpc[params_input[i]] = "";
 		}
 	}
 	// checkbox
 	for (var i = 0; i < params_check.length; i++) {
-		db_frpc_[params_check[i]] = E(params_check[i]).checked ? '1' : '0';
+		db_frpc[params_check[i]] = E(params_check[i]).checked ? '1' : '0';
 	}
 	//base64
 	for (var i = 0; i < params_base64.length; i++) {
 		if (!E(params_base64[i]).value) {
-			db_frpc_[params_base64[i]] = "";
+			db_frpc[params_base64[i]] = "";
 		} else {
 			if (E(params_base64[i]).value.indexOf("=") != -1) {
-				db_frpc_[params_base64[i]] = Base64.encode(E(params_base64[i]).value);
+				db_frpc[params_base64[i]] = Base64.encode(E(params_base64[i]).value);
 			} else {
-				db_frpc_[params_base64[i]] = "";
+				db_frpc[params_base64[i]] = "";
 			}
 		}
 	}
-	//console.log(db_frpc_);
+	//console.log(db_frpc);
 	// post data
-	//var uid = parseInt(Math.random() * 100000000);
-	//var postData = {"id": uid, "method": "frpc_config.sh", "params": [1], "fields": db_frpc_ };
-	db_frpc_["action_script"]="frpc_config.sh";
-	db_frpc_["action_mode"] = "restart";
+	var uid = parseInt(Math.random() * 100000000);
+	var postData = {"id": uid, "method": "frpc_config.sh", "params": [1], "fields": db_frpc };
 	$.ajax({
-		url: "/applydb.cgi?p=frpc",
+		url: "/_api/",
 		cache: false,
 		type: "POST",
-		dataType: "text",
-		data:  $.param(db_frpc_),
+		dataType: "json",
+		data: JSON.stringify(postData),
 		success: function(response) {
-			//if (response.result == uid){
+			if (response.result == uid){
 				refreshpage();
-			//}
+			}
 		}
 	});
 }
@@ -331,15 +296,13 @@ function addTr(o) {
 			ns[p + "_" + params[i] + "_" + myid] = $('#' + params[i]).val();
 		}
 	}
-	//var postData = {"id": parseInt(Math.random() * 100000000), "method": "dummy_script.sh", "params":[], "fields": ns };
-	ns["action_script"]="frpc_config.sh";
-	ns["action_mode"] = "clean";
+	var postData = {"id": parseInt(Math.random() * 100000000), "method": "dummy_script.sh", "params":[], "fields": ns };
 	$.ajax({
 		type: "POST",
 		cache:false,
-		url: "/applydb.cgi?p=frpc",
-		data: $.param(ns),
-		dataType: "text",
+		url: "/_api/",
+		data: JSON.stringify(postData),
+		dataType: "json",
 		success: function(response) {
 			//回传成功后，重新生成表格
 			refresh_table();
@@ -372,15 +335,13 @@ function delTr(o) { //删除配置行功能
 			ns[p + "_" + params[i] + "_" + id] = "";
 		}
 		//回传删除数据操作给dbus接口
-		//var postData = {"id": parseInt(Math.random() * 100000000), "method": "dummy_script.sh", "params":[], "fields": ns };
-		ns["action_script"]="frpc_config.sh";
-		ns["action_mode"] = "clean";
+		var postData = {"id": parseInt(Math.random() * 100000000), "method": "dummy_script.sh", "params":[], "fields": ns };
 		$.ajax({
 			type: "POST",
 			cache:false,
-			url: "/applydb.cgi?p=frpc",
-			data: $.param(ns),
-			dataType: "text",
+			url: "/_api/",
+			data: JSON.stringify(postData),
+			dataType: "json",
 			success: function(response) {
 				refresh_table();
 			}
@@ -390,11 +351,11 @@ function delTr(o) { //删除配置行功能
 function refresh_table() {
 	$.ajax({
 		type: "GET",
-		url: "/dbconf?p=frpc",
-		dataType: "script",
+		url: "/_api/frpc",
+		dataType: "json",
 		async: false,
 		success: function(data) {
-			db_frpc_ = db_frpc;
+			db_frpc = data.result[0];
 			$("#conf_table").find("tr:gt(2)").remove();
 			$('#conf_table tr:last').after(refresh_html());
 		}
@@ -451,7 +412,7 @@ function editlTr(o) { //编辑节点功能，显示编辑面板
 }
 function getAllConfigs() {
 	var dic = {};
-	for (var field in db_frpc_) {
+	for (var field in db_frpc) {
 		names = field.split("_");
 		dic[names[names.length - 1]] = 'ok';
 	}
@@ -462,11 +423,11 @@ function getAllConfigs() {
 		var obj = {};
 		for (var i = 0; i < params.length; i++) {
 			var ofield = p + "_" + params[i] + "_" + field;
-			if (typeof db_frpc_[ofield] == "undefined") {
+			if (typeof db_frpc[ofield] == "undefined") {
 				obj = null;
 				break;
 			}
-			obj[params[i]] = db_frpc_[ofield];
+			obj[params[i]] = db_frpc[ofield];
 		}
 		if (obj != null) {
 			var node_i = parseInt(field);
@@ -541,9 +502,10 @@ function get_frpc_conf() {
 */
 function get_frpc_conf() {
 	$.ajax({
-		url: '/res/frpc_ini.html',
+		url: '/_temp/.frpc.ini',
 		type: 'GET',
-		dataType: 'html',
+		cache:false,
+		dataType: 'text',
 		success: function(res) {
 			$('#frpctxt').val(res);
 		}
@@ -551,9 +513,10 @@ function get_frpc_conf() {
 }
 function get_stcp_conf() {
 	$.ajax({
-		url: '/res/frpc_stcp.html',
+		url: '/_temp/.frpc_stcp.ini',
 		type: 'GET',
-		dataType: 'html',
+		cache:false,
+		dataType: 'text',
 		success: function(res) {
 			$('#usertxt').val(res);
 		}
@@ -817,7 +780,7 @@ function openssHint(itemNum) {
                                     <div style="float:left;" class="formfonttitle">软件中心 - Frpc内网穿透</div>
                                     <div style="float:right; width:15px; height:25px;margin-top:10px"><img id="return_btn" onclick="reload_Soft_Center();" align="right" style="cursor:pointer;position:absolute;margin-left:-30px;margin-top:-25px;" title="返回软件中心" src="/images/backprev.png" onMouseOver="this.src='/images/backprevclick.png'" onMouseOut="this.src='/images/backprev.png'"></img></div>
                                     <div style="margin:30px 0 10px 5px;" class="splitLine"></div>
-                                    <div class="formfontdesc"><i>* 为了Frpc稳定运行，请开启虚拟内存功能！！！</i>&nbsp;&nbsp;&nbsp;&nbsp;【<a href="http://koolshare.cn/thread-65379-1-1.html"  target="_blank"><i>服务器搭建教程</i></a>】</div>
+                                    <div class="formfontdesc"><i>* 为了Frpc稳定运行，请开启虚拟内存功能！！！</i></div>
                                     <div id="frpc_switch_show">
                                     <table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3" class="FormTable">
                                         <tr id="switch_tr">
@@ -837,9 +800,6 @@ function openssHint(itemNum) {
                                                     </label>
                                                 </div>
                                                 <div id="frpc_version_show" style="padding-top:5px;margin-left:30px;margin-top:0px;float: left;"></div>
-                                                <div id="frpc_changelog_show" style="padding-top:5px;margin-right:10px;margin-top:0px;float: right;">
-                                                    <a type="button" class="frpc_btn" style="cursor:pointer" href="https://raw.githubusercontent.com/paldier/softcenter/master/frpc/Changelog.txt" target="_blank">更新日志</a> <a type="button" class="frpc_btn" style="cursor:pointer" target="_blank" href="https://github.com/fatedier/frp/blob/master/README_zh.md">自定义配置帮助</a>
-                                                </div>
                                             </td>
                                         </tr>
                                         <tr id="frpc_status">
@@ -851,11 +811,6 @@ function openssHint(itemNum) {
                                         <tr>
                                             <th width="20%"><a class="hintstyle" href="javascript:void(0);" onclick="openssHint(18)">DDNS显示设置</a></th>
                                             <td>
-                                                <select id="frpc_common_ddns" name="frpc_common_ddns" style="margin:0px 0px 0px 2px;" class="input_option">
-                                                    <option value="2" selected="selected">不做更改</option>
-                                                    <option value="1">开启</option>
-                                                    <option value="0">关闭</option>
-                                                </select>
                                                 <input type="text" class="input_ss_table" id="frpc_domain" name="frpc_domain" maxlength="255" value="" placeholder="填入要显示的域名，如:router.xxx.com" style="width:330px;margin-top: 3px;" />
                                             </td>
                                         </tr>
@@ -1116,7 +1071,7 @@ function openssHint(itemNum) {
                                     <!-- this is the popup area for user rules -->
                                     <div id="frpc_settings"  class="contentM_qis" style="box-shadow: 3px 3px 10px #000;margin-top: 70px;">
                                         <div class="user_title">Frpc 配置文件&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="close_conf('frpc_settings');" value="关闭"><span class="close"></span></a></div>
-                                        <div style="margin-left:15px"><i>1&nbsp;&nbsp;文本框内的内容保存在【/tmp/.frpc.ini】。</i></div>
+                                        <div style="margin-left:15px"><i>1&nbsp;&nbsp;文本框内的内容保存在【/tmp/upload/.frpc.ini】。</i></div>
                                         <div style="margin-left:15px"><i>2&nbsp;&nbsp;请自行保存到本地，并根据实际情况进行修改，如有疑问请到frp官网求助。</i></div>
                                         <div id="user_tr" style="margin: 10px 10px 10px 10px;width:98%;text-align:center;">
                                             <textarea cols="50" rows="20" wrap="off" id="frpctxt" style="width:97%;padding-left:10px;padding-right:10px;border:1px solid #222;font-family:'Courier New', Courier, mono; font-size:11px;background:#475A5F;color:#FFFFFF;outline: none;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled="disabled"></textarea>
@@ -1127,7 +1082,7 @@ function openssHint(itemNum) {
                                     </div>
                                     <div id="stcp_settings"  class="contentM_qis" style="box-shadow: 3px 3px 10px #000;margin-top: 70px;">
                                         <div class="user_title">Frpc stcp 配置文件参考&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="close_conf('stcp_settings');" value="关闭"><span class="close"></span></a></div>
-                                        <div style="margin-left:15px"><i>1&nbsp;&nbsp;文本框内的内容保存在【/tmp/.frpc_stcp.ini】。</i></div>
+                                        <div style="margin-left:15px"><i>1&nbsp;&nbsp;文本框内的内容保存在【/tmp/upload/.frpc_stcp.ini】。</i></div>
                                         <div style="margin-left:15px"><i>2&nbsp;&nbsp;请自行保存到本地，并根据实际情况进行修改，如有疑问请到frp官网求助。</i></div>
                                         <div id="user_tr" style="margin: 10px 10px 10px 10px;width:98%;text-align:center;">
                                             <textarea cols="50" rows="20" wrap="off" id="usertxt" style="width:97%;padding-left:10px;padding-right:10px;border:1px solid #222;font-family:'Courier New', Courier, mono; font-size:11px;background:#475A5F;color:#FFFFFF;outline: none;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled="disabled"></textarea>

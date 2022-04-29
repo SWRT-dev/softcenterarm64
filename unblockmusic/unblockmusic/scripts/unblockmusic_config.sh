@@ -9,14 +9,6 @@ ipt_n="iptables -t nat"
 serverCrt="/jffs/softcenter/bin/Music/server.crt"
 serverKey="/jffs/softcenter/bin/Music/server.key"
 
-create_autostart(){
-		ln -sf /jffs/softcenter/scripts/unblockmusic_config.sh /jffs/softcenter/init.d/S99unblockmusic.sh
-}
-
-remove_autostart(){
-	rm -f /jffs/softcenter/init.d/*unblockmusic.sh
-}
-
 add_rule()
 {
 	echo_date 加载nat规则...
@@ -77,7 +69,7 @@ start_unblockmusic(){
 	fi
 	mkdir -p /var/wwwext
 	cp -f /jffs/softcenter/bin/Music/ca.crt /www/ext
-	create_autostart
+	ln -sf /jffs/softcenter/scripts/unblockmusic_config.sh /jffs/softcenter/init.d/S99unblockmusic.sh
 }
 
 stop_unblockmusic(){
@@ -87,7 +79,9 @@ stop_unblockmusic(){
 	rm -f /tmp/unblockmusic.log
 
 	del_rule
-	remove_autostart
+	if [ "$unblockmusic_enable" == "0" ]; then
+		rm -f /jffs/softcenter/init.d/*unblockmusic.sh
+	fi
 }
 
 case $ACTION in

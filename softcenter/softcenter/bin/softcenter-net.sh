@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (C) 2021 SWRTdev
+# Copyright (C) 2021-2022 SWRTdev
 
 ACTION=$1
 

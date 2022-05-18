@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (C) 2021 SWRTdev
+# Copyright (C) 2021-2022 SWRTdev
 
 MODEL=$(nvram get productid)
 if [ "${MODEL:0:3}" == "GT-" ] || [ "$(nvram get swrt_rog)" == "1" ];then

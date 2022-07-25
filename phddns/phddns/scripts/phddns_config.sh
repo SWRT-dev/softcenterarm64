@@ -1,63 +1,100 @@
 #!/bin/sh
-eval `dbus export phddns`
+source /jffs/softcenter/scripts/base.sh
+eval `dbus export phddns_`
 
-Phddns=/jffs/softcenter/bin
-StatusFile=/tmp/oraysl.status
-orayproc=`ps | grep "oraysl" | grep -v 'grep' | awk '{print $1}'`
-
-logger "request is:"$phddns_basic_request
-
-########get user info SN and status#####
-getStatus()
+unbind_account()
 {
-    if [ -f "$StatusFile" ]; then
-        txt=`cat "$StatusFile"|tr '\n' '$'`
-        dbus set phddns_basic_info=$txt
-    else
-        dbus set phddns_basic_status=""
-    fi
+	local password=$(echo $phddns_password | base64 -d)
+	curl -X POST -d '{"sn":"'$phddns_sn'","password":"'$password'"}' -H 'Content-Type: application/json' 'https://hsk-api.oray.com/devices/unbinding'
+	if [ "$?" == "200"];then
+		http_response "成功"
+	else
+		http_response "失败"
+	fi
 }
 
-#####Request processing interface#######
-if [ "$phddns_basic_request" = "20" ]; then
-    if [ -f $Phddns/oraysl ]; then
-        dbus set phddns_basic_status="020"
-        dbus set phddns_basic_info=""
-        sleep 2
-        /jffs/softcenter/scripts/phddns_run.sh stop
-    else
-        dbus set phddns_basic_status="00"
-    fi
-elif [ "$phddns_basic_request" = "10" ]; then
-    if [ -f $Phddns/oraysl ]; then
-        dbus set phddns_basic_status="010"
-        /jffs/softcenter/scripts/phddns_run.sh start
-        sleep 2
-    else
-        dbus set phddns_basic_status="00"
-    fi
-    getStatus
-elif [ "$phddns_basic_request" = "00" ]; then
-    if [ -n "$orayproc" ]; then 
-        #does not exist oray cloese switch#
-        dbus set phddns_basic_status="01"
-        getStatus
-    else
-        dbus set phddns_basic_status="02"
-    fi
-elif [ "$phddns_basic_request" = "30" ]; then
-    if [ -f $Phddns/config/init.status ]; then
-        /jffs/softcenter/scripts/phddns_run.sh reset
-        ##reset success##
-        dbus set phddns_basic_status="010"
-        dbus set phddns_reset_status="01"
-        sleep 2
-    else
-        dbus set phddns_reset_status="00"
-    fi
-else
-    dbus set phddns_basic_status="00"
-fi
+get_qrimg()
+{
+	local password=$(echo $phddns_password | base64 -d)
+	dbus remove phddns_qrimg
+	ret=$(curl -X POST -d '{"sn":"'$phddns_sn'","password":"'$password'"}' -H 'Content-Type: application/json' 'https://hsk-api.oray.com/devices/qrcode')
+	if [ "$(echo $ret |grep qrcodeimg)" != "" ];then
+		http_response "$(echo $ret |/jffs/softcenter/bin/jq -r .qrcodeimg | base64)"
+	else
+		http_response "no"
+	fi
+}
 
-sleep 2
-#dbus save phddns
+get_login_info()
+{
+	local url ret
+	ret=$(curl http://127.0.0.1:16062/ora_service/getmgrurl)
+	url=$(echo $ret |/jffs/softcenter/bin/jq -r .data.url)
+	if [ "${url}" != "null" ];then
+		http_response "$(echo ${url} | base64 | tr -d '\n')"
+	else
+		http_response "no"
+	fi
+}
+
+get_base_info()
+{
+	local sn password status ip result
+	result=$(curl http://127.0.0.1:16062/ora_service/getsn)
+	status=$(echo $result |/jffs/softcenter/bin/jq -r .result_code)
+	if [ "$status" == "0" ];then
+		status=$(echo $result |/jffs/softcenter/bin/jq -r .data.status)
+		password=$(echo $result |/jffs/softcenter/bin/jq -r .data.device_sn_pwd)
+		sn=$(echo $result |/jffs/softcenter/bin/jq -r .data.device_sn)
+		ip=$(echo $result |/jffs/softcenter/bin/jq -r .data.public_ip)
+		dbus set phddns_password=$(echo $password | base64)
+		dbus set phddns_sn=$sn
+		dbus set phddns_ip="$ip"
+		dbus set phddns_status=$status
+	else
+		dbus set phddns_status=0
+		dbus remove phddns_password
+		dbus remove phddns_sn
+		dbus remove phddns_ip
+	fi
+}
+
+phddns_stop()
+{
+	killall phtunnel
+}
+
+phddns_start()
+{
+	cd /jffs/softcenter/bin
+	phtunnel -c /etc/phtunnel.json -l /var/log/oraybox/phtunnel.log --appid=$phddns_appid --appkey=$phddns_appkey -r -d
+	get_base_info
+}
+
+case $1 in
+stop)
+	phddns_stop
+	;;
+start)
+	[ "$phddns_enable" == "1" ] && phddns_start
+	;;
+esac
+
+case $2 in
+getsn)
+	get_base_info
+	;;
+geturl)
+	get_login_info
+	;;
+getqr)
+	get_qrimg
+	;;
+unbind)
+	unbind_account
+	;;
+restart)
+	phddns_stop
+	[ "$phddns_enable" == "1" ] && phddns_start
+	;;
+esac

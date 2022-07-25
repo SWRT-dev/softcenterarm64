@@ -2,9 +2,9 @@
 
 
 MODULE=phddns
-VERSION=3.0.3
-TITLE="花生壳3.0"
-DESCRIPTION="花生壳内网版3.0 （phddns） 动态域名 内网穿透"
+VERSION=3.0.4
+TITLE="花生壳内网穿透"
+DESCRIPTION="花生壳内网穿透"
 HOME_URL=Module_phddns.asp
 
 # Check and include base

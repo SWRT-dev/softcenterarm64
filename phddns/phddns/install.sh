@@ -15,12 +15,13 @@ if [ "$phddns_enable" == "1" ];then
 	[ -f "/jffs/softcenter/scripts/phddns_config.sh" ] && sh /jffs/softcenter/scripts/phddns_config.sh stop >/dev/null 2>&1 &
 fi
 
-rm -rf /jffs/softcenter/init.d/*Phddns.sh > /dev/null 2>&1
+rm -rf /jffs/softcenter/init.d/*phddns.sh > /dev/null 2>&1
 cp -rf /tmp/phddns/bin/* /jffs/softcenter/bin/
 cp -rf /tmp/phddns/res/* /jffs/softcenter/res/
 cp -rf /tmp/phddns/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/phddns/webs/*  /jffs/softcenter/webs/
 cp -rf /tmp/phddns/uninstall.sh /jffs/softcenter/scripts/uninstall_phddns.sh
+ln -sf /jffs/softcenter/scripts/phddns_config.sh /jffs/softcenter/init.d/S99phddns.sh
 if [ "$ROG" == "1" ];then
 	continue
 elif [ "$TUF" == "1" ];then
@@ -31,9 +32,6 @@ fi
 
 chmod 755 /jffs/softcenter/scripts/phddns_*.sh
 chmod 755 /jffs/softcenter/bin/*
-
-# phddns config directory
-mkdir /jffs/softcenter/etc > /dev/null 2>&1
 
 # 离线安装用
 dbus set phddns_status=0

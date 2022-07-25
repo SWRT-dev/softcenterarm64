@@ -308,14 +308,14 @@
         }, 
         {
             "arch": "arm64", 
-            "build_date": "2022-07-25_19:44:28", 
+            "build_date": "2022-07-25_20:09:08", 
             "description": "花生壳内网穿透", 
             "home_url": "Module_phddns.asp", 
-            "md5": "a47a6c3fdd84c5a86b5c8f759dc66adf", 
+            "md5": "c9fe8f161c5e913e21c4dd2fa41bfb61", 
             "name": "phddns", 
             "tar_url": "phddns/phddns.tar.gz", 
             "title": "花生壳内网穿透", 
-            "version": "3.0.4"
+            "version": "3.0.5"
         }, 
         {
             "build_date": "2020-08-20_11:32:48", 

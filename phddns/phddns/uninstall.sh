@@ -7,7 +7,7 @@ cd /tmp
 /jffs/softcenter/scripts/phddns_config.sh stop
 
 rm -rf /jffs/softcenter/bin/phtunnel
-rm -rf /jffs/softcenter/init.d/*Phddns.sh
+rm -rf /jffs/softcenter/init.d/*phddns.sh
 rm -rf /jffs/softcenter/scripts/phddns_*.sh
 rm -rf /jffs/softcenter/res/icon-phddns.png
 rm -rf /jffs/softcenter/webs/Module_phddns.asp

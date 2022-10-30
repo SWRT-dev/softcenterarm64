@@ -38,7 +38,7 @@ start_instance() {
 
 	add_join $zerotier_id
 
-	/jffs/softcenter/bin/zerotier-one $args $config_path >/dev/null 2>&1 &
+	/jffs/softcenter/bin/zerotier-one -d $args $config_path
 
 	rules
 }

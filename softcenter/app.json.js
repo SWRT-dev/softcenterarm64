@@ -186,6 +186,17 @@
             "version": "2.9.3"
         }, 
         {
+            "arch": "arm64", 
+            "build_date": "2022-10-30_17:29:54", 
+            "description": "tailscale", 
+            "home_url": "Module_tailscale.asp", 
+            "md5": "3b3e87ce8fe9cf6c396c7bfc06661375", 
+            "name": "tailscale", 
+            "tar_url": "tailscale/tailscale.tar.gz", 
+            "title": "tailscale", 
+            "version": "0.0.1"
+        }, 
+        {
             "build_date": "2020-08-20_11:50:35", 
             "description": "这是一只自动帮你签到的dog", 
             "home_url": "Module_qiandao.asp", 

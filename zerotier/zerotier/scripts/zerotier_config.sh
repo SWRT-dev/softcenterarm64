@@ -60,7 +60,7 @@ rules() {
 	iptables -I FORWARD -i $zt0 -o $zt0 -j ACCEPT
 	iptables -I FORWARD -i $zt0 -j ACCEPT
 	iptables -I FORWARD -o $zt0 -j ACCEPT
-	if [ $zerotier_nat -eq 1 ]; then
+	if [ $zerotier_nat -eq 1 ] && [ "$(/jffs/softcenter/bin/zerotier-cli -D/jffs/softcenter/etc/zerotier-one info| grep OFFLINE)" == "" ]; then
 		iptables -t nat -A POSTROUTING -o $zt0 -j MASQUERADE
 		while [ "$(ip route | grep "dev $zt0  proto" | awk '{print $1}')" = "" ]; do
 			sleep 1

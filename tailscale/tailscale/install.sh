@@ -16,6 +16,7 @@ if [ "$enable" == "1" ];then
 fi
 
 # cp files
+cp -rf /tmp/tailscale/bin/* /jffs/softcenter/bin/
 cp -rf /tmp/tailscale/scripts/* /jffs/softcenter/scripts/
 cp -rf /tmp/tailscale/webs/* /jffs/softcenter/webs/
 cp -rf /tmp/tailscale/res/* /jffs/softcenter/res/

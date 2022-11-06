@@ -1,9 +1,9 @@
 {
-"version":"0.0.1",
-"md5":"3b3e87ce8fe9cf6c396c7bfc06661375",
+"version":"0.0.2",
+"md5":"4b68efd3d42b3b4d1e858d73c50d44a9",
 "arch":"arm64",
 "home_url":"Module_tailscale.asp",
 "title":"tailscale",
 "description":"tailscale",
-"build_date":"2022-10-30_17:29:54"
+"build_date":"2022-11-06_15:22:22"
 }

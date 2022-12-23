@@ -278,14 +278,14 @@
         }, 
         {
             "arch": "arm64", 
-            "build_date": "2022-10-30_19:46:05", 
+            "build_date": "2022-12-23_15:32:33", 
             "description": "分布式的虚拟以太网", 
             "home_url": "Module_zerotier.asp", 
-            "md5": "5a7f54917923c5bbcb193968d64f9a53", 
+            "md5": "9191c810f7a5d404717ccb2d45026efe", 
             "name": "zerotier", 
             "tar_url": "zerotier/zerotier.tar.gz", 
             "title": "zerotier", 
-            "version": "1.0"
+            "version": "1.1"
         }, 
         {
             "build_date": "2021-01-26_08:34:59", 

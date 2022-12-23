@@ -122,11 +122,21 @@ stop_zero() {
 	rm -rf $config_path
 }
 
-case $ACTION in
+case $1 in
 stop)
 	stop_zero
 	;;
-*)
+start)
+	start_zero
+	;;
+esac
+
+case $2 in
+stop)
+	stop_zero
+	;;
+restart)
+	stop_zero
 	start_zero
 	;;
 esac

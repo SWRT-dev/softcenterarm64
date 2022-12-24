@@ -26,13 +26,11 @@
 <script type="text/javascript">
 
 var db_tailscale = {};
-var params_check = ["tailscale_enable"]; 
+var params_check = ["tailscale_enable", "tailscale_nat"]; 
 
 function init() {
 	show_menu(menu_hook);
 	get_dbus_data();
-	get_status();
-	check_join();
 }
 
 
@@ -49,6 +47,12 @@ function get_dbus_data() {
 		success: function(data) {
 			db_tailscale = data.result[0];
 			conf2obj();
+			if(db_tailscale["tailscale_enable"] == "1"){
+				if(db_tailscale["tailscale_online"] == "3")
+					E("status").innerHTML = "无法连接到服务器";
+				else
+					get_status();
+			}
 		}
 	});
 }
@@ -64,10 +68,6 @@ function conf2obj() {
 			E(params_check[i]).checked = db_tailscale[params_check[i]] == "1";
 		}
 	}
-	if(db_tailscale["tailscale_online"] == "1")
-		E("login_id").style.display = "none";
-	else
-		E("login_id").style.display = "";
 }
 
 function get_status() {
@@ -80,8 +80,12 @@ function get_status() {
 		data: JSON.stringify(postData),
 		dataType: "json",
 		success: function(response) {
-			E("status").innerHTML = response.result;
-			setTimeout("get_status();", 20000);
+			if(typeof response.result == "number")
+				setTimeout("get_status();", 5000);
+			else{
+				E("status").innerHTML = response.result;
+				setTimeout("get_status();", 20000);
+			}
 		},
 		error: function() {
 			setTimeout("get_status();", 5000);
@@ -89,30 +93,20 @@ function get_status() {
 	});
 }
 
-function check_join() {
+function check_login() {
 	var id = parseInt(Math.random() * 100000000);
-	var postData = {"id": id, "method": "tailscale_config.sh", "params": ["get_status"], "fields": db_tailscale};
+	var postData = { "id": id, "method": "tailscale_config.sh", "params": "check_login", "fields": db_tailscale };
 	$.ajax({
 		type: "POST",
-		cache: false,
+		cache:false,
 		url: "/_api/",
 		data: JSON.stringify(postData),
 		dataType: "json",
-		success: function(response) {
-			get_dbus_data();
-			if(db_tailscale["tailscale_online"] == "0" && typeof db_tailscale["tailscale_login_url"] == "undefined"){
-				get_url();
-			}
-		},
-		error: function() {
+		success: function(response){
 		}
 	});
-
 }
 
-function get_url() {
-	push_data(db_tailscale, "get_url");
-}
 
 function save() {
 //	for (var i = 0; i < params_input.length; i++) {
@@ -124,10 +118,10 @@ function save() {
 		db_tailscale[params_check[i]] = E(params_check[i]).checked ? '1' : '0';
 	}
 	showLoading();
-	push_data(db_tailscale, "restart");
+	push_data(db_tailscale, "restart", 1);
 }
 
-function push_data(obj, arg) {
+function push_data(obj, arg, reload) {
 	var id = parseInt(Math.random() * 100000000);
 	var postData = { "id": id, "method": "tailscale_config.sh", "params": [arg], "fields": obj };
 	$.ajax({
@@ -137,7 +131,7 @@ function push_data(obj, arg) {
 		data: JSON.stringify(postData),
 		dataType: "json",
 		success: function(response){
-			if(response.result == id)
+			if(response.result == id && reload == 1)
 				refreshpage();
 		}
 	});
@@ -149,8 +143,7 @@ function menu_hook(title, tab) {
 }
 
 function login() {
-	var url = Base64.decode(db_tailscale["tailscale_login_url"]);
-	window.open(url);
+	window.open("http://"+window.location.hostname+":8088");
 }
 </script> 
 </head>
@@ -166,8 +159,8 @@ function login() {
 		<input type="hidden" name="action_script" value="" />
 		<input type="hidden" name="action_wait" value="5" />
 		<input type="hidden" name="first_time" value="" />
-		<input type="hidden" name="preferred_lang" id="preferred_lang" value="<% nvram_get(" preferred_lang "); %>"/>
-		<input type="hidden" name="firmver" value="<% nvram_get(" firmver "); %>"/>
+		<input type="hidden" name="preferred_lang" id="preferred_lang" value="<% nvram_get("preferred_lang"); %>"/>
+		<input type="hidden" name="firmver" value="<% nvram_get("firmver"); %>"/>
 		<table class="content" align="center" cellpadding="0" cellspacing="0">
 			<tr>
 				<td width="17">&nbsp;</td>
@@ -194,6 +187,7 @@ function login() {
 												<ul style="padding-top:5px;margin-top:10px;float: left;">
 													<li>启用后，等待几秒钟，点击<u>加入网络</u></li> 
                                                     <li>登录到官网后台后如果需要访问内网其他设备,选择对应设备右边的Edit route settings启用内网nat</li>
+                                                    <li>未付费账号仅一台设备支持开启内网nat,其他设备支持访问开启内网nat设备的ip段</li>
 													<li><a href="https://login.tailscale.com" target="_blank" ><i><u>官网</u></i></a></li> 
 												</ul>
 											</div>
@@ -219,6 +213,22 @@ function login() {
 														</div>
 													</td>
 												</tr>
+												<tr id="switch_tr">
+													<th>开启nat</th>
+													<td colspan="2">
+														<div class="switch_field" style="display:table-cell;float: left;">
+															<label for="tailscale_nat">
+																<input id="tailscale_nat" class="switch" type="checkbox" style="display: none;">
+																<div class="switch_container">
+																	<div class="switch_bar"></div>
+																	<div class="switch_circle transition_style">
+																		<div></div>
+																	</div>
+																</div>
+															</label>
+														</div>
+													</td>
+												</tr>
 												<tr id="status_tr">
 													<th width="35%">状态</th>
 													<td>
@@ -229,7 +239,7 @@ function login() {
 											</table>
 											<div class="apply_gen">
 												<input class="button_gen" id="cmdBtn" onClick="save();" type="button" value="提交" />
-												<input id="login_id" class="button_gen" id="cmdBtn" onClick="login();" type="button" value="加入网络" />
+												<input id="login_id" class="button_gen" onClick="login();" type="button" value="加入网络" />
 											</div>
 											<div style="margin:30px 0 10px 5px;" class="splitLine"></div>
 											<div class="SCBottom">

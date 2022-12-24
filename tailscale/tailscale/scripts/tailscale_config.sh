@@ -19,11 +19,24 @@ tailscale_start(){
 		ln -sf /jffs/softcenter/etc/tailscale /tmp/var/lib/tailscale
 		/jffs/softcenter/bin/tailscaled --cleanup
 		start-stop-daemon -S -q -b -m -p ${PID_FILE} -x /jffs/softcenter/bin/tailscaled
-		/jffs/softcenter/bin/tailscale up --accept-routes --advertise-routes=${subnet} &
+		if [ "$tailscale_nat" == "1" ];then
+			/jffs/softcenter/bin/tailscale up --accept-dns=false --advertise-routes=${subnet} &
+		else
+			/jffs/softcenter/bin/tailscale up --accept-dns=false --accept-routes &
+		tailscale_web
+		check_login_status
+#		if [ "$(dbus get tailscale_online)" == "1" ];then
+#			/jffs/softcenter/bin/tailscale up --reset &
+#			/jffs/softcenter/bin/tailscale up --accept-dns=false --accept-routes --advertise-routes=${subnet} &
+#		fi
+		if [ "$tailscale_login_url" == "" ];then
+			tailscale_login
+		fi
     fi
 }
 
 tailscale_stop(){
+#	/jffs/softcenter/bin/tailscale down &
 	/jffs/softcenter/bin/tailscaled --cleanup
 	killall tailscale
 	killall tailscaled
@@ -31,44 +44,43 @@ tailscale_stop(){
 	dbus set tailscale_online=0
 }
 
-tailscale_login(){
-	local url
-	url=`/jffs/softcenter/bin/tailscale status | grep "Log in at" | cut -d " " -f 4 | base64`
-	dbus set tailscale_login_url=${url}
-}
-
-tailscale_status(){
-	local status
-	status=`/jffs/softcenter/bin/tailscale status | grep "Log in at"`
-	if [ "$status" == "" ]; then
-		dbus set tailscale_online=1
-	else 
-		dbus set tailscale_online=0
+check_login_status(){
+	local status1 status2
+	status1=`/jffs/softcenter/bin/tailscale status | grep "Logged out"`
+	status2=`/jffs/softcenter/bin/tailscale status | grep "not in map poll"`
+	if [ "$status1" != "" && "$status2" == "" ]; then
+		dbus set tailscale_online=2 #logout
+	elif [ "$status2" != "" ]; then
+		dbus set tailscale_online=3 #unable to connect to server
+	else
+		dbus set tailscale_online=1 #ok
 	fi
-
 }
 
+
+tailscale_web(){
+	local ipaddr
+	ipaddr=`nvram get lan_ipaddr`
+	/jffs/softcenter/bin/tailscale web --listen ${ipaddr}:8088 &
+}
 
 case $1 in
-start_nat)
+start)
 		tailscale_stop
 		tailscale_start
         ;;
-esac
-
-case $2 in
-start)
+start_nat)
 		tailscale_stop
 		tailscale_start
         ;;
 stop)
 		tailscale_stop
         ;;
-get_url)
-		tailscale_login
-        ;;
-get_status)
-		tailscale_status
+esac
+
+case $2 in
+check_login)
+		check_login_status
         ;;
 restart)
 		tailscale_stop

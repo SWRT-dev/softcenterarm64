@@ -6,10 +6,10 @@ tailscale_status(){
 	local status pid msg msg2 ip
 	pid=`pidof tailscaled`
 	if [ -n "$pid" ];then
-		status=`/jffs/softcenter/bin/tailscale status | grep "linux"`
+		status=`/jffs/softcenter/bin/tailscale status | grep -i $(uname -n) | grep "linux"`
 		if [ "$status" != "" ]; then
 			msg2=ONLINE
-			ip=`/jffs/softcenter/bin/tailscale status | cut  -d " " -f 1`
+			ip=`/jffs/softcenter/bin/tailscale ip`
 		else 
 			msg2=OFFLINE
 		fi

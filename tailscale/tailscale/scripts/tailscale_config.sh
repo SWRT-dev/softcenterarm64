@@ -23,6 +23,7 @@ tailscale_start(){
 			/jffs/softcenter/bin/tailscale up --accept-dns=false --advertise-routes=${subnet} &
 		else
 			/jffs/softcenter/bin/tailscale up --accept-dns=false --accept-routes &
+		fi
 		tailscale_web
 		check_login_status
 #		if [ "$(dbus get tailscale_online)" == "1" ];then

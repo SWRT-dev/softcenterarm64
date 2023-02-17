@@ -1,0 +1,24 @@
+{
+  "Enable node": "Enable node",
+  "Status": "Status",
+  "Setting": "Setting",
+  "Enable JD DailyBonus": "Enable JD DailyBonus",
+  "JD DailyBonus": "JD DailyBonus",
+  "Note": "Note",
+  "First account cookie": "First account cookie",
+  "Second account cookie": "Second account cookie",
+  "Auto run": "Auto run",
+  "Delay(In milliseconds)": "Delay(In milliseconds)",
+  "Time period": "Time period",
+  "Autoupdate url": "Autoupdate url",
+  "Autoupdate time": "Autoupdate time",
+  "Enable Serverchan": "Enable Serverchan",
+  "Serverchan api": "Serverchan api",
+  "Notify only on failure": "Notify only on failure",
+  "Apply": "Apply",
+  "Offline installation": "Offline installation",
+  "Software Center": "Software Center",
+  "Autoupdate": "Autoupdate"
+}
+
+

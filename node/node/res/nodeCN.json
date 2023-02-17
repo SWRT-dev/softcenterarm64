@@ -1,0 +1,24 @@
+{
+  "Enable node": "启用node",
+  "Status": "运行状态",
+  "Setting": "全局设置",
+  "Enable JD DailyBonus": "启用京东签到",
+  "JD DailyBonus": "京东签到",
+  "Note": "说明",
+  "First account cookie": "主帐号cookie",
+  "Second account cookie": "第二账号cookie",
+  "Auto run": "启用自动签到",
+  "Delay(In milliseconds)": "延迟签到(单位毫秒)",
+  "Time period": "自动签到时间段",
+  "Autoupdate url": "自动更新源",
+  "Autoupdate time": "自动更新时间段",
+  "Enable Serverchan": "启用Server酱",
+  "Serverchan api": "Server酱推送接口",
+  "Notify only on failure": "仅当cookie失效时推送",
+  "Apply": "应用",
+  "Offline installation": "离线安装",
+  "Software Center": "软件中心",
+  "Autoupdate": "自动检查更新"
+}
+
+

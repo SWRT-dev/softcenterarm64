@@ -1,8 +1,9 @@
 {
-"version":"1.2",
-"md5":"69b7e78fa27d2453b54662403fecf047",
+"version":"1.3",
+"md5":"7be0159c132d3a1458ecfc7d428c2e3a",
+"arch":"arm64",
 "home_url":"Module_adbyby.asp",
-"title":"adbyby",
-"description":"广告屏蔽大师",
-"build_date":"2020-08-20_11:32:48"
+"title":"广告屏蔽大师 Plus",
+"description":"广告屏蔽大师 Plus 可以全面过滤各种横幅、弹窗、视频广告，同时阻止跟踪、隐私窃取及各种恶意网站",
+"build_date":"2023-02-19_17:13:13"
 }

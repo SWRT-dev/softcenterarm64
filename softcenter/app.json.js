@@ -224,14 +224,15 @@
             "version": "2.2"
         }, 
         {
-            "build_date": "2020-08-20_11:34:16", 
+            "arch": "arm64", 
+            "build_date": "2023-04-30_08:24:14", 
             "description": "aliddns", 
             "home_url": "Module_aliddns.asp", 
-            "md5": "dab6ab1debc4fb8bb5fb02a63127c153", 
+            "md5": "c627a9b029a0baa2723bbd86e76fbef6", 
             "name": "aliddns", 
             "tar_url": "aliddns/aliddns.tar.gz", 
             "title": "阿里DDNS", 
-            "version": "2.3"
+            "version": "2.5"
         }, 
         {
             "arch": "arm64", 

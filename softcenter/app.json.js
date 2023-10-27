@@ -364,7 +364,7 @@
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/paldier/softcenterarm64/master", 
-    "md5": "4f49bc406825c2f0020100cc55741259", 
+    "md5": "d90f4026bbae587949969a43f2ff4390", 
     "tar_url": "softcenter/softcenter.tar.gz", 
-    "version": "1.4.9"
+    "version": "1.5.0"
 }

@@ -13,14 +13,14 @@
         }, 
         {
             "arch": "arm64", 
-            "build_date": "2024-03-05_08:35:56", 
+            "build_date": "2024-03-05_17:06:01", 
             "description": "简便高效的异地组网、内网穿透工具", 
             "home_url": "Module_vnt.asp", 
-            "md5": "e534e4930fc15e499550fd46e5f96b37", 
+            "md5": "e495a1ccbe36da3159844f2e80049c43", 
             "name": "vnt", 
             "tar_url": "vnt/vnt.tar.gz", 
             "title": "vnt", 
-            "version": "1.0"
+            "version": "1.1"
         }, 
         {
             "build_date": "2021-03-24_20:17:35", 

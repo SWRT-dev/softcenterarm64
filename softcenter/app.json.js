@@ -332,14 +332,14 @@
         }, 
         {
             "arch": "arm64", 
-            "build_date": "2023-01-08_12:54:17", 
+            "build_date": "2024-04-08_13:13:45", 
             "description": "超强的SSH网页客户端~", 
             "home_url": "Module_shellinabox.asp", 
-            "md5": "b3bf38ef2abf82d108bf46890fab42b0", 
+            "md5": "e39135d6873849bebd94da7de29aa689", 
             "name": "shellinabox", 
             "tar_url": "shellinabox/shellinabox.tar.gz", 
             "title": "shellinabox", 
-            "version": "2.3"
+            "version": "2.4"
         }, 
         {
             "arch": "arm64", 

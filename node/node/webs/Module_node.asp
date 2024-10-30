@@ -15,11 +15,12 @@
 <link rel="stylesheet" type="text/css" href="ParentalControl.css">
 <link rel="stylesheet" type="text/css" href="css/icon.css">
 <link rel="stylesheet" type="text/css" href="/res/softcenter.css">
+<script language="JavaScript" type="text/javascript" src="/js/jquery.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/httpApi.js"></script>
 <script type="text/javascript" src="/state.js"></script>
 <script type="text/javascript" src="/popup.js"></script>
 <script type="text/javascript" src="/help.js"></script>
 <script type="text/javascript" src="/validator.js"></script>
-<script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/general.js"></script>
 <script type="text/javascript" src="/switcherplugin/jquery.iphone-switch.js"></script>
 <script type="text/javascript" src="/client_function.js"></script>
@@ -30,7 +31,7 @@
 <script>
 var params_check = ["node_enable", "node_jd_enable"];
 var jd_check = ["node_jd_auto_run", "node_jd_auto_run", "node_jd_auto_update", "node_jd_failed"];
-var jd_input = ["node_jd_cookie", "node_jd_cookie2", "node_jd_stop", "node_jd_auto_run_time", "node_jd_auto_update_time", "node_jd_remote_url", "node_jd_serverchan"];
+var jd_input = ["node_jd_cookie", "node_jd_cookie2", "node_jd_stop", "node_jd_auto_run_time", "node_jd_auto_update_time", "node_jd_remote_url"];
 function E(e) {
 	return (typeof(e) == 'string') ? document.getElementById(e) : e;
 }
@@ -362,44 +363,6 @@ function menu_hook(title, tab) {
 															<option value="22">22:00</option>
 															<option value="23">23:00</option>
 														</select>
-													</td>
-												</tr>
-												<tr>
-													<th sclang>Enable Serverchan</th>
-													<td>
-														<div class="switch_field" style="display:table-cell;float: left;">
-															<label for="node_jd_serverchan_enable">
-																<input id="node_jd_serverchan_enable" class="switch" type="checkbox" style="display: none;">
-																<div class="switch_container">
-																	<div class="switch_bar"></div>
-																	<div class="switch_circle transition_style">
-																		<div></div>
-																	</div>
-																</div>
-															</label>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<th>ServerChan SCKEY</th>
-													<td style="width:25%;">
-													<input type="text" class="input_ss_table" style="width:auto;" name="node_jd_serverchan" value="" maxlength="100" size="50" id="node_jd_serverchan" />
-													</td>
-												</tr>
-												<tr>
-													<th sclang>Notify only on failure</th>
-													<td>
-														<div class="switch_field" style="display:table-cell;float: left;">
-															<label for="node_jd_failed">
-																<input id="node_jd_failed" class="switch" type="checkbox" style="display: none;">
-																<div class="switch_container">
-																	<div class="switch_bar"></div>
-																	<div class="switch_circle transition_style">
-																		<div></div>
-																	</div>
-																</div>
-															</label>
-														</div>
 													</td>
 												</tr>
 											</table>

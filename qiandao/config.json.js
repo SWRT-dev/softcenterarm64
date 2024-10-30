@@ -1,8 +1,9 @@
 {
-"version":"1.7",
-"md5":"4e65333470519017e3ec5e3f0142ff1d",
+"version":"1.8",
+"md5":"e4b000f371167677ec9b8a138ba47a1a",
+"arch":"arm64",
 "home_url":"Module_qiandao.asp",
 "title":"签到dog",
 "description":"这是一只自动帮你签到的dog",
-"build_date":"2020-08-20_11:50:35"
+"build_date":"2024-10-29_11:42:18"
 }

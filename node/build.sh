@@ -2,7 +2,7 @@
 
 
 MODULE=node
-VERSION=0.0.5
+VERSION=0.0.6
 TITLE="node.js"
 DESCRIPTION="node.js"
 HOME_URL=Module_node.asp
